@@ -8,6 +8,7 @@
 #pragma once
 
 #include <iostream>
+#include <getopt.h>
 
 namespace zappy {
     class Gui {
@@ -22,9 +23,7 @@ namespace zappy {
                 _machine = machine;
             }
 
-            ~Gui() {
-
-            }
+            ~Gui() {};
 
             //* Getters
             int getPort(void) {
@@ -41,6 +40,18 @@ namespace zappy {
             void setMachine(std::string machine) {
                 _machine = machine;
             }
+
+            //* Exception
+            class GuiException : public std::exception {
+                public:
+                    GuiException(const std::string &message) throw()
+                    : _message(message) {};
+                    ~GuiException() throw() {};
+                    const char *what() const throw() { return (_message.c_str()); };
+                private:
+                    std::string _message;
+            };
+
         private:
             int _port;
             std::string _machine;
