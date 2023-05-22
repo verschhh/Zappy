@@ -5,7 +5,7 @@
 ## Makefile
 ##
 
-SRC = src/main.cpp \
+SRC = 	src/main.cpp \
 
 OBJ = $(SRC:.cpp=.o)
 
