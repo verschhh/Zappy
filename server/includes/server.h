@@ -83,8 +83,14 @@ client_t *root_client_ctor(void);
 client_t *client_ctor(client_t *root);
 client_t *pop_client(client_t *client);
 
+//* Server
+int start_server(args_t *args);
+int retrieve_command(int sockfd, fd_set *readfds, serv_t *serv);
+void accept_new_client(fd_set *readfds, serv_t *serv);
+
 //* Tools
 void usage(void);
 void print_and_exit(char *str);
+void usage(void);
 
 #endif
