@@ -3,6 +3,6 @@ zappy_gui
 zappy_server
 *.o
 *.a
-vscode/
+.vscode/
 vgcore*
 *.log
