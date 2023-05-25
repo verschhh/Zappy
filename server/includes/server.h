@@ -22,10 +22,14 @@ typedef struct args_s {
     int height;
     char **names;
     int clientsNb;
-    int freq;
+    float freq;
     int namesCount;
 } args_t;
 
+//* Parsing
 int parse_arguments(int ac, char **av, args_t *args);
+
+//* Tools
+void print_and_exit(char *str);
 
 #endif

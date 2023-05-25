@@ -13,17 +13,24 @@ int parse_arguments(int ac, char **av, args_t *args)
 
     args->names = malloc(sizeof(char *) * MAX_NAMES);
     args->namesCount = 0;
+    args->height = 10;
+    args->width = 10;
+    args->clientsNb = 5;
+    args->freq = 100;
 
     while ((option = getopt(ac, av, "p:x:y:n:c:f:")) != -1) {
         switch (option) {
             case 'p':
-                args->port = atoi(optarg);
+                if ((args->port = atoi(optarg)) < 1)
+                    print_and_exit("Port must be greater than 0");
                 break;
             case 'x':
-                args->width = atoi(optarg);
+                if ((args->width = atoi(optarg)) < 1)
+                    print_and_exit("Width must be greater than 0");
                 break;
             case 'y':
-                args->height = atoi(optarg);
+                if ((args->height = atoi(optarg)) < 1)
+                    print_and_exit("Height must be greater than 0");
                 break;
             case 'n':
                 int currentArg = optind - 1;
@@ -35,10 +42,13 @@ int parse_arguments(int ac, char **av, args_t *args)
                 optind = currentArg;
                 break;
             case 'c':
-                args->clientsNb = atoi(optarg);
+                if ((args->clientsNb = atoi(optarg)) < 1)
+                    print_and_exit("ClientsNb must be greater than 0");
                 break;
             case 'f':
-                args->freq = atoi(optarg);
+                char *endptr;
+                if ((args->freq = strtof(optarg, &endptr)) <= 0)
+                    print_and_exit("Freq must be greater than 0");
                 break;
             case '?':
                 if (optopt == 'p' || optopt == 'x' || optopt == 'y' || optopt == 'n' || optopt == 'c' || optopt == 'f') {
@@ -47,19 +57,12 @@ int parse_arguments(int ac, char **av, args_t *args)
                     fprintf(stderr, "Unknown option `-%c'.\n", optopt);
                 }
             default:
-                printf("default\n");
                 return 84;
         }
     }
 
-    printf("port: %d, width: %d, height: %d, clientsNb: %d, freq: %d\n",
-    args->port, args->width, args->height, args->clientsNb, args->freq);
-
-    printf("Count: %d\n", args->namesCount);
-
-    for (int i = 0; i < args->namesCount; i++) {
-        printf("Name %d: %s\n", i + 1, args->names[i]);
-    }
+    if (args->namesCount < 2)
+        print_and_exit("You must specify at least 2 team names");
 
     return 0;
 }
