@@ -25,5 +25,10 @@ int main(int ac, char **av)
         usage();
         return 0;
     }
-    printf("Server\n");
+
+    args_t *args = malloc(sizeof(args_t));
+
+    if (parse_arguments(ac, av, args) == 84) {
+        return 84;
+    }
 }
