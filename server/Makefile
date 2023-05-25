@@ -5,7 +5,7 @@
 ## Makefile
 ##
 
-SRC = src/main.c
+SRC = $(shell find ./src/ -name '*.c')
 
 OBJ = $(SRC:.c=.o)
 
