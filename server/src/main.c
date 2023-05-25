@@ -72,15 +72,16 @@ int body(args_t *args)
 
 int main(int ac, char **av)
 {
-    args_t *args = malloc(sizeof(args_t));
     if (ac == 2 && strcmp(av[1], "-help") == 0) {
         usage();
-        free(args);
         return 0;
     }
+
+    args_t *args = malloc(sizeof(args_t));
     if (parse_arguments(ac, av, args) == 84) {
         free(args);
         return 84;
     }
+
     body(args);
 }
