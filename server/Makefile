@@ -5,8 +5,7 @@
 ## Makefile
 ##
 
-SRC = 	src/main.c \
-		src/parse_arguments.c \
+SRC = $(shell find ./src/ -name '*.c')
 
 OBJ = $(SRC:.c=.o)
 
