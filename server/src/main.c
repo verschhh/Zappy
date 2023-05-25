@@ -7,26 +7,6 @@
 
 #include "../includes/server.h"
 
-void err_n_die(const char *string)
-{
-    printf("%s\n", string);
-    exit (84);
-}
-
-void usage(void)
-{
-    printf("USAGE: ./zappy_server -p port -x width -y height ");
-    printf("-n name1 name2 ... -c clientsNb\n");
-    printf("-f freq\n");
-    printf("\tport\tis the port number\n");
-    printf("\twidth\tis the width of the world\n");
-    printf("\theight\tis the height of the world\n");
-    printf("\tnameX\tis the name of the team X\n");
-    printf("\tclientsNb\tis the number of authorized clients per team\n");
-    printf("\tfreq\tis the reciprocal of time unit ");
-    printf("for execution of actions\n");
-}
-
 int retrieve_command(int sockfd, fd_set *readfds, serv_t *serv)
 {
     // char buffer[1024] = {0};
@@ -60,7 +40,7 @@ int start_server(fd_set *readfds, serv_t *serv)
     tmpfds = *readfds;
 
     if (select(serv->max_sd + 1, &tmpfds, NULL, NULL, NULL) < 0)
-        err_n_die("ERROR on select");
+        print_and_exit("ERROR on select");
 
     for (int i = 0; i <= serv->max_sd; i++) {
         if (!FD_ISSET(i, &tmpfds)) {

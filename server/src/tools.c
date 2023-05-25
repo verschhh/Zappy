@@ -12,3 +12,17 @@ void print_and_exit(char *str)
     fprintf(stderr, "%s\n", str);
     exit(84);
 }
+
+void usage(void)
+{
+    printf("USAGE: ./zappy_server -p port -x width -y height ");
+    printf("-n name1 name2 ... -c clientsNb\n");
+    printf("-f freq\n");
+    printf("\tport\tis the port number\n");
+    printf("\twidth\tis the width of the world\n");
+    printf("\theight\tis the height of the world\n");
+    printf("\tnameX\tis the name of the team X\n");
+    printf("\tclientsNb\tis the number of authorized clients per team\n");
+    printf("\tfreq\tis the reciprocal of time unit ");
+    printf("for execution of actions\n");
+}
