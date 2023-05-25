@@ -73,11 +73,18 @@ typedef struct serv_s {
     client_t *clients;
 } serv_t;
 
-int parse_arguments(int ac, char **av, args_t *args);
+//* Constructor
 serv_t *serv_ctor(args_t *arg);
 client_t *root_client_ctor(void);
 client_t *client_ctor(client_t *root);
 client_t *pop_client(client_t *client);
+
+int start_server(args_t *args);
+int retrieve_command(int sockfd, fd_set *readfds, serv_t *serv);
+void accept_new_client(fd_set *readfds, serv_t *serv);
+
+//* Parsing
+int parse_arguments(int ac, char **av, args_t *args);
 
 //* Tools
 void print_and_exit(char *str);
