@@ -73,13 +73,18 @@ typedef struct serv_s {
     client_t *clients;
 } serv_t;
 
+//* Arguments parsing
 int parse_arguments(int ac, char **av, args_t *args);
+args_t *args_constructor(void);
+
+//* Constructors
 serv_t *serv_ctor(args_t *arg);
 client_t *root_client_ctor(void);
 client_t *client_ctor(client_t *root);
 client_t *pop_client(client_t *client);
 
 //* Tools
+void usage(void);
 void print_and_exit(char *str);
 
 #endif

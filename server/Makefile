@@ -13,6 +13,8 @@ NAME = zappy_server
 
 CFLAGS = -I./includes
 
+# CPPFLAGS = -W -Wall -Wextra -g3
+
 all: $(NAME)
 
 $(NAME): $(OBJ)

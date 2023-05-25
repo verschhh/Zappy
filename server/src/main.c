@@ -52,6 +52,8 @@ int start_server(fd_set *readfds, serv_t *serv)
             retrieve_command(i, readfds, serv);
         }
     }
+
+    return 0;
 }
 
 int body(args_t *args)
@@ -77,7 +79,7 @@ int main(int ac, char **av)
         return 0;
     }
 
-    args_t *args = malloc(sizeof(args_t));
+    args_t *args = args_constructor();
     if (parse_arguments(ac, av, args) == 84) {
         free(args);
         return 84;

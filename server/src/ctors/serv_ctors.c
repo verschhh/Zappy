@@ -16,12 +16,12 @@ serv_t *serv_ctor(args_t *arg)
     serv->addr.sin_port = htons(serv->portno);
     serv->addr.sin_addr.s_addr = INADDR_ANY;
     if ((serv->sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
-        err_n_die("ERROR opening socket");
+        print_and_exit("ERROR opening socket");
     if (bind(serv->sockfd, (struct sockaddr*)&serv->addr,
             sizeof(serv->addr)) < 0)
-        err_n_die("ERROR on binding");
+        print_and_exit("ERROR on binding");
     if (listen(serv->sockfd, 16) < 0)
-        err_n_die("ERROR on listen");
+        print_and_exit("ERROR on listen");
     serv->clients = root_client_ctor();
     serv->global_uid = 1;
     return serv;
