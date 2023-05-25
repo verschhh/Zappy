@@ -88,5 +88,6 @@ int parse_arguments(int ac, char **av, args_t *args);
 
 //* Tools
 void print_and_exit(char *str);
+void usage(void);
 
 #endif
