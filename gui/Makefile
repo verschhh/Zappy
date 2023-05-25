@@ -5,13 +5,14 @@
 ## Makefile
 ##
 
-SRC = 	src/main.cpp \
+SRC = 	src/gui.cpp \
+		src/main.cpp \
 
 OBJ = $(SRC:.cpp=.o)
 
 NAME = zappy_gui
 
-CFLAGS = -I./includes
+CFLAGS = -I./includes -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -lsfml-network -W -Wall -Wextra -Werror -g3
 
 all: $(NAME)
 

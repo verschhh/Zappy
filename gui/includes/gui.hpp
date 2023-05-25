@@ -9,6 +9,7 @@
 
 #include <iostream>
 #include <getopt.h>
+#include <SFML/Graphics.hpp>
 
 namespace zappy {
     class Gui {
@@ -51,6 +52,10 @@ namespace zappy {
                 private:
                     std::string _message;
             };
+
+            //* Methods
+
+            void run();
 
         private:
             int _port;

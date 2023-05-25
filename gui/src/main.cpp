@@ -40,6 +40,7 @@ int guiSetup(int ac, char **av)
     }
 
     zappy::Gui gui(port, machine);
+    gui.run();
 
     return (0);
 }
