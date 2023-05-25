@@ -51,8 +51,10 @@ int parse_arguments(int ac, char **av, args_t *args)
                     print_and_exit("Freq must be greater than 0");
                 break;
             case '?':
-                if (optopt == 'p' || optopt == 'x' || optopt == 'y' || optopt == 'n' || optopt == 'c' || optopt == 'f') {
-                    fprintf(stderr, "Option -%c requires an argument.\n", optopt);
+                if (optopt == 'p' || optopt == 'x' || optopt == 'y'
+                    || optopt == 'n' || optopt == 'c' || optopt == 'f') {
+                    fprintf(stderr, "Option -%c requires an argument.\n",
+                        optopt);
                 } else {
                     fprintf(stderr, "Unknown option `-%c'.\n", optopt);
                 }

@@ -5,3 +5,4 @@ zappy_server
 *.a
 vscode/
 vgcore*
+*.log
