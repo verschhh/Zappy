@@ -15,6 +15,8 @@ void accept_new_client(fd_set *readfds, serv_t *serv)
     inet_ntoa(client->addr.sin_addr);
     int temp = ntohs(client->addr.sin_port);
     (void)temp;
+    printf("New connection, socket fd is %d, ip is : %s, port : %d\n",
+        client->sockfd, inet_ntoa(client->addr.sin_addr), temp);
     FD_SET(client->sockfd, readfds);
     if (client->sockfd > serv->max_sd)
         serv->max_sd = client->sockfd;
