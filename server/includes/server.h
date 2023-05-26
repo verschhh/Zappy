@@ -76,6 +76,11 @@ typedef struct serv_s {
 //* Arguments parsing
 int parse_arguments(int ac, char **av, args_t *args);
 args_t *args_constructor(void);
+int parse_names(char **av, args_t *args);
+int parse_default(void);
+int parse_port_width_height(int option, char *optarg, args_t *args);
+int parse_names_clients_nb_freq(int option, char *optarg, args_t *args,
+    char **av);
 
 //* Constructors
 serv_t *serv_ctor(args_t *arg);
