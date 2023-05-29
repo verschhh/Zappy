@@ -10,6 +10,7 @@
 #include <iostream>
 #include <getopt.h>
 #include <SFML/Graphics.hpp>
+#include "menu.hpp"
 
 namespace zappy {
     class Gui {
@@ -58,6 +59,7 @@ namespace zappy {
             void run();
 
         private:
+            Menu menu;
             int _port;
             std::string _machine;
     };
