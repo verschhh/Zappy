@@ -7,17 +7,20 @@
 
 SRC = 	src/gui.cpp \
 		src/main.cpp \
+		src/menu.cpp \
 
 OBJ = $(SRC:.cpp=.o)
 
 NAME = zappy_gui
 
-CFLAGS = -I./includes -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -lsfml-network -W -Wall -Wextra -Werror -g3
+CFLAGS = -I./includes -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -lsfml-network
+
+CPPFLAGS = -W -Wall -Wextra -Werror -g3
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	g++ -o $(NAME) $(OBJ) $(CFLAGS)
+	g++ -o $(NAME) $(OBJ) $(CFLAGS) $(CPPFLAGS)
 	mv $(NAME) ../
 
 clean:
