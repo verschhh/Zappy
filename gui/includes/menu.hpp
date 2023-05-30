@@ -23,6 +23,8 @@ public:
 private:
     sf::Texture backgroundTexture;
     sf::Sprite backgroundSprite;
+    sf::Texture logoTexture;
+    sf::Sprite logoSprite;
     sf::Texture playButtonTexture;
     sf::Sprite playButtonSprite;
     sf::Texture quitButtonTexture;

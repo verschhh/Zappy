@@ -14,18 +14,24 @@ Menu::Menu() {
 }
 
 void Menu::loadTextures() {
-    backgroundTexture.loadFromFile("gui/assets/images/test.jpg");
+    backgroundTexture.loadFromFile("gui/assets/images/background_space.png");
     backgroundSprite.setTexture(backgroundTexture);
-    // playButtonTexture.loadFromFile("gui/assets/buttons/play_button_still.png");
-    // playButtonSprite.setTexture(playButtonTexture);
-    // quitButtonTexture.loadFromFile("gui/assets/buttons/quit_button_still.png");
-    // quitButtonSprite.setTexture(quitButtonTexture);
+    logoTexture.loadFromFile("gui/assets/zappyLogo.png");
+    logoSprite.setTexture(logoTexture);
+    logoSprite.setScale(10, 10);
+    playButtonTexture.loadFromFile("gui/assets/buttons/play_button_still.png");
+    playButtonSprite.setTexture(playButtonTexture);
+    playButtonSprite.setScale(4, 4);
+    quitButtonTexture.loadFromFile("gui/assets/buttons/quit_button_still.png");
+    quitButtonSprite.setTexture(quitButtonTexture);
+    quitButtonSprite.setScale(4, 4);
 }
 
 void Menu::setupButtons() {
     backgroundSprite.setPosition(0, 0);
-    // playButtonSprite.setPosition(200, 400);
-    // quitButtonSprite.setPosition(400, 400);
+    logoSprite.setPosition(500, 150);
+    playButtonSprite.setPosition(600, 700);
+    quitButtonSprite.setPosition(1060, 700);
 }
 
 bool Menu::isQuitButtonClicked() {
@@ -52,6 +58,7 @@ void Menu::handleEvents(sf::RenderWindow& window) {
 
 void Menu::draw(sf::RenderWindow& window) {
     window.draw(backgroundSprite);
-    // window.draw(playButtonSprite);
-    // window.draw(quitButtonSprite);
+    window.draw(logoSprite);
+    window.draw(playButtonSprite);
+    window.draw(quitButtonSprite);
 }
