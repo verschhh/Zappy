@@ -9,7 +9,7 @@
 
 void zappy::Gui::run() {
     // Create an SFML window
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Zappy");
+    sf::RenderWindow window(sf::VideoMode(1920, 1080), "Zappy");
     menu.loadTextures();
     menu.setupButtons();
 
