@@ -1,4 +1,11 @@
 #!/usr/bin/env python3
+##
+## EPITECH PROJECT, 2022
+## B-YEP-400-BER-4-1-zappy-kentin.paille
+## File description:
+## main.py
+##
+
 
 import socket
 import sys
@@ -41,12 +48,15 @@ def set_args(av, ac):
         machine = "localhost"
     return port, name, machine
 
+def print_usage():
+    print("USAGE: ./zappy_ai -help || -p [port] -n [name] -h [machine]")
+    print("\t[port]\tis the port number")
+    print("\t[name]\tis the name of the team")
+    print("\t[machine]\tis the name of the machine; localhost by default")
+
 def main(av, ac):
     if ac == 2 and av[1] == "-help":
-        print("USAGE: ./zappy_ai -p port -n name -h machine")
-        print("\tport\tis the port number")
-        print("\tname\tis the name of the team")
-        print("\tmachine\tis the name of the machine; localhost by default")
+        print_usage()
         return 0
     elif ac == 7 or ac == 5:
         if check_args(av, ac) == 84:
@@ -59,7 +69,7 @@ def main(av, ac):
             print(buff.decode())
         print("port: " + av[2])
     else:
-        print("USAGE: ./zappy_ai -help")
+        print_usage()
         return 84
 
 if __name__ == "__main__":
