@@ -14,6 +14,20 @@ void usage(void)
     std::cout << "\tmachine\tis the name of the machine; localhost by default" << std::endl;
 }
 
+int guiStart(int port, std::string machine)
+{
+    zappy::Gui gui(port, machine);
+
+    try {
+        gui.run();
+    } catch (zappy::Gui::GuiException &e) {
+        std::cerr << e.what() << std::endl;
+        return (84);
+    }
+
+    return (0);
+}
+
 int guiSetup(int ac, char **av)
 {
     int port = 0;
@@ -39,10 +53,7 @@ int guiSetup(int ac, char **av)
         return (84);
     }
 
-    zappy::Gui gui(port, machine);
-    gui.run();
-
-    return (0);
+    return (guiStart(port, machine));
 }
 
 int main(int ac, char **av)

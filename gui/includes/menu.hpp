@@ -20,8 +20,9 @@ public:
 
     bool isQuitButtonClicked();
 
-
 private:
+    sf::Texture backgroundTexture;
+    sf::Sprite backgroundSprite;
     sf::Texture playButtonTexture;
     sf::Sprite playButtonSprite;
     sf::Texture quitButtonTexture;

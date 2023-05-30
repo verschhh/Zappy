@@ -6,31 +6,39 @@
 */
 
 #include "../includes/gui.hpp"
+#include <iostream>
+
+void zappy::Gui::setIcon(sf::RenderWindow& window) {
+    sf::Image icon;
+    if (!icon.loadFromFile("gui/assets/zappyFavicon.png")) {
+        throw GuiException("Error: cannot load icon");
+    }
+    window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
+}
 
 void zappy::Gui::run() {
-    // Create an SFML window
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Zappy");
-    menu.loadTextures();
-    menu.setupButtons();
+    sf::RenderWindow window(sf::VideoMode(1920, 1080), "Zappy", sf::Style::Fullscreen);
+    setIcon(window);
 
-    // Game loop
+    Menu menu;
+
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed)
-                window.close();
+            if (event.type == sf::Event::Closed) {
+                    window.close();
+            }
         }
-
         window.clear();
+
         menu.handleEvents(window);
-        
-        if (menu.isQuitButtonClicked()) {
-            window.close();
-        }
+
+        // if (menu.isQuitButtonClicked()) {
+        //     window.close();
+        // }
 
         menu.draw(window);
 
-        // Display the updated window
         window.display();
     }
 }

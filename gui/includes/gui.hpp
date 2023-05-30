@@ -55,8 +55,8 @@ namespace zappy {
             };
 
             //* Methods
-
             void run();
+            void setIcon(sf::RenderWindow& window);
 
         private:
             Menu menu;

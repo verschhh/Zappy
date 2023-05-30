@@ -6,6 +6,7 @@
 */
 
 #include "../includes/menu.hpp"
+#include <iostream> // TODO: del this include
 
 Menu::Menu() {
     loadTextures();
@@ -13,17 +14,18 @@ Menu::Menu() {
 }
 
 void Menu::loadTextures() {
-    // Load textures implementation
-    playButtonTexture.loadFromFile("gui/assets/buttons/play_button_still.png");
-    playButtonSprite.setTexture(playButtonTexture);
-    quitButtonTexture.loadFromFile("gui/assets/buttons/quit_button_still.png");
-    quitButtonSprite.setTexture(quitButtonTexture);
+    backgroundTexture.loadFromFile("gui/assets/images/test.jpg");
+    backgroundSprite.setTexture(backgroundTexture);
+    // playButtonTexture.loadFromFile("gui/assets/buttons/play_button_still.png");
+    // playButtonSprite.setTexture(playButtonTexture);
+    // quitButtonTexture.loadFromFile("gui/assets/buttons/quit_button_still.png");
+    // quitButtonSprite.setTexture(quitButtonTexture);
 }
 
 void Menu::setupButtons() {
-    // Setup buttons implementation
-    playButtonSprite.setPosition(200, 400);
-    quitButtonSprite.setPosition(400, 400);
+    backgroundSprite.setPosition(0, 0);
+    // playButtonSprite.setPosition(200, 400);
+    // quitButtonSprite.setPosition(400, 400);
 }
 
 bool Menu::isQuitButtonClicked() {
@@ -36,19 +38,20 @@ void Menu::handleEvents(sf::RenderWindow& window) {
         if (event.type == sf::Event::Closed) {
             window.close();
         } else if (event.type == sf::Event::MouseButtonPressed) {
-            if (event.mouseButton.button == sf::Mouse::Left) {
-                sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-                if (quitButtonSprite.getGlobalBounds().contains(mousePos.x, mousePos.y)) {
-                    _isQuitButtonClicked = true;
-                }
-            }
+            std::cout << "x: " << event.mouseButton.x;
+            std::cout << "y: " << event.mouseButton.y << std::endl;
+            // if (event.mouseButton.button == sf::Mouse::Left) {
+            //     sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+            //     if (quitButtonSprite.getGlobalBounds().contains(mousePos.x, mousePos.y)) {
+            //         _isQuitButtonClicked = true;
+            //     }
+            // }
         }
     }
 }
 
 void Menu::draw(sf::RenderWindow& window) {
-    // Drawing implementation
-    window.draw(playButtonSprite);
-    window.draw(quitButtonSprite);
-    // Draw other menu elements as needed
+    window.draw(backgroundSprite);
+    // window.draw(playButtonSprite);
+    // window.draw(quitButtonSprite);
 }
