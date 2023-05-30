@@ -1,11 +1,4 @@
 #!/usr/bin/env python3
-##
-## EPITECH PROJECT, 2022
-## B-YEP-400-BER-4-1-zappy-kentin.paille
-## File description:
-## main.py
-##
-
 
 ##
 ## EPITECH PROJECT, 2023
@@ -13,8 +6,6 @@
 ## File description:
 ## main
 ##
-
-
 
 import socket
 import sys
