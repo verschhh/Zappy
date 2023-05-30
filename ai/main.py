@@ -1,7 +1,17 @@
 #!/usr/bin/env python3
 
+##
+## EPITECH PROJECT, 2023
+## Zappy
+## File description:
+## main
+##
+
+
+
 import socket
 import sys
+from time import sleep
 
 def check_args(av, ac):
     nb_param = 0
@@ -54,10 +64,22 @@ def main(av, ac):
         port, team_name, host = set_args(av, ac)
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.connect((host, port))
-            s.sendall("Hello world".encode('utf-8'))
             buff = s.recv(512)
             print(buff.decode())
-        print("port: " + av[2])
+            s.sendall((team_name + "\n").encode())
+            buff = s.recv(512)
+            print(buff.decode())
+            message = input("-> ")
+            while message != "quit":
+                s.sendall((message+"\n").encode())
+                buff = s.recv(4096)
+                if not buff:
+                    break
+                print(buff.decode())
+                sleep(1)
+                message = input("-> ")
+            s.close()
+
     else:
         print("USAGE: ./zappy_ai -help")
         return 84
