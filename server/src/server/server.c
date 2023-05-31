@@ -7,6 +7,26 @@
 
 #include "../includes/server.h"
 
+void crtld_handler(int signal)
+{
+    exit(0);
+}
+
+struct termios init_signal(void)
+{
+    struct termios old_termios;
+    struct termios new_termios;
+
+    setvbuf(stdout, NULL, _IONBF, 0);
+    tcgetattr(0, &old_termios);
+    signal(SIGINT, crtld_handler);
+    new_termios = old_termios;
+    new_termios.c_cc[VEOF] = 3;
+    new_termios.c_cc[VINTR] = 4;
+    tcsetattr(0, TCSANOW, &new_termios);
+    return old_termios;
+}
+
 int server(fd_set *readfds, serv_t *serv)
 {
     fd_set tmpfds;
@@ -31,6 +51,7 @@ int server(fd_set *readfds, serv_t *serv)
 
 int start_server(args_t *args)
 {
+    struct termios old_termios = init_signal();
     serv_t *serv = serv_ctor(args);
     fd_set readfds;
     if (serv == NULL) {
@@ -39,8 +60,13 @@ int start_server(args_t *args)
     }
     FD_SET(serv->sockfd, &readfds);
     serv->max_sd = serv->sockfd;
-    while (1)
+    signal(SIGINT, crtld_handler);
+    while (1) {
         server(&readfds, serv);
+    }
+    tcsetattr(0, TCSANOW, &old_termios);
     free(args);
     return 0;
 }
+
+

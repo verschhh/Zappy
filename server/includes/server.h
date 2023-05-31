@@ -19,6 +19,8 @@
     #include <netinet/in.h>
     #include <error.h>
     #include <string.h>
+    #include <signal.h>
+    #include <termios.h>
 
 static const int MAX_NAMES = 10;
 
