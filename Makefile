@@ -17,6 +17,7 @@ server:
 	@make -C server
 
 clean:
+	@make clean -C ai
 	@make clean -C gui
 	@make clean -C server
 

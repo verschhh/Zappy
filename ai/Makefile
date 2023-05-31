@@ -15,6 +15,5 @@ fclean:
 	rm -f ../zappy_ai
 
 clean:
-	echo "hello"
 
 .PHONY: all clean fclean re
