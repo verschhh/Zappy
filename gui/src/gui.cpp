@@ -23,16 +23,9 @@ void zappy::Gui::run() {
     Menu menu;
 
     while (window.isOpen()) {
-        sf::Event event;
-        while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed) {
-                window.close();
-            }
-            // ? Duplicate ? Not if we make an handle events functions for each scene (scene selector)
-            else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
-                window.close();
-            }
-        }
+
+        menu.handleEvents(window);
+
         window.clear();
 
         menu.drawScene(window);
