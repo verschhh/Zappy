@@ -5,7 +5,7 @@
 ## Makefile
 ##
 
-all: gui server
+all: gui server ai
 
 ai:
 	@make -C ai
