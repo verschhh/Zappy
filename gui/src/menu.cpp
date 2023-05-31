@@ -39,6 +39,7 @@ bool Menu::isQuitButtonClicked() {
 }
 
 void Menu::handleEvents(sf::RenderWindow& window) {
+    (void) window;
     // sf::Event event;
     // while (window.pollEvent(event)) {
     //     if (event.type == sf::Event::Closed) {
