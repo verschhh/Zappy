@@ -8,6 +8,17 @@
 #include "../includes/gui.hpp"
 #include <iostream>
 
+zappy::Gui::Gui(int port, std::string machine)
+: _indexScene(0)
+{
+    _port = port;
+    _machine = machine;
+
+    _scenes.push_back(new Menu());
+
+    // TODO: initiate server connection
+}
+
 void zappy::Gui::setIcon(sf::RenderWindow& window) {
     sf::Image icon;
     if (!icon.loadFromFile("gui/assets/zappyFavicon.png")) {
@@ -20,15 +31,12 @@ void zappy::Gui::run() {
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "Zappy", sf::Style::Fullscreen);
     setIcon(window);
 
-    Menu menu;
-
     while (window.isOpen()) {
-
-        menu.handleEvents(window);
+        _scenes[_indexScene]->handleEvents(window);
 
         window.clear();
 
-        menu.drawScene(window);
+        _scenes[_indexScene]->drawScene(window);
 
         window.display();
     }
