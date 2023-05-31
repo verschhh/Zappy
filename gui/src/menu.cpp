@@ -18,7 +18,7 @@ void Menu::loadTextures() {
     backgroundSprite.setTexture(backgroundTexture);
     logoTexture.loadFromFile("gui/assets/zappyLogo.png");
     logoSprite.setTexture(logoTexture);
-    logoSprite.setScale(10, 10);
+    logoSprite.setScale(15, 15);
     playButtonTexture.loadFromFile("gui/assets/buttons/play_button_still.png");
     playButtonSprite.setTexture(playButtonTexture);
     playButtonSprite.setScale(4, 4);
@@ -29,7 +29,7 @@ void Menu::loadTextures() {
 
 void Menu::setupButtons() {
     backgroundSprite.setPosition(0, 0);
-    logoSprite.setPosition(500, 150);
+    logoSprite.setPosition(250, 150);
     playButtonSprite.setPosition(600, 700);
     quitButtonSprite.setPosition(1060, 700);
 }
