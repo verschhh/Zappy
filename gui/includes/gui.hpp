@@ -10,7 +10,7 @@
 #include <iostream>
 #include <getopt.h>
 #include <SFML/Graphics.hpp>
-#include "menu.hpp"
+#include "scenes.hpp"
 
 namespace zappy {
     class Gui {

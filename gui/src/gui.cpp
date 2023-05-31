@@ -35,7 +35,7 @@ void zappy::Gui::run() {
         }
         window.clear();
 
-        menu.draw(window);
+        menu.drawScene(window);
 
         window.display();
     }
