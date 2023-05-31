@@ -18,7 +18,7 @@ void Menu::loadTextures() {
     backgroundSprite.setTexture(backgroundTexture);
     logoTexture.loadFromFile("gui/assets/zappyLogo.png");
     logoSprite.setTexture(logoTexture);
-    logoSprite.setScale(10, 10);
+    logoSprite.setScale(15, 15);
     playButtonTexture.loadFromFile("gui/assets/buttons/play_button_still.png");
     playButtonSprite.setTexture(playButtonTexture);
     playButtonSprite.setScale(4, 4);
@@ -29,7 +29,7 @@ void Menu::loadTextures() {
 
 void Menu::setupButtons() {
     backgroundSprite.setPosition(0, 0);
-    logoSprite.setPosition(500, 150);
+    logoSprite.setPosition(250, 150);
     playButtonSprite.setPosition(600, 700);
     quitButtonSprite.setPosition(1060, 700);
 }
@@ -39,21 +39,25 @@ bool Menu::isQuitButtonClicked() {
 }
 
 void Menu::handleEvents(sf::RenderWindow& window) {
-    sf::Event event;
-    while (window.pollEvent(event)) {
-        if (event.type == sf::Event::Closed) {
-            window.close();
-        } else if (event.type == sf::Event::MouseButtonPressed) {
-            std::cout << "x: " << event.mouseButton.x;
-            std::cout << "y: " << event.mouseButton.y << std::endl;
-            // if (event.mouseButton.button == sf::Mouse::Left) {
-            //     sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-            //     if (quitButtonSprite.getGlobalBounds().contains(mousePos.x, mousePos.y)) {
-            //         _isQuitButtonClicked = true;
-            //     }
-            // }
-        }
-    }
+    // sf::Event event;
+    // while (window.pollEvent(event)) {
+    //     if (event.type == sf::Event::Closed) {
+    //         std::cout << "window closed" << std::endl;
+    //         window.close();
+    //     } else if (event.type == sf::Event::MouseButtonPressed) {
+    //         std::cout << "x: " << event.mouseButton.x;
+    //         std::cout << "y: " << event.mouseButton.y << std::endl;
+    //         // if (event.mouseButton.button == sf::Mouse::Left) {
+    //         //     sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+    //         //     if (quitButtonSprite.getGlobalBounds().contains(mousePos.x, mousePos.y)) {
+    //         //         _isQuitButtonClicked = true;
+    //         //     }
+    //         // }
+    //     } else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
+    //         std::cout << "escape pressed" << std::endl;
+    //         window.close();
+    //     }
+    // }
 }
 
 void Menu::draw(sf::RenderWindow& window) {
