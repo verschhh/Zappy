@@ -22,7 +22,7 @@ serv_t *serv_ctor(args_t *arg)
         print_and_exit("ERROR on binding");
     if (listen(serv->sockfd, 16) < 0)
         print_and_exit("ERROR on listen");
-    serv->clients = root_client_ctor();
+    serv->clients = root_client_ctor(arg);
     serv->global_uid = 1;
     return serv;
 }

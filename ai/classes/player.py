@@ -37,6 +37,14 @@ class Player:
             self.y += 1
         elif self.orientation == Orientation.WEST:
             self.x -= 1
+        if self.x < 0:
+            self.x = self.max_x - 1
+        elif self.x >= self.max_x:
+            self.x = 0
+        if self.y < 0:
+            self.y = self.max_y - 1
+        elif self.y >= self.max_y:
+            self.y = 0
 
     def right(self):
         self.socket.send("Right")

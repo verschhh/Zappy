@@ -18,7 +18,7 @@ CFLAGS = -I./includes
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	gcc -o $(NAME) $(OBJ) $(CFLAGS)
+	gcc -o $(NAME) $(OBJ) $(CFLAGS) $(CPPFLAGS)
 	# mv $(NAME) ../
 
 clean:
