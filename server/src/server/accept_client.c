@@ -10,6 +10,8 @@
 void accept_new_client(fd_set *readfds, serv_t *serv)
 {
     client_t *client = client_ctor(serv->clients);
+    if (client == NULL)
+        return;
     client->sockfd = accept(serv->sockfd,
         (struct sockaddr *)&client->addr, &client->addrlen);
     inet_ntoa(client->addr.sin_addr);
@@ -20,4 +22,5 @@ void accept_new_client(fd_set *readfds, serv_t *serv)
     FD_SET(client->sockfd, readfds);
     if (client->sockfd > serv->max_sd)
         serv->max_sd = client->sockfd;
+    write(client->sockfd, "Welcome, you are now connected", 31);
 }
