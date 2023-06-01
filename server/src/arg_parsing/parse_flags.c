@@ -14,6 +14,7 @@ int parse_names(char **av, args_t *args)
     int currentArg = optind - 1;
     while (currentArg < ac && *av[currentArg] != '-') {
         args->names[args->namesCount] = strdup(av[currentArg]);
+        args->names[args->namesCount][strlen(av[currentArg])] = 0;
         args->namesCount++;
         currentArg++;
     }

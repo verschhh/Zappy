@@ -7,17 +7,30 @@
 
 #include "../includes/server.h"
 
-client_t *root_client_ctor(void)
+client_t *root_client_ctor(args_t *arg)
 {
-    client_t *root = malloc(sizeof(client_t));
+    client_t *root = NULL;
+    client_t *current = NULL;
 
-    root->x = 0;
-    root->y = 0;
-    root->level = 0;
-    root->orientation = 0;
-    root->team_name = NULL;
-    root->next = NULL;
-    root->addrlen = sizeof(struct sockaddr_in);
+    for (int i = 0; i != arg->namesCount; i++) {
+        client_t *new_node = malloc(sizeof(client_t));
+        if (new_node == NULL)
+            perror("Memory allocation failed");
+        new_node->x = 0;
+        new_node->y = 0;
+        new_node->level = 0;
+        new_node->orientation = 0;
+        new_node->team_name = arg->names[i];
+        new_node->addrlen = sizeof(struct sockaddr_in);
+        new_node->next = NULL;
+        if (root == NULL) {
+            root = new_node;
+            current = root;
+        } else {
+            current->next = new_node;
+            current = current->next;
+        }
+    }
     return root;
 }
 
