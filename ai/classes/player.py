@@ -19,8 +19,8 @@ class Player:
     def __init__(self, socket, game):
         self.x = 4
         self.y = 3
-        self.max_x = game.width
-        self.max_y = game.height
+        self.max_x = game.map_size_x
+        self.max_y = game.map_size_y
         self.level = 1
         self.inventory = {"food": 10, "linemate": 0, "deraumere": 0, "sibur": 0, "mendiane": 0, "phiras": 0, "thystame": 0}
         self.team = ""
@@ -29,6 +29,16 @@ class Player:
         self.vision = []
         self.vision_with_pos = []
 
+    def get_distance(self, x, y):
+        dx = abs(self.x - x)
+        dy = abs(self.y - y)
+
+        wrapped_dx = min(dx, self.max_x - dx)
+        wrapped_dy = min(dy, self.max_y - dy)
+
+        return wrapped_dx + wrapped_dy
+
+    # * In Game Commands
     def forward(self):
         self.socket.send("Forward")
         if self.orientation == Orientation.NORTH:
