@@ -1,5 +1,6 @@
 zappy_gui
 zappy_server
+zappy_ai
 *.o
 *.a
 .vscode/
