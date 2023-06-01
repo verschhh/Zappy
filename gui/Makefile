@@ -8,6 +8,7 @@
 SRC = 	src/gui.cpp \
 		src/main.cpp \
 		src/menu.cpp \
+		src/inGame.cpp \
 
 OBJ = $(SRC:.cpp=.o)
 

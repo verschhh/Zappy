@@ -15,6 +15,7 @@ zappy::Gui::Gui(int port, std::string machine)
     _machine = machine;
 
     _scenes.push_back(new Menu());
+    _scenes.push_back(new InGame());
 
     // TODO: initiate server connection
 }
@@ -35,6 +36,7 @@ void zappy::Gui::run() {
 
     while (window.isOpen()) {
         _scenes[_indexScene]->handleEvents(window);
+        setIndexScene(_scenes[_indexScene]->getIndexScene());
 
         window.clear();
 
