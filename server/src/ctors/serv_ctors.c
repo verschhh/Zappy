@@ -24,5 +24,7 @@ serv_t *serv_ctor(args_t *arg)
         print_and_exit("ERROR on listen");
     serv->clients = root_client_ctor(arg);
     serv->global_uid = 1;
+    serv->map_x = arg->width;
+    serv->map_y = arg->height;
     return serv;
 }

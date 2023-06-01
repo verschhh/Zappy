@@ -16,6 +16,7 @@ void fill_new_node(client_t *new_node, args_t *arg, int i)
     new_node->team_name = arg->names[i];
     new_node->addrlen = sizeof(struct sockaddr_in);
     new_node->next = NULL;
+    new_node->slot = arg->clientsNb;
 }
 
 client_t *root_client_ctor(args_t *arg)
