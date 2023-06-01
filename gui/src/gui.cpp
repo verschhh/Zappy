@@ -8,6 +8,17 @@
 #include "../includes/gui.hpp"
 #include <iostream>
 
+zappy::Gui::Gui(int port, std::string machine)
+: _indexScene(0)
+{
+    _port = port;
+    _machine = machine;
+
+    _scenes.push_back(new Menu());
+
+    // TODO: initiate server connection
+}
+
 void zappy::Gui::setIcon(sf::RenderWindow& window) {
     sf::Image icon;
     if (!icon.loadFromFile("gui/assets/zappyFavicon.png")) {
@@ -20,22 +31,12 @@ void zappy::Gui::run() {
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "Zappy", sf::Style::Fullscreen);
     setIcon(window);
 
-    Menu menu;
-
     while (window.isOpen()) {
-        sf::Event event;
-        while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed) {
-                window.close();
-            }
-            // ? Duplicate ? Not if we make an handle events functions for each scene (scene selector)
-            else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
-                window.close();
-            }
-        }
+        _scenes[_indexScene]->handleEvents(window);
+
         window.clear();
 
-        menu.draw(window);
+        _scenes[_indexScene]->drawScene(window);
 
         window.display();
     }

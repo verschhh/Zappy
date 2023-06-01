@@ -10,20 +10,12 @@
 #include <iostream>
 #include <getopt.h>
 #include <SFML/Graphics.hpp>
-#include "menu.hpp"
+#include "scenes.hpp"
 
 namespace zappy {
     class Gui {
         public:
-            Gui(int port) {
-                _port = port;
-                _machine = "localhost";
-            }
-
-            Gui(int port, std::string machine) {
-                _port = port;
-                _machine = machine;
-            }
+            Gui(int port, std::string machine);
 
             ~Gui() {};
 
@@ -59,8 +51,10 @@ namespace zappy {
             void setIcon(sf::RenderWindow& window);
 
         private:
-            Menu menu;
             int _port;
             std::string _machine;
+
+            int _indexScene;
+            std::vector<IScene*> _scenes;
     };
 }
