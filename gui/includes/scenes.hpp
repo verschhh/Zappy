@@ -8,12 +8,13 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <cmath>
 
 namespace zappy {
     class IScene {
         public:
             virtual void handleEvents(sf::RenderWindow& window) = 0;
-            virtual void drawScene(sf::RenderWindow& window) = 0;
+            virtual void drawScene(sf::RenderWindow& window, sf::Clock clock) = 0;
             virtual void setSpriteProperties(sf::Sprite& sprite, sf::Texture& texture, sf::Vector2f scale, sf::Vector2f position) = 0;
     };
 
@@ -26,6 +27,9 @@ namespace zappy {
                 sprite.setTexture(texture);
                 sprite.setScale(scale);
                 sprite.setPosition(position);
+
+                sf::FloatRect spriteBounds = sprite.getLocalBounds();
+                sprite.setOrigin(spriteBounds.width / 2, spriteBounds.height / 2);
             }
     };
 
@@ -35,11 +39,12 @@ namespace zappy {
             ~Menu();
 
             void handleEvents(sf::RenderWindow& window);
-            void drawScene(sf::RenderWindow& window);
+            void drawScene(sf::RenderWindow& window, sf::Clock clock);
 
             void loadTextures();
             void handleHoverButtons(sf::Vector2i mousePosition);
             void handleMouseClicks(sf::RenderWindow &window, sf::Event event, sf::Vector2i mousePosition);
+            void animateStar(sf::Clock clock, float baseScale);
 
         private:
             sf::Texture _backgroundTexture;
@@ -53,5 +58,8 @@ namespace zappy {
 
             sf::Texture _quitButtonTexture;
             sf::Sprite _quitButtonSprite;
+
+            sf::Texture _shiningLightTexture;
+            sf::Sprite _shiningLightSprite;
     };
 }

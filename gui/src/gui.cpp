@@ -31,12 +31,14 @@ void zappy::Gui::run() {
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "Zappy", sf::Style::Fullscreen);
     setIcon(window);
 
+    sf::Clock clock;
+
     while (window.isOpen()) {
         _scenes[_indexScene]->handleEvents(window);
 
         window.clear();
 
-        _scenes[_indexScene]->drawScene(window);
+        _scenes[_indexScene]->drawScene(window, clock);
 
         window.display();
     }
