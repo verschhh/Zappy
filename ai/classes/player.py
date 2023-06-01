@@ -19,6 +19,8 @@ class Player:
     def __init__(self, socket, game):
         self.x = 4
         self.y = 3
+        self.max_x = game.width
+        self.max_y = game.height
         self.level = 1
         self.inventory = {"food": 10, "linemate": 0, "deraumere": 0, "sibur": 0, "mendiane": 0, "phiras": 0, "thystame": 0}
         self.team = ""
