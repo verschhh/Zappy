@@ -7,6 +7,8 @@
 
 from socket import *
 
+SUCESS = 0
+FAIL = 84
 class Orientation:
     NORTH = 0
     EAST = 1
@@ -51,8 +53,69 @@ class Player:
         self.socket.send("Look")
         self.socket.receive()
         buff = self.socket.buffer[2:-2]
+        i = 0
         print(buff)
+        while buff[i] != '\0':
+            if buff[i] == ',' and buff[i + 1] == ' ':
+                buff = buff[:i + 1] + buff[i + 2:]
+                if i >= buff.rfind(','):
+                    break
+            i += 1
         self.vision = buff.split(',')
         for i in range(len(self.vision)):
             self.vision[i] = self.vision[i].split(' ')
-        self.socket.buffer = ""
+        if len(self.vision[-1]) > 1:
+            self.vision[-1] = self.vision[-1][:-1]
+
+    def eject(self):
+        self.socket.send("Eject")
+        self.socket.receive()
+        buff = self.socket.buffer
+        if buff == "ok":
+            return SUCESS
+        else:
+            return FAIL
+
+    def fork(self):
+        self.socket.send("Fork")
+        self.socket.receive()
+
+    def connect_nbr(self):
+        self.socket.send("Connect_nbr")
+        self.socket.receive()
+        buff = self.socket.buffer
+        return int(buff)
+
+    def broadcast(self, message):
+        self.socket.send(f"Broadcast {message}")
+        self.socket.receive()
+
+    def take(self, item):
+        self.socket.send(f"Take {item}")
+        self.socket.receive()
+        buff = self.socket.buffer
+        if buff == "ok":
+            self.inventory[item] += 1
+            return SUCESS
+        else:
+            return FAIL
+
+    def set(self, item):
+        self.socket.send(f"Set {item}")
+        self.socket.receive()
+        buff = self.socket.buffer
+        if buff == "ok":
+            self.inventory[item] -= 1
+            return SUCESS
+        else:
+            return FAIL
+
+    def incantation(self):
+        self.socket.send("Incantation")
+        self.socket.receive()
+        buff = self.socket.buffer
+        if buff == "Elevation underway":
+            self.level += 1
+        else:
+            return FAIL
+
