@@ -83,7 +83,6 @@ def main(av, ac):
             sock.send(message)
             sock.receive()
             print(sock.buffer)
-            sleep(1)
             message = input("-> ")
         sock.close()
 

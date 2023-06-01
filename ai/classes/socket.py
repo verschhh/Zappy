@@ -30,7 +30,13 @@ class Socket:
     def receive(self):
         buff = self._sock.recv(4096)
         if not buff:
-            return None
+            print("Server disconnected")
+            sys.exit(0)
+        elif buff.decode() == "dead\n":
+            print("You died")
+            sys.exit(0)
+        elif buff.decode().split(':')[0] == "eject":
+            print
         self.buffer += buff.decode()
 
     def close(self):
