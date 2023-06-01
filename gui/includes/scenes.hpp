@@ -32,6 +32,8 @@ namespace zappy {
 
             void loadTextures();
             void setupButtons();
+            void handleHoverButtons(sf::Vector2i mousePosition);
+            void handleMouseClicks(sf::RenderWindow &window, sf::Event event, sf::Vector2i mousePosition);
 
         private:
             sf::Texture _backgroundTexture;
