@@ -38,17 +38,48 @@ void zappy::Menu::setupButtons() {
     _quitButtonSprite.setPosition(1060, 700);
 }
 
+void zappy::Menu::handleHoverButtons(sf::Vector2i mousePosition)
+{
+    if (_playButtonSprite.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
+        _playButtonTexture.loadFromFile("gui/assets/buttons/play_button_hovered.png");
+        _playButtonSprite.setTexture(_playButtonTexture);
+    } else {
+        _playButtonTexture.loadFromFile("gui/assets/buttons/play_button_still.png");
+        _playButtonSprite.setTexture(_playButtonTexture);
+    }
+
+    if (_quitButtonSprite.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
+        _quitButtonTexture.loadFromFile("gui/assets/buttons/quit_button_hovered.png");
+        _quitButtonSprite.setTexture(_quitButtonTexture);
+    } else {
+        _quitButtonTexture.loadFromFile("gui/assets/buttons/quit_button_still.png");
+        _quitButtonSprite.setTexture(_quitButtonTexture);
+    }
+}
+
+void zappy::Menu::handleMouseClicks(sf::RenderWindow &window, sf::Event event, sf::Vector2i mousePosition)
+{
+    if (event.type == sf::Event::MouseButtonPressed) {
+        if (_playButtonSprite.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
+            // TODO: increment scene index to switch to game scene
+        }
+        if (_quitButtonSprite.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
+            window.close();
+        }
+    }
+}
+
 void zappy::Menu::handleEvents(sf::RenderWindow& window) {
     sf::Event event;
 
     while (window.pollEvent(event)) {
-        if (event.type == sf::Event::Closed) {
+        if (event.type == sf::Event::Closed
+        || (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)) {
             window.close();
         }
-        // ? Duplicate ? Not if we make an handle events functions for each scene (scene selector)
-        else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
-            window.close();
-        }
+        sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
+        handleMouseClicks(window, event, mousePosition);
+        handleHoverButtons(mousePosition);
     }
 }
 

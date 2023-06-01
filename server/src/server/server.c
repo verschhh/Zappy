@@ -36,13 +36,13 @@ int server(fd_set *readfds, serv_t *serv)
         print_and_exit("ERROR on select");
 
     for (int i = 0; i <= serv->max_sd; i++) {
-        if (!FD_ISSET(i, &tmpfds)) {
+        if (!FD_ISSET(i, &tmpfds)) { // Valgrind HERE
             continue;
         }
         if (i == serv->sockfd) {
             accept_new_client(readfds, serv);
         } else {
-            retrieve_command(i, readfds, serv);
+            receive_client_msg(i, readfds, serv);
         }
     }
 
