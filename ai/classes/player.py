@@ -17,14 +17,15 @@ class Orientation:
 
 class Player:
     def __init__(self, socket):
-        self.x = 0
-        self.y = 0
+        self.x = 4
+        self.y = 3
         self.level = 1
         self.inventory = {"food": 10, "linemate": 0, "deraumere": 0, "sibur": 0, "mendiane": 0, "phiras": 0, "thystame": 0}
         self.team = ""
         self.orientation = Orientation.NORTH
         self.socket = socket
         self.vision = []
+        self.vision_with_pos = []
 
     def forward(self):
         self.socket.send("Forward")
@@ -66,6 +67,11 @@ class Player:
             self.vision[i] = self.vision[i].split(' ')
         if len(self.vision[-1]) > 1:
             self.vision[-1] = self.vision[-1][:-1]
+        self.find_pos_of_look()
+
+    def find_pos_of_look(self):
+        buff = 0
+        self.vision_with_pos = []
 
     def eject(self):
         self.socket.send("Eject")

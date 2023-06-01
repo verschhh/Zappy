@@ -76,6 +76,8 @@ def main(av, ac):
         buff = sock.buffer.split("\n")
         print(f"client number: {buff[0]}")
         print(f"  map size:\nx:{buff[1].split()[0]}\ty:{buff[1].split()[1]}")
+        game = Game(int(buff[1].split()[0]), int(buff[1].split()[1]))
+        game.set_map()
         player.look()
         print(player.vision)
         message = input("-> ")
