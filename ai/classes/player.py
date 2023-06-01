@@ -16,7 +16,7 @@ class Orientation:
     WEST = 3
 
 class Player:
-    def __init__(self, socket):
+    def __init__(self, socket, game):
         self.x = 4
         self.y = 3
         self.level = 1
