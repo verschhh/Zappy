@@ -6,7 +6,6 @@
 ##
 
 from socket import *
-from game import *
 
 SUCESS = 0
 FAIL = 84
