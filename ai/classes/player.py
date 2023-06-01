@@ -6,6 +6,7 @@
 ##
 
 from socket import *
+from math import ceil
 
 SUCESS = 0
 FAIL = 84
@@ -19,12 +20,12 @@ class Player:
     def __init__(self, socket, game):
         self.x = 4
         self.y = 3
-        self.max_x = game.width
-        self.max_y = game.height
+        self.max_x = game.map_size_x - 1
+        self.max_y = game.map_size_y - 1
         self.level = 1
         self.inventory = {"food": 10, "linemate": 0, "deraumere": 0, "sibur": 0, "mendiane": 0, "phiras": 0, "thystame": 0}
         self.team = ""
-        self.orientation = Orientation.NORTH
+        self.orientation = Orientation.EAST
         self.socket = socket
         self.vision = []
         self.vision_with_pos = []
@@ -78,10 +79,37 @@ class Player:
         if len(self.vision[-1]) > 1:
             self.vision[-1] = self.vision[-1][:-1]
         self.find_pos_of_look()
+        return self.vision_with_pos
 
     def find_pos_of_look(self):
-        buff = 0
         self.vision_with_pos = []
+        floor = 0
+        pos_vision = 0
+
+        for c,i in enumerate(range(1, 1+3*self.level, 2)):
+            for x in range(i):
+                if x + 1 < i/2:
+                    self.set_object_pos(-c+x, floor, pos_vision)
+                elif x + 1 == ceil(i/2):
+                    self.set_object_pos(0, floor, pos_vision)
+                else:
+                    self.set_object_pos(abs(c-x), floor, pos_vision)
+                pos_vision += 1
+            floor += 1
+
+        print(self.vision_with_pos)
+
+    def set_object_pos(self, move, floor, i):
+        if self.orientation == Orientation.NORTH:
+            self.vision_with_pos.append([self.x + move, self.y - floor, self.vision[i]])
+        elif self.orientation == Orientation.EAST:
+            self.vision_with_pos.append([self.x + floor, self.y + move, self.vision[i]])
+        elif self.orientation == Orientation.SOUTH:
+            self.vision_with_pos.append([self.x - move, self.y + floor, self.vision[i]])
+        elif self.orientation == Orientation.WEST:
+            self.vision_with_pos.append([self.x - floor, self.y - move, self.vision[i]])
+        else:
+            print("Error: Orientation not found")
 
     def eject(self):
         self.socket.send("Eject")

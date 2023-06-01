@@ -79,8 +79,10 @@ def main(av, ac):
         game = Game(int(buff[1].split()[0]), int(buff[1].split()[1]))
         player = Player(sock, game)
         game.set_map()
-        player.look()
+        game.update_map(player.look())
         print(player.vision)
+        for i in game.map:
+            print(i)
         message = input("-> ")
         while message != "quit":
             sock.send(message)
