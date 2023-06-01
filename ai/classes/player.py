@@ -6,6 +6,7 @@
 ##
 
 from socket import *
+from game import *
 
 SUCESS = 0
 FAIL = 84
@@ -16,9 +17,11 @@ class Orientation:
     WEST = 3
 
 class Player:
-    def __init__(self, socket):
+    def __init__(self, socket, game):
         self.x = 0
         self.y = 0
+        self.max_x = game.map_size_x
+        self.max_y = game.map_size_y
         self.level = 1
         self.inventory = {"food": 10, "linemate": 0, "deraumere": 0, "sibur": 0, "mendiane": 0, "phiras": 0, "thystame": 0}
         self.team = ""
@@ -36,6 +39,14 @@ class Player:
             self.y += 1
         elif self.orientation == Orientation.WEST:
             self.x -= 1
+        if self.x < 0:
+            self.x = self.max_x - 1
+        elif self.x >= self.max_x:
+            self.x = 0
+        if self.y < 0:
+            self.y = self.max_y - 1
+        elif self.y >= self.max_y:
+            self.y = 0
 
     def right(self):
         self.socket.send("Right")
