@@ -114,4 +114,7 @@ void usage(void);
 void print_and_exit(char *str);
 void usage(void);
 
+//* Commands
+int map_command(int sockfd, serv_t *serv);
+
 #endif
