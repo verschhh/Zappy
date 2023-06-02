@@ -5,7 +5,6 @@
 ## player
 ##
 
-from socket import *
 from math import ceil
 import re
 
