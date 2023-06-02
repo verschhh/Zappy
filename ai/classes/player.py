@@ -51,7 +51,6 @@ class Player:
 
         return wrapped_dx + wrapped_dy
 
-    # * In Game Commands
     def forward(self):
         self.socket.send("Forward")
         self.socket.receive()

@@ -83,7 +83,6 @@ def main(av, ac):
         print_map(game)
         message = input("-> ")
         while message != "quit":
-            print(sock.buffer)
             if message == "dead\n":
                 print("You died")
                 return 0
