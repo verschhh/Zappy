@@ -19,14 +19,14 @@ class Orientation:
 
 class Player:
     def __init__(self, socket, game):
-        self.x = 2
+        self.x = 0
         self.y = 0
         self.max_x = game.map_size_x - 1
         self.max_y = game.map_size_y - 1
         self.level = 1
         self.inventory = {"food": 10, "linemate": 0, "deraumere": 0, "sibur": 0, "mendiane": 0, "phiras": 0, "thystame": 0}
         self.team = ""
-        self.orientation = Orientation.NORTH
+        self.orientation = Orientation.WEST
         self.socket = socket
         self.vision = []
         self.vision_with_pos = []
@@ -43,6 +43,7 @@ class Player:
     # * In Game Commands
     def forward(self):
         self.socket.send("Forward")
+        self.socket.receive()
         if self.orientation == Orientation.NORTH:
             self.y -= 1
         elif self.orientation == Orientation.EAST:
@@ -62,12 +63,14 @@ class Player:
 
     def right(self):
         self.socket.send("Right")
+        self.socket.receive()
         self.orientation += 1
         if self.orientation > Orientation.WEST:
             self.orientation = Orientation.NORTH
 
     def left(self):
         self.socket.send("Left")
+        self.socket.receive()
         self.orientation -= 1
         if self.orientation < Orientation.NORTH:
             self.orientation = Orientation.WEST
@@ -112,33 +115,46 @@ class Player:
 
     def set_object_pos(self, move, floor, i):
         if self.orientation == Orientation.NORTH:
-            print(self.y, floor)
             if self.x + move > self.max_x:
-                move = -self.x - move + 1
+                move = -self.max_x - move + 1
             elif self.x + move < 0:
                 move = self.max_x - move - 1
-            if self.y - floor < 0:
-                print("passe")
-                floor = -self.y - floor - 1
-                print(floor)
 
+            if self.y - floor < 0:
+                floor = -self.max_y - floor + 1
             self.vision_with_pos.append([self.x + move, self.y - floor, self.vision[i]])
 
-
-
-
-
-        # Todo : Handling error for out of map of East , South and West
-
         elif self.orientation == Orientation.EAST:
+            if self.y + move > self.max_y:
+                move = -self.max_y - move + 1
+            elif self.y + move < 0:
+                move = self.max_y - move - 1
 
+            if self.x + floor > self.max_x:
+                floor = -self.max_x - floor + 1
             self.vision_with_pos.append([self.x + floor, self.y + move, self.vision[i]])
+
         elif self.orientation == Orientation.SOUTH:
+            if self.x - move > self.max_x:
+                move = self.max_x - move - 1
+            elif self.x - move < 0:
+                move = -self.max_x + move - 1
+
+            if self.y + floor > self.max_y:
+                floor = -self.max_y + floor - 1
+
             self.vision_with_pos.append([self.x - move, self.y + floor, self.vision[i]])
+
         elif self.orientation == Orientation.WEST:
+            if self.y - move > self.max_y:
+                move = self.max_y + move + 1
+            elif self.y - move < 0:
+                move = -self.max_y + move - 1
+
+            if self.x - floor < 0:
+                floor = -self.max_x + floor - 1
+
             self.vision_with_pos.append([self.x - floor, self.y - move, self.vision[i]])
-        else:
-            print("Error: Orientation not found")
 
     def eject(self):
         self.socket.send("Eject")
