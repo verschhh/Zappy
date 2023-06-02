@@ -62,13 +62,17 @@ typedef struct inv_s {
     int thystame;
 } inv_t;
 
-typedef struct client_s {
-    char *team_name;
+typedef struct player_s {
     int x;
     int y;
     int level;
     inv_t *inventory;
     int orientation;
+    struct player_s *next;
+} player_t;
+
+typedef struct client_s {
+    char *team_name;
     int sockfd;
     struct sockaddr_in addr;
     socklen_t addrlen;
