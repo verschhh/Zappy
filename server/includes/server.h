@@ -77,6 +77,7 @@ typedef struct client_s {
     struct sockaddr_in addr;
     socklen_t addrlen;
     int slot;
+    struct player_s *player;
     struct client_s *next;
 } client_t;
 
