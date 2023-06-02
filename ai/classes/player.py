@@ -19,14 +19,14 @@ class Orientation:
 
 class Player:
     def __init__(self, socket, game):
-        self.x = 0
-        self.y = 0
+        self.x = 5
+        self.y = 5
         self.max_x = game.map_size_x - 1
         self.max_y = game.map_size_y - 1
         self.level = 1
         self.inventory = {"food": 10, "linemate": 0, "deraumere": 0, "sibur": 0, "mendiane": 0, "phiras": 0, "thystame": 0}
         self.team = ""
-        self.orientation = Orientation.WEST
+        self.orientation = Orientation.SOUTH
         self.socket = socket
         self.vision = []
         self.vision_with_pos = []
