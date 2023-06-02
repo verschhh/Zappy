@@ -70,22 +70,3 @@ void send_x_y_ai(int sockfd, serv_t *serv, char *number)
     write(sockfd, result, strlen(result));
     free(result);
 }
-
-// void get_group_name(client_t *client, serv_t *serv, fd_set *readfds)
-// {
-//     int next = 0;
-//     char buffer[1024] = {0};
-//     int bytes_read = recv(serv->sockfd, buffer, sizeof(buffer), 0);
-
-//     if (bytes_read <= 0) {
-//         printf("Here\n");
-//         close(client->sockfd);
-//         FD_CLR(client->sockfd, readfds);
-//     } else {
-//         next = check_name_team(serv, buffer);
-//         if (next != 0)
-//             send_x_y_ai(client->sockfd, serv, send_nb_slot_ai(next));
-//         else
-//             write(client->sockfd, "ko", 3);
-//     }
-// }

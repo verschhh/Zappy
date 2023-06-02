@@ -26,3 +26,22 @@ void usage(void)
     printf("\tfreq\tis the reciprocal of time unit ");
     printf("for execution of actions\n");
 }
+
+char** splitStringAtSpaces(const char* input, int* count)
+{
+    const char* delimiter = " ";
+    char* copy = strdup(input);
+    char* token = strtok(copy, delimiter);
+    char** result = NULL;
+    int i = 0;
+
+    while (token != NULL) {
+        result = realloc(result, (i + 1) * sizeof(char*));
+        result[i] = strdup(token);
+        i++;
+        token = strtok(NULL, delimiter);
+    }
+    *count = i;
+    free(copy);
+    return result;
+}
