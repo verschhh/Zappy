@@ -76,27 +76,41 @@ def main(av, ac):
         buff = sock.buffer.split("\n")
         print(f"client number: {buff[0]}")
         print(f"  map size:\nx:{buff[1].split()[0]}\ty:{buff[1].split()[1]}")
-        # game = Game(int(buff[1].split()[0]), int(buff[1].split()[1]))
-        game = Game(5, 5)
+        game = Game(int(buff[1].split()[0]), int(buff[1].split()[1]))
         player = Player(sock, game)
         game.set_map()
         game.update_map(player.look())
         print(player.vision)
-        for i in game.map:
-            for z in i:
-                print(z["food"],end="\t")
-            print("\n")
+        print_map(game)
         message = input("-> ")
         while message != "quit":
-            sock.send(message)
-            sock.receive()
             print(sock.buffer)
+            if message == "dead\n":
+                print("You died")
+                return 0
+            elif message == "Look":
+                game.update_map(player.look())
+                print_map(game)
+            elif message == "Forward":
+                player.forward()
+            elif message == "Right":
+                player.right()
+            elif message == "Left":
+                player.left()
+            elif message == "Take food":
+                player.take("food")
             message = input("-> ")
         sock.close()
 
     else:
         print_usage()
         return 84
+
+def print_map(game):
+    for i in game.map:
+        for z in i:
+            print(z["food"],end="\t")
+        print("\n")
 
 if __name__ == "__main__":
     if main(sys.argv, len(sys.argv)) == 84:
