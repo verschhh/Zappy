@@ -24,6 +24,10 @@
 
 static const int MAX_NAMES = 10;
 
+enum nb_command {
+    NB_CMD = 1
+};
+
 enum enum_slot {
     FULL,
     NOT_FULL,
@@ -86,7 +90,7 @@ typedef struct serv_s {
 
 typedef struct cmd_s {
     char *command;
-    void(*pointer)(serv_t *);
+    int(*pointer)(int, serv_t *);
 } cmd_t;
 
 //* Arguments parsing

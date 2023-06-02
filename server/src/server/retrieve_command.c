@@ -7,7 +7,8 @@
 
 #include "../includes/server.h"
 
-const cmd_t cmd_list[1] = {
+const cmd_t cmd_list[NB_CMD] = {
+    {"msz", &map_command}
 };
 
 int check_slot_team(client_t *temp)
@@ -36,7 +37,6 @@ int check_name_team(serv_t *serv, char *buffer)
     strncpy(copy, buffer, strlen(buffer) - 1);
     copy[strlen(buffer)] = 0;
     if (temp == NULL) {
-        free(temp);
         return 0;
     }
     while (temp->next != NULL) {
@@ -47,7 +47,6 @@ int check_name_team(serv_t *serv, char *buffer)
             return slot;
         temp = temp->next;
     }
-    free(temp);
     return 0;
 }
 
@@ -75,18 +74,54 @@ void send_x_y_ai(int sockfd, serv_t *serv, char *number)
     free(result);
 }
 
+int parse_command(char *buffer)
+{
+    char *cmd = malloc(sizeof(char) * strlen(buffer) + 1);
+    int index = 0;
+
+    while (buffer[index] != ' ' && buffer[index] != '\n') {
+        cmd[index] = buffer[index];
+        index++;
+    }
+    cmd[index] = '\0';
+    printf("cmd = %s\n", cmd);
+    printf("First\n");
+    for (int i = 0; i != NB_CMD; i++) {
+        printf("HELLO\n");
+        printf("%s = ZIZI\n", cmd);
+        printf("cmd = %s and cmd_list = %s\n", cmd, cmd_list[i].command);
+        if (strcmp("msz", cmd_list[i].command) == 0)
+            return i;
+    }
+    return -1;
+}
+
+int lauch_cmd(int cmd, int sockfd, serv_t *serv)
+{
+    if (cmd_list[cmd].pointer(sockfd, serv) == 84)
+        return 84;
+    return 0;
+}
+
 int receive_client_msg(int sockfd, fd_set *readfds, serv_t *serv)
 {
     char buffer[1024] = {0};
     int next = 0;
+    int cmd = 0;
     int bytes_read = recv(sockfd, buffer, sizeof(buffer), 0);
     if (bytes_read <= 0) {
         close(sockfd);
         FD_CLR(sockfd, readfds);
     } else {
-        next = check_name_team(serv, buffer);
-        if (next != 0)
-            send_x_y_ai(sockfd, serv, send_nb_slot_ai(next));
+        cmd = parse_command(buffer);
+        if (cmd == -1) {
+            printf("Invalid cmd\n");
+            return 0;
+        }
+        lauch_cmd(cmd, sockfd, serv);
+        // next = check_name_team(serv, buffer);
+        // if (next != 0)
+        //     send_x_y_ai(sockfd, serv, send_nb_slot_ai(next));
     }
     return 0;
 }
