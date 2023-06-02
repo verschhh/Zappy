@@ -111,7 +111,11 @@ client_t *pop_client(client_t *client);
 //* Server
 int start_server(args_t *args);
 int receive_client_msg(int sockfd, fd_set *readfds, serv_t *serv);
-void accept_new_client(fd_set *readfds, serv_t *serv);
+client_t *accept_new_client(fd_set *readfds, serv_t *serv);
+// void get_group_name(client_t *client, serv_t *serv, fd_set *readfds);
+int check_name_team(serv_t *serv, char *buffer);
+void send_x_y_ai(int sockfd, serv_t *serv, char *number);
+char *send_nb_slot_ai(int slot);
 
 //* Tools
 void usage(void);

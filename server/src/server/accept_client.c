@@ -7,18 +7,11 @@
 
 #include "../includes/server.h"
 
-void get_group_name()
-{
-    // next = check_name_team(serv, buffer);
-    // if (next != 0)
-    //     send_x_y_ai(sockfd, serv, send_nb_slot_ai(next));
-}
-
-void accept_new_client(fd_set *readfds, serv_t *serv)
+client_t *accept_new_client(fd_set *readfds, serv_t *serv)
 {
     client_t *client = client_ctor(serv->clients);
     if (client == NULL)
-        return;
+        return NULL;
     client->sockfd = accept(serv->sockfd,
         (struct sockaddr *)&client->addr, &client->addrlen);
     inet_ntoa(client->addr.sin_addr);
@@ -30,5 +23,5 @@ void accept_new_client(fd_set *readfds, serv_t *serv)
     if (client->sockfd > serv->max_sd)
         serv->max_sd = client->sockfd;
     write(client->sockfd, "Welcome, you are now connected", 31);
-    get_group_name();
+    return client;
 }
