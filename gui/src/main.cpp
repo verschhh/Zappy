@@ -30,7 +30,7 @@ int guiStart(int port, std::string machine)
 int guiSetup(int ac, char **av)
 {
     int port = 0;
-    std::string machine = "localhost";
+    std::string machine = "127.0.0.1";
 
     int option;
     while ((option = getopt(ac, av, "p:h:")) != -1) {
