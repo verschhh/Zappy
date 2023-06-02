@@ -19,7 +19,7 @@ class Orientation:
     WEST = 3
 
 class Priority:
-    NONE = 0
+    EXPLORE = 0
     FOOD = 1
     LINEMATE = 2
     DERAUMERE = 3
@@ -213,13 +213,15 @@ class Player:
             if item in self.inventory:
                 self.inventory[item] = int(quantity)
 
+    def update_priority(self):
+        if (self.inventory["food"] < 10):
+            self.priority = Priority.FOOD
+            return
+        if self.priority != Priority.EXPLORE:
+            return
+
     def pick_move(self):
+        move = ""
         self.update_inventory()
-        food_priority = self.get_food_priority()
-        print (f"food: {self.inventory['food']} food priority: {food_priority}")
-    
-    def get_food_priority(self):
-        if self.inventory["food"] < 10:
-            return 1.0
-        else:
-            return 10.0 / self.inventory["food"]
+        self.update_priority()
+        return move
