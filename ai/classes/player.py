@@ -10,11 +10,22 @@ import re
 
 SUCESS = 0
 FAIL = 84
+
 class Orientation:
     NORTH = 0
     EAST = 1
     SOUTH = 2
     WEST = 3
+
+class Priority:
+    NONE = 0
+    FOOD = 1
+    LINEMATE = 2
+    DERAUMERE = 3
+    SIBUR = 4
+    MENDIANE = 5
+    PHIRAS = 6
+    THYSTAME = 7
 
 class Player:
     def __init__(self, socket, game):
