@@ -5,7 +5,8 @@
 ## player
 ##
 
-from socket import *
+import socket
+import re
 
 SUCESS = 0
 FAIL = 84
@@ -144,4 +145,24 @@ class Player:
             self.level += 1
         else:
             return FAIL
+    
+    # * AI Strategy
+    def update_inventory(self):
+        self.socket.send("Inventory")
+        self.socket.receive()
+        inventory_regex = r"(\w+)\s+(\d+)"
+        matches = re.findall(inventory_regex, self.socket.buffer)
+        for item, quantity in matches:
+            if item in self.inventory:
+                self.inventory[item] = int(quantity)
 
+    def pick_move(self):
+        self.update_inventory()
+        food_priority = self.get_food_priority()
+        print (f"food: {self.inventory['food']} food priority: {food_priority}")
+    
+    def get_food_priority(self):
+        if self.inventory["food"] < 10:
+            return 1.0
+        else:
+            return 10.0 / self.inventory["food"]
