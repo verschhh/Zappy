@@ -8,7 +8,7 @@
 #include "../includes/server.h"
 
 const cmd_t cmd_list[NB_CMD] = {
-    {"msz", &map_command}
+    {"msz\n", &map_command}
 };
 
 int check_slot_team(client_t *temp)
@@ -79,18 +79,16 @@ int parse_command(char *buffer)
     char *cmd = malloc(sizeof(char) * strlen(buffer) + 1);
     int index = 0;
 
-    while (buffer[index] != ' ' && buffer[index] != '\n') {
+    while (buffer[index] != ' ' && buffer[index] != '\0') {
         cmd[index] = buffer[index];
         index++;
     }
-    cmd[index] = '\0';
-    printf("cmd = %s\n", cmd);
-    printf("First\n");
+    cmd[index - 2] = '\n';
+    cmd[index - 1] = '\0';
     for (int i = 0; i != NB_CMD; i++) {
-        printf("HELLO\n");
-        printf("%s = ZIZI\n", cmd);
-        printf("cmd = %s and cmd_list = %s\n", cmd, cmd_list[i].command);
-        if (strcmp("msz", cmd_list[i].command) == 0)
+        int test = strlen(cmd);
+        int pre = strlen(cmd_list[i].command);
+        if (strcmp(cmd, cmd_list[i].command) == 0)
             return i;
     }
     return -1;
