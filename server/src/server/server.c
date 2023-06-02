@@ -9,6 +9,7 @@
 
 void crtld_handler(int signal)
 {
+    (void)signal;
     exit(0);
 }
 
