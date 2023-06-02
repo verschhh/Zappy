@@ -16,9 +16,8 @@ void usage(void)
 
 int guiStart(int port, std::string machine)
 {
-    zappy::Gui gui(port, machine);
-
     try {
+        zappy::Gui gui(port, machine);
         gui.run();
     } catch (zappy::Gui::GuiException &e) {
         std::cerr << e.what() << std::endl;

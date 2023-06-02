@@ -7,7 +7,9 @@
 
 #include "../includes/scenes.hpp"
 
-zappy::Menu::Menu() {
+zappy::Menu::Menu()
+{
+    setIndexScene(0);
     loadTextures();
 }
 
@@ -53,7 +55,7 @@ void zappy::Menu::handleMouseClicks(sf::RenderWindow &window, sf::Event event, s
 {
     if (event.type == sf::Event::MouseButtonPressed) {
         if (_playButtonSprite.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
-            // TODO: increment scene index to switch to game scene
+            setIndexScene(1);
         }
         if (_quitButtonSprite.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
             window.close();

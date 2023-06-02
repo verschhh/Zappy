@@ -26,6 +26,9 @@ namespace zappy {
             std::string getMachine(void) {
                 return (_machine);
             }
+            int getIndexScene(void) {
+                return (_indexScene);
+            }
 
             //* Setters
             void setPort(int port) {
@@ -33,6 +36,9 @@ namespace zappy {
             }
             void setMachine(std::string machine) {
                 _machine = machine;
+            }
+            void setIndexScene(int indexScene) {
+                _indexScene = indexScene;
             }
 
             //* Exception

@@ -30,11 +30,11 @@ struct termios init_signal(void)
 int server(fd_set *readfds, serv_t *serv)
 {
     fd_set tmpfds;
-    tmpfds = *readfds;
 
+    FD_ZERO(&tmpfds);
+    tmpfds = *readfds;
     if (select(serv->max_sd + 1, &tmpfds, NULL, NULL, NULL) < 0)
         print_and_exit("ERROR on select");
-
     for (int i = 0; i <= serv->max_sd; i++) {
         if (!FD_ISSET(i, &tmpfds)) { // Valgrind HERE
             continue;

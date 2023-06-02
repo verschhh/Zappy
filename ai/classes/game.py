@@ -24,4 +24,3 @@ class Game:
     # def update_map(self, player):
     #     for y, i in enumerate(self.map):
     #         for  x, _ in enumerate(i):
-                

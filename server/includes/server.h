@@ -24,6 +24,16 @@
 
 static const int MAX_NAMES = 10;
 
+enum nb_command {
+    NB_CMD = 1
+};
+
+enum enum_slot {
+    FULL,
+    NOT_FULL,
+    CONTINUE = 100
+};
+
 enum orientation {
     NORTH,
     EAST,
@@ -63,9 +73,12 @@ typedef struct client_s {
     struct sockaddr_in addr;
     socklen_t addrlen;
     struct client_s *next;
+    int slot;
 } client_t;
 
 typedef struct serv_s {
+    int map_x;
+    int map_y;
     int sockfd;
     int portno;
     int max_sd;
@@ -77,7 +90,7 @@ typedef struct serv_s {
 
 typedef struct cmd_s {
     char *command;
-    void(*pointer)(serv_t *);
+    int(*pointer)(int, serv_t *);
 } cmd_t;
 
 //* Arguments parsing
@@ -104,5 +117,8 @@ void accept_new_client(fd_set *readfds, serv_t *serv);
 void usage(void);
 void print_and_exit(char *str);
 void usage(void);
+
+//* Commands
+int map_command(int sockfd, serv_t *serv);
 
 #endif
