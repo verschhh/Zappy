@@ -17,13 +17,17 @@ zappy::InGame::InGame(int mapWidth, int mapHeight)
 
 zappy::InGame::~InGame() {}
 
+static int randomNumber(int min, int max)
+{
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dist(min, max);
+    int randomNumber = dist(gen);
+    return (randomNumber);
+}
+
 void zappy::InGame::createMap()
 {
-    // TODO: idea -> create mutliple grid textures and choose one randomly
-    if (!_gridTexture.loadFromFile("gui/assets/grid.png")) {
-        throw SceneException("InGame error: cannot load grid texture");
-    }
-
     int spriteSize = 60;
     int gap = spriteSize / 5;
 
@@ -46,9 +50,10 @@ void zappy::InGame::createMap()
     for (int i = 0; i < _mapWidth; i++) {
         _map[i].resize(_mapHeight);
         for (int j = 0; j < _mapHeight; j++) {
+
             setSpriteProperties(
                 _map[i][j],
-                _gridTexture,
+                _gridTextures[randomNumber(0, 6)],
                 sf::Vector2f(scaleFactor, scaleFactor),
                 sf::Vector2f(startX + i * (scaledSpriteSize + scaledGap), startY + j * (scaledSpriteSize + scaledGap))
             );
@@ -59,6 +64,12 @@ void zappy::InGame::createMap()
 void zappy::InGame::loadTextures() {
     _backgroundTexture.loadFromFile("gui/assets/images/test.jpg");
     setSpriteProperties(_backgroundSprite, _backgroundTexture, sf::Vector2f(1, 1), sf::Vector2f(960, 540));
+
+    _gridTextures.resize(7);
+    for (int i = 0; i < 7; i++) {
+        std::string texturePath = "gui/assets/map/grid" + std::to_string(i + 1) + ".png";
+        _gridTextures[i].loadFromFile(texturePath);
+    }
 }
 
 void zappy::InGame::handleEvents(sf::RenderWindow& window) {

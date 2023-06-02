@@ -9,6 +9,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <cmath>
+#include <random>
 
 static const int WINDOW_WIDTH = 1920;
 static const int WINDOW_HEIGHT = 1080;
@@ -103,7 +104,7 @@ namespace zappy {
         private:
             int _mapWidth;
             int _mapHeight;
-            sf::Texture _gridTexture;
+            std::vector<sf::Texture> _gridTextures;
             std::vector<std::vector<sf::Sprite>> _map;
 
             sf::Texture _backgroundTexture;
