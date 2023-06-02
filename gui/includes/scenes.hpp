@@ -10,6 +10,9 @@
 #include <SFML/Graphics.hpp>
 #include <cmath>
 
+static const int WINDOW_WIDTH = 1920;
+static const int WINDOW_HEIGHT = 1080;
+
 namespace zappy {
     class IScene {
         public:

@@ -24,12 +24,34 @@ void zappy::InGame::createMap()
         throw SceneException("InGame error: cannot load grid texture");
     }
 
+    int spriteSize = 60;
+    int gap = spriteSize / 5;
+
+    int totalWidth = _mapWidth * (spriteSize + gap) + spriteSize * 4;
+    int totalHeight = _mapHeight * (spriteSize + gap) + spriteSize * 4;
+
+    // TODO: store scaleFactor for further use (all sprites)
+    float scaleFactor = std::min((WINDOW_WIDTH / static_cast<float>(totalWidth)), WINDOW_HEIGHT / static_cast<float>(totalHeight));
+
+    int scaledSpriteSize = static_cast<int>(spriteSize * scaleFactor);
+    int scaledGap = static_cast<int>(gap * scaleFactor);
+
+    int scaledTotalWidth = _mapWidth * (scaledSpriteSize + scaledGap) - scaledGap;
+    int scaledTotalHeight = _mapHeight * (scaledSpriteSize + scaledGap) - scaledGap;
+
+    int startX = (WINDOW_WIDTH - scaledTotalWidth) / 2;
+    int startY = (WINDOW_HEIGHT - scaledTotalHeight) / 2;
+
     _map.resize(_mapWidth);
     for (int i = 0; i < _mapWidth; i++) {
         _map[i].resize(_mapHeight);
         for (int j = 0; j < _mapHeight; j++) {
-            // TODO: set a scale factor accoring to grid size (for all sprites)
-            setSpriteProperties(_map[i][j], _gridTexture, sf::Vector2f(1.5, 1.5), sf::Vector2f(i * 60 * 1.6, j * 60 * 1.6));
+            setSpriteProperties(
+                _map[i][j],
+                _gridTexture,
+                sf::Vector2f(scaleFactor, scaleFactor),
+                sf::Vector2f(startX + i * (scaledSpriteSize + scaledGap), startY + j * (scaledSpriteSize + scaledGap))
+            );
         }
     }
 }
