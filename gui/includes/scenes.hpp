@@ -10,6 +10,9 @@
 #include <SFML/Graphics.hpp>
 #include <cmath>
 
+static const int WINDOW_WIDTH = 1920;
+static const int WINDOW_HEIGHT = 1080;
+
 namespace zappy {
     class IScene {
         public:
@@ -41,6 +44,16 @@ namespace zappy {
                 sf::FloatRect spriteBounds = sprite.getLocalBounds();
                 sprite.setOrigin(spriteBounds.width / 2, spriteBounds.height / 2);
             }
+
+            class SceneException : public std::exception {
+                public:
+                    SceneException(const std::string &message) throw()
+                    : _message(message) {};
+                    ~SceneException() throw() {};
+                    const char *what() const throw() { return (_message.c_str()); };
+                private:
+                    std::string _message;
+            };
 
             private:
                 int _indexScene;
@@ -78,15 +91,21 @@ namespace zappy {
 
     class InGame : public AScene {
         public:
-            InGame();
+            InGame(int mapWidth, int mapHeight);
             ~InGame();
 
             void handleEvents(sf::RenderWindow& window);
             void drawScene(sf::RenderWindow& window, sf::Clock clock);
 
             void loadTextures();
+            void createMap();
 
         private:
+            int _mapWidth;
+            int _mapHeight;
+            sf::Texture _gridTexture;
+            std::vector<std::vector<sf::Sprite>> _map;
+
             sf::Texture _backgroundTexture;
             sf::Sprite _backgroundSprite;
     };
