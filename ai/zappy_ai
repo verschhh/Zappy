@@ -76,13 +76,16 @@ def main(av, ac):
         buff = sock.buffer.split("\n")
         print(f"client number: {buff[0]}")
         print(f"  map size:\nx:{buff[1].split()[0]}\ty:{buff[1].split()[1]}")
-        game = Game(int(buff[1].split()[0]), int(buff[1].split()[1]))
+        # game = Game(int(buff[1].split()[0]), int(buff[1].split()[1]))
+        game = Game(3, 3)
         player = Player(sock, game)
         game.set_map()
         game.update_map(player.look())
         print(player.vision)
         for i in game.map:
-            print(i)
+            for z in i:
+                print(z["food"],end=" ")
+            print()
         message = input("-> ")
         while message != "quit":
             sock.send(message)

@@ -18,14 +18,14 @@ class Orientation:
 
 class Player:
     def __init__(self, socket, game):
-        self.x = 4
-        self.y = 3
+        self.x = 2
+        self.y = 0
         self.max_x = game.map_size_x - 1
         self.max_y = game.map_size_y - 1
         self.level = 1
         self.inventory = {"food": 10, "linemate": 0, "deraumere": 0, "sibur": 0, "mendiane": 0, "phiras": 0, "thystame": 0}
         self.team = ""
-        self.orientation = Orientation.EAST
+        self.orientation = Orientation.NORTH
         self.socket = socket
         self.vision = []
         self.vision_with_pos = []
@@ -101,8 +101,26 @@ class Player:
 
     def set_object_pos(self, move, floor, i):
         if self.orientation == Orientation.NORTH:
+            print(self.y, floor)
+            if self.x + move > self.max_x:
+                move = -self.x - move + 1
+            elif self.x + move < 0:
+                move = self.max_x - move - 1
+            if self.y - floor < 0:
+                print("passe")
+                floor = -self.y - floor - 1
+                print(floor)
+
             self.vision_with_pos.append([self.x + move, self.y - floor, self.vision[i]])
+
+
+
+
+
+        # Todo : Handling error for out of map of East , South and West
+
         elif self.orientation == Orientation.EAST:
+
             self.vision_with_pos.append([self.x + floor, self.y + move, self.vision[i]])
         elif self.orientation == Orientation.SOUTH:
             self.vision_with_pos.append([self.x - move, self.y + floor, self.vision[i]])
