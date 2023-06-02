@@ -91,7 +91,7 @@ class Player:
         self.socket.receive()
         buff = self.socket.buffer[2:-2]
         i = 0
-        print(buff)
+
         while buff[i] != '\0':
             if buff[i] == ',' and buff[i + 1] == ' ':
                 buff = buff[:i + 1] + buff[i + 2:]
@@ -121,8 +121,6 @@ class Player:
                     self.set_object_pos(abs(c-x), floor, pos_vision)
                 pos_vision += 1
             floor += 1
-
-        print(self.vision_with_pos)
 
     def set_object_pos(self, move, floor, i):
         if self.orientation == Orientation.NORTH:
