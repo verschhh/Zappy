@@ -17,7 +17,7 @@ class Game:
         for i in range(self.map_size_y):
             self.map.append([])
             for i in range(self.map_size_x):
-                self.map[-1].append({"food": 0, "linemate": 0, "deraumere": 0, "sibur": 0, "mendiane": 0, "phiras": 0, "thystame": 0})
+                self.map[-1].append({"player": 0, "food": 0,"linemate": 0, "deraumere": 0, "sibur": 0, "mendiane": 0, "phiras": 0, "thystame": 0})
 
 
     def update_map(self, list_items_to_update):
@@ -26,7 +26,7 @@ class Game:
             for  x, _ in enumerate(i):
                 for item in list_items_to_update:
                     if item[0] == x and item[1] == y:
-                        self.map[y][x] = {"food": 0, "linemate": 0, "deraumere": 0, "sibur": 0, "mendiane": 0, "phiras": 0, "thystame": 0}
+                        self.map[y][x] = {"player": 0, "food": 0, "linemate": 0, "deraumere": 0, "sibur": 0, "mendiane": 0, "phiras": 0, "thystame": 0}
                         for item2 in item[2]:
                             if item2 in self.map[y][x]:
                                 self.map[y][x][item2] += 1
