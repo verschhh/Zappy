@@ -9,7 +9,8 @@
 
 const cmd_t cmd_list[NB_CMD] = {
     {"msz\n", &map_size},
-    {"bct", &tile_content}
+    {"bct", &tile_content},
+    {"mct\n", &map_content}
 };
 
 int parse_command(char *buffer)

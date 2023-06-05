@@ -146,5 +146,6 @@ char** splitStringAtSpaces(const char* input, int* count);
 //* Commands
 int map_size(int sockfd, serv_t *serv, char *buffer);
 int tile_content(int sockef, serv_t *serv, char *buffer);
+int map_content(int sockf, serv_t *serv, char *buffer);
 
 #endif
