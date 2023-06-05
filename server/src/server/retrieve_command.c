@@ -27,7 +27,6 @@ int parse_command(char *buffer)
     }
     cmd[index] = '\0';
     for (int i = 0; i != NB_CMD; i++) {
-        printf("len buffer = %d\nlen cmd_list = %d", strlen(buffer), strlen(cmd_list[0].command));
         if (strstr(cmd, cmd_list[i].command) != NULL)
             return i;
     }
