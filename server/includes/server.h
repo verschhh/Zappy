@@ -25,7 +25,7 @@
 static const int MAX_NAMES = 10;
 
 enum nb_command {
-    NB_CMD = 6
+    NB_CMD = 8
 };
 
 enum enum_slot {
@@ -157,5 +157,6 @@ int get_all_names_group(int sockfd, serv_t *serv, char *buffer);
 int send_unit_time(int sockfd, serv_t *serv, char *buffer);
 int send_player_position(int sockfd, serv_t *serv, char *buffer);
 int send_player_level(int sockfd, serv_t *serv, char *buffer);
+int send_player_inventory(int sockfd, serv_t *serv, char *buffer);
 
 #endif

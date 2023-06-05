@@ -36,9 +36,10 @@ int send_player_level(int sockfd, serv_t *serv, char *buffer)
     char *msg = NULL;
     int len = 0;
 
+    len = snprintf(msg, 0, "plv %d %d\n", tmp->id, tmp->level);
     msg = malloc(sizeof(char) * (len + 1));
     msg[len] = '\0';
-    len = snprintf(msg, 0, "plv %d %d\n", tmp->id, tmp->level);
+    snprintf(msg, len, "plv %d %d\n", tmp->id, tmp->level);
     if (write(sockfd, msg, len) == -1)
         return 84;
     return 0;
@@ -47,7 +48,7 @@ int send_player_level(int sockfd, serv_t *serv, char *buffer)
 int send_player_inventory(int sockfd, serv_t *serv, char *buffer)
 {
     int count = 0;
-    char **array = splitStringAtSpaces(buffer, &count);
+    char **array = split_string_at_spaces(buffer, &count);
     player_t *tmp = parse_player(sockfd, serv, atoi(array[1]));
     inv_t *inv = tmp->inventory;
     char *msg = NULL;
