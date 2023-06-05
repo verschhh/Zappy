@@ -25,7 +25,7 @@
 static const int MAX_NAMES = 10;
 
 enum nb_command {
-    NB_CMD = 2
+    NB_CMD = 6
 };
 
 enum enum_slot {

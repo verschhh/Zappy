@@ -12,7 +12,8 @@ const cmd_t cmd_list[NB_CMD] = {
     {"bct", &tile_content},
     {"mct\n", &map_content},
     {"tna\n", &get_all_names_group},
-    {"sgt\n", &send_unit_time}
+    {"sgt\n", &send_unit_time},
+    {"ppo", &send_player_position}
 };
 
 int parse_command(char *buffer)
