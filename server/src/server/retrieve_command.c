@@ -8,11 +8,11 @@
 #include "../includes/server.h"
 
 const cmd_t cmd_list[NB_CMD] = {
-    {"msz\n", &map_size},
+    {"msz", &map_size},
     {"bct", &tile_content},
-    {"mct\n", &map_content},
-    {"tna\n", &get_all_names_group},
-    {"sgt\n", &send_unit_time},
+    {"mct", &map_content},
+    {"tna", &get_all_names_group},
+    {"sgt", &send_unit_time},
     {"ppo", &send_player_position}
 };
 
@@ -27,7 +27,8 @@ int parse_command(char *buffer)
     }
     cmd[index] = '\0';
     for (int i = 0; i != NB_CMD; i++) {
-        if (strcmp(cmd, cmd_list[i].command) == 0)
+        printf("len buffer = %d\nlen cmd_list = %d", strlen(buffer), strlen(cmd_list[0].command));
+        if (strstr(cmd, cmd_list[i].command) != NULL)
             return i;
     }
     return -1;
