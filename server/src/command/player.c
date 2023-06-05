@@ -44,21 +44,24 @@ int send_player_level(int sockfd, serv_t *serv, char *buffer)
     return 0;
 }
 
-// int send_player_inventory(player_t *player, int sockfd)
-// {
-//     inv_t *inventory = player->inventory;
-//     char *msg;
-//     int len = 6 + strlen((char *)player->id) + strlen((char *) inventory->food);
+int send_player_inventory(int sockfd, serv_t *serv, char *buffer)
+{
+    int count = 0;
+    char **array = splitStringAtSpaces(buffer, &count);
+    player_t *tmp = parse_player(sockfd, serv, atoi(array[1]));
+    inv_t *inv = tmp->inventory;
+    char *msg = NULL;
+    int len = 0;
 
-//     len += strlen((char *) inventory->linemate) + strlen((char *) inventory->deraumere);
-//     len += strlen((char *) inventory->sibur) + strlen((char *) inventory->mendiane);
-//     len += strlen((char *) inventory->phiras) + strlen((char *) inventory->thystame);
-//     msg = malloc(sizeof(char) * (len + 1));
-//     msg[len] = '\0';
-//     sprintf(msg, "pin %d %d %d %d %d %d %d %d %d %d\n", player->id, inventory->food,
-//         inventory->linemate, inventory->deraumere, inventory->sibur, inventory->mendiane,
-//         inventory->phiras, inventory->thystame);
-//     if (write(sockfd, msg, len) == -1)
-//         return 84;
-//     return 0;
-// }
+    len = snprintf(msg, 0, "pin %d %d %d %d %d %d %d %d\n", tmp->id
+        , inv->food, inv->linemate, inv->deraumere, inv->sibur, inv->mendiane,
+        inv->phiras, inv->thystame);
+    msg = malloc(sizeof(char) * (len + 1));
+    msg[len] = '\0';
+    snprintf(msg, len, "pin %d %d %d %d %d %d %d %d\n", tmp->id
+        , inv->food, inv->linemate, inv->deraumere, inv->sibur, inv->mendiane,
+        inv->phiras, inv->thystame);
+    if (write(sockfd, msg, len) == -1)
+        return 84;
+    return 0;
+}
