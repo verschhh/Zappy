@@ -65,3 +65,35 @@ client_t *pop_client(client_t *client)
     free(tmp);
     return client;
 }
+
+client_t *create_client(client_t *root)
+{
+    root = malloc(sizeof(client_t));
+    root->team_name = "TEMP";
+    root->next = NULL;
+}
+
+client_t *client_ctor(serv_t *serv)
+{
+    client_t *root = NULL;
+    client_t *current = NULL;
+
+    if (serv->clients == NULL) {
+        create_client(root);
+        return root;
+    }
+    // while (serv->clients->next != NULL)
+    //     map_t *new_node = malloc(sizeof(map_t));
+    //     if (new_node == NULL)
+    //         perror("Memory allocation failed");
+    //     fill_new_node_map(new_node, arg);
+    //     if (root == NULL) {
+    //         root = new_node;
+    //         current = root;
+    //     } else {
+    //         current->next = new_node;
+    //         current = current->next;
+    //     }
+    // }
+    return root;
+}
