@@ -5,7 +5,7 @@
 ** player.c
 */
 
-#include "../../includes/server.h"
+#include "../../includes/zappy.h"
 
 int send_player_position(int sockfd, serv_t *serv, char *buffer)
 {

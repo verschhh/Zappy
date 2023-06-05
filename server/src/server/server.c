@@ -5,7 +5,7 @@
 ** server.c
 */
 
-#include "../includes/server.h"
+#include "../includes/zappy.h"
 
 void crtld_handler(int signal)
 {

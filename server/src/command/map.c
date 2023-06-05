@@ -5,7 +5,7 @@
 ** map.c
 */
 
-#include "../../includes/server.h"
+#include "../../includes/zappy.h"
 
 int map_size(int sockfd, serv_t *serv, char *buffer)
 {

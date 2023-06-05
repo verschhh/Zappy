@@ -5,7 +5,7 @@
 ** accept_client.c
 */
 
-#include "../includes/server.h"
+#include "../includes/zappy.h"
 
 void send_msg_connection(client_t *client, serv_t *serv)
 {

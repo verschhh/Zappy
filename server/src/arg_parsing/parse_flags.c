@@ -5,7 +5,7 @@
 ** parse_flags.c
 */
 
-#include "../includes/server.h"
+#include "../includes/zappy.h"
 
 int parse_names(char **av, args_t *args)
 {

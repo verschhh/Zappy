@@ -5,7 +5,7 @@
 ** retrieve_command.c
 */
 
-#include "../includes/server.h"
+#include "../includes/zappy.h"
 
 const cmd_t cmd_list[NB_CMD] = {
     {"msz", &map_size},

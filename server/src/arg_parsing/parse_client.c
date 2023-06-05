@@ -5,7 +5,7 @@
 ** parse_player.c
 */
 
-#include "../../includes/server.h"
+#include "../../includes/zappy.h"
 
 player_t *parse_player(int sockfd, serv_t *serv, int nb)
 {

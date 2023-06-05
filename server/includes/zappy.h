@@ -8,38 +8,10 @@
 #ifndef _SERVER_H_
     #define _SERVER_H_
 
-    #include <stdio.h>
-    #include <stdlib.h>
-    #include <unistd.h>
-    #include <getopt.h>
-    #include <sys/socket.h>
-    #include <sys/types.h>
-    #include <sys/select.h>
-    #include <arpa/inet.h>
-    #include <netinet/in.h>
-    #include <error.h>
-    #include <string.h>
-    #include <signal.h>
-    #include <termios.h>
+    #include "struct.h"
+    #include "enum.h"
 
 static const int MAX_NAMES = 10;
-
-enum nb_command {
-    NB_CMD = 8
-};
-
-enum enum_slot {
-    FULL,
-    NOT_FULL,
-    CONTINUE = 100
-};
-
-enum orientation {
-    NORTH,
-    EAST,
-    SOUTH,
-    WEST
-};
 
 typedef struct args_s {
     int port;
@@ -68,14 +40,15 @@ typedef struct player_s {
     int id;
     inv_t *inventory;
     enum orientation orientation;
+    struct player_s *next;
 } player_t;
 
 typedef struct client_s {
     char *team_name;
-    int slot;
     int sockfd;
     struct sockaddr_in addr;
     socklen_t addrlen;
+    int slot;
     struct player_s *player;
     struct client_s *next;
 } client_t;
@@ -92,20 +65,6 @@ typedef struct map_s {
     int thystame;
     struct map_s *next;
 } map_t;
-
-typedef struct serv_s {
-    int freq;
-    int map_x;
-    int map_y;
-    int sockfd;
-    int portno;
-    int max_sd;
-    struct sockaddr_in addr;
-    pid_t pid;
-    int global_uid;
-    client_t *clients;
-    map_t *map;
-} serv_t;
 
 typedef struct cmd_s {
     char *command;

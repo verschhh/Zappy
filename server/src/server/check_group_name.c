@@ -5,7 +5,7 @@
 ** check_group_name.c
 */
 
-#include "../../includes/server.h"
+#include "../../includes/zappy.h"
 
 
 int check_slot_team(client_t *temp)

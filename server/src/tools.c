@@ -5,7 +5,7 @@
 ** tools.c
 */
 
-#include "../includes/server.h"
+#include "../includes/zappy.h"
 
 void print_and_exit(char *str)
 {

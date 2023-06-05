@@ -5,7 +5,7 @@
 ** time.c
 */
 
-#include "../../includes/server.h"
+#include "../../includes/zappy.h"
 
 int send_unit_time(int sockfd, serv_t *serv, char *buffer)
 {

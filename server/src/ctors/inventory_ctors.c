@@ -5,7 +5,7 @@
 ** inventory_ctors.c
 */
 
-#include "../includes/server.h"
+#include "../includes/zappy.h"
 
 inv_t *inv_ctor(void)
 {
