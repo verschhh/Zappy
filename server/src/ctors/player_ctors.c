@@ -19,7 +19,6 @@ player_t *player_root_ctor(int nb_client)
     player->level = 1;
     player->orientation = NORTH;
     player->inventory = inv_ctor();
-    player->next = NULL;
     return player;
 }
 
@@ -30,16 +29,12 @@ player_t *add_player(player_t *player)
 
     if (player == NULL)
         return NULL;
-    while (tmp->next != NULL)
-        tmp = tmp->next;
     new_player->x = 0;
     new_player->y = 0;
     new_player->id = tmp->id + 1;
     new_player->level = 1;
     new_player->orientation = NORTH;
     new_player->inventory = inv_ctor();
-    new_player->next = NULL;
-    tmp->next = new_player;
     printf("Player %d created\n", new_player->id);
     return new_player;
 }

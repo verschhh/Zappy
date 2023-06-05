@@ -7,6 +7,17 @@
 
 #include "../includes/server.h"
 
+void send_msg_connection(client_t *client, serv_t *serv)
+{
+    char *msg;
+    int len = snprintf(msg, 0, "pnw #%d %d %d", client->player->x, client->player->y);
+
+    msg = malloc(sizeof(char) * (len + 1));
+    msg[len] = '\0';
+    sprintf(msg, "pnw #%d %d %d", client->player->x, client->player->y);
+    write(serv->sockfd, msg, len);
+}
+
 client_t *accept_new_client(fd_set *readfds, serv_t *serv)
 {
     client_t *client = client_ctor(serv->clients);
@@ -22,6 +33,6 @@ client_t *accept_new_client(fd_set *readfds, serv_t *serv)
     FD_SET(client->sockfd, readfds);
     if (client->sockfd > serv->max_sd)
         serv->max_sd = client->sockfd;
-    write(client->sockfd, "Welcome, you are now connected", 31);
+    // send_msg_connection(client, serv);
     return client;
 }

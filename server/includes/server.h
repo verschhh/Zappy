@@ -68,15 +68,14 @@ typedef struct player_s {
     int id;
     inv_t *inventory;
     enum orientation orientation;
-    struct player_s *next;
 } player_t;
 
 typedef struct client_s {
     char *team_name;
+    int slot;
     int sockfd;
     struct sockaddr_in addr;
     socklen_t addrlen;
-    int slot;
     struct player_s *player;
     struct client_s *next;
 } client_t;
@@ -95,6 +94,7 @@ typedef struct map_s {
 } map_t;
 
 typedef struct serv_s {
+    int freq;
     int map_x;
     int map_y;
     int sockfd;
@@ -105,7 +105,6 @@ typedef struct serv_s {
     int global_uid;
     client_t *clients;
     map_t *map;
-    int freq;
 } serv_t;
 
 typedef struct cmd_s {
