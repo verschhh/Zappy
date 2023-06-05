@@ -8,11 +8,11 @@
 #include "../includes/scenes.hpp"
 
 zappy::InGame::InGame(int mapWidth, int mapHeight)
-: _mapWidth(mapWidth), _mapHeight(mapHeight)
+: _mapWidth(mapWidth), _mapHeight(mapHeight), _scaleFactor(1)
 {
     setIndexScene(1);
-    loadTextures();
     createMap();
+    loadTextures();
 }
 
 zappy::InGame::~InGame() {}
@@ -28,17 +28,22 @@ static int randomNumber(int min, int max)
 
 void zappy::InGame::createMap()
 {
+    _gridTextures.resize(7);
+    for (int i = 0; i < 7; i++) {
+        std::string texturePath = "gui/assets/map/grid" + std::to_string(i + 1) + ".png";
+        _gridTextures[i].loadFromFile(texturePath);
+    }
+
     int spriteSize = 60;
     int gap = spriteSize / 5;
 
     int totalWidth = _mapWidth * (spriteSize + gap) + spriteSize * 4;
     int totalHeight = _mapHeight * (spriteSize + gap) + spriteSize * 4;
 
-    // TODO: store scaleFactor for further use (all sprites)
-    float scaleFactor = std::min((WINDOW_WIDTH / static_cast<float>(totalWidth)), WINDOW_HEIGHT / static_cast<float>(totalHeight));
+    _scaleFactor = std::min((WINDOW_WIDTH / static_cast<float>(totalWidth)), WINDOW_HEIGHT / static_cast<float>(totalHeight));
 
-    int scaledSpriteSize = static_cast<int>(spriteSize * scaleFactor);
-    int scaledGap = static_cast<int>(gap * scaleFactor);
+    int scaledSpriteSize = static_cast<int>(spriteSize * _scaleFactor);
+    int scaledGap = static_cast<int>(gap * _scaleFactor);
 
     int scaledTotalWidth = _mapWidth * (scaledSpriteSize + scaledGap) - scaledGap;
     int scaledTotalHeight = _mapHeight * (scaledSpriteSize + scaledGap) - scaledGap;
@@ -50,11 +55,10 @@ void zappy::InGame::createMap()
     for (int i = 0; i < _mapWidth; i++) {
         _map[i].resize(_mapHeight);
         for (int j = 0; j < _mapHeight; j++) {
-
             setSpriteProperties(
                 _map[i][j],
                 _gridTextures[randomNumber(0, 6)],
-                sf::Vector2f(scaleFactor, scaleFactor),
+                sf::Vector2f(_scaleFactor, _scaleFactor),
                 sf::Vector2f(startX + i * (scaledSpriteSize + scaledGap), startY + j * (scaledSpriteSize + scaledGap))
             );
         }
@@ -64,12 +68,6 @@ void zappy::InGame::createMap()
 void zappy::InGame::loadTextures() {
     _backgroundTexture.loadFromFile("gui/assets/images/space.jpg");
     setSpriteProperties(_backgroundSprite, _backgroundTexture, sf::Vector2f(1, 1), sf::Vector2f(960, 540));
-
-    _gridTextures.resize(7);
-    for (int i = 0; i < 7; i++) {
-        std::string texturePath = "gui/assets/map/grid" + std::to_string(i + 1) + ".png";
-        _gridTextures[i].loadFromFile(texturePath);
-    }
 }
 
 void zappy::InGame::handleEvents(sf::RenderWindow& window) {

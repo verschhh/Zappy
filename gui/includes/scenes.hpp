@@ -107,6 +107,8 @@ namespace zappy {
             std::vector<sf::Texture> _gridTextures;
             std::vector<std::vector<sf::Sprite>> _map;
 
+            float _scaleFactor;
+
             sf::Texture _backgroundTexture;
             sf::Sprite _backgroundSprite;
     };
