@@ -9,67 +9,8 @@
     #define _SERVER_H_
 
     #include "struct.h"
-    #include "enum.h"
 
 static const int MAX_NAMES = 10;
-
-typedef struct args_s {
-    int port;
-    int width;
-    int height;
-    char **names;
-    int clientsnb;
-    float freq;
-    int namescount;
-} args_t;
-
-typedef struct inv_s {
-    int food;
-    int linemate;
-    int deraumere;
-    int sibur;
-    int mendiane;
-    int phiras;
-    int thystame;
-} inv_t;
-
-typedef struct player_s {
-    int x;
-    int y;
-    int level;
-    int id;
-    inv_t *inventory;
-    enum orientation orientation;
-    struct player_s *next;
-} player_t;
-
-typedef struct client_s {
-    char *team_name;
-    int sockfd;
-    struct sockaddr_in addr;
-    socklen_t addrlen;
-    int slot;
-    struct player_s *player;
-    struct client_s *next;
-} client_t;
-
-typedef struct map_s {
-    int x;
-    int y;
-    int food;
-    int linemate;
-    int deraumere;
-    int sibur;
-    int mendiane;
-    int phiras;
-    int thystame;
-    struct map_s *next;
-} map_t;
-
-typedef struct cmd_s {
-    char *command;
-    int(*pointer)(int, serv_t *, char *);
-} cmd_t;
 
 //* Arguments parsing
 int parse_arguments(int ac, char **av, args_t *args);

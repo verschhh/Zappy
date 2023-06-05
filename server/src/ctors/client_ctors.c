@@ -5,7 +5,7 @@
 ** client_ctors.c
 */
 
-#include "../includes/server.h"
+#include "../includes/zappy.h"
 
 void fill_new_node(client_t *new_node, args_t *arg, int i)
 {

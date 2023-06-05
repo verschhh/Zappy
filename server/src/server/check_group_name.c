@@ -64,7 +64,7 @@ void send_x_y_ai(int sockfd, serv_t *serv, char *number)
     char size_map[8];
 
     strcpy(result, number);
-    sprintf(size_map, "%d %d\n", serv->map_x, serv->map_y);
+    sprintf(size_map, "%d %d\n", serv->max_x, serv->max_y);
     strcat(result, size_map);
     result[strlen(result) + strlen(number) - 1] = 0;
     write(sockfd, result, strlen(result));

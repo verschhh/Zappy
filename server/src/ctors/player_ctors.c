@@ -5,7 +5,7 @@
 ** player_ctors.c
 */
 
-#include "../includes/server.h"
+#include "../includes/zappy.h"
 
 player_t *player_root_ctor(int nb_client)
 {
