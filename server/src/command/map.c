@@ -35,7 +35,7 @@ int tile_content(int sockfd, serv_t *serv, char *buffer)
 {
     int count = 0;
     int error = 0;
-    char **array = splitStringAtSpaces(buffer, &count);
+    char **array = split_string_at_spaces(buffer, &count);
     int my_x = atoi(array[1]);
     int my_y = atoi(array[2]);
     map_t *temp = serv->map;

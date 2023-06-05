@@ -146,7 +146,7 @@ char *send_nb_slot_ai(int slot);
 void usage(void);
 void print_and_exit(char *str);
 void usage(void);
-char** splitStringAtSpaces(const char* input, int* count);
+char** split_string_at_spaces(const char* input, int* count);
 char *get_orientation(enum orientation orientation);
 
 //* Commands
