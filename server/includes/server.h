@@ -25,7 +25,7 @@
 static const int MAX_NAMES = 10;
 
 enum nb_command {
-    NB_CMD = 2
+    NB_CMD = 5
 };
 
 enum enum_slot {
@@ -57,7 +57,6 @@ typedef struct inv_s {
     int deraumere;
     int sibur;
     int mendiane;
-
     int phiras;
     int thystame;
 } inv_t;
@@ -105,6 +104,7 @@ typedef struct serv_s {
     int global_uid;
     client_t *clients;
     map_t *map;
+    int freq;
 } serv_t;
 
 typedef struct cmd_s {
@@ -147,5 +147,7 @@ char** splitStringAtSpaces(const char* input, int* count);
 int map_size(int sockfd, serv_t *serv, char *buffer);
 int tile_content(int sockef, serv_t *serv, char *buffer);
 int map_content(int sockf, serv_t *serv, char *buffer);
+int get_all_names_group(int sockfd, serv_t *serv, char *buffer);
+int send_unit_time(int sockfd, serv_t *serv, char *buffer);
 
 #endif

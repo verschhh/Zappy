@@ -27,5 +27,6 @@ serv_t *serv_ctor(args_t *arg)
     serv->map_x = arg->width;
     serv->map_y = arg->height;
     serv->map = create_map(arg);
+    serv->freq = arg->freq;
     return serv;
 }
