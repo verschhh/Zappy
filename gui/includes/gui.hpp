@@ -11,6 +11,7 @@
 #include <getopt.h>
 #include <SFML/Graphics.hpp>
 #include "scenes.hpp"
+#include "connection.hpp"
 
 namespace zappy {
     class Gui {
@@ -57,6 +58,7 @@ namespace zappy {
             void setIcon(sf::RenderWindow& window);
 
         private:
+            Connection _connection;
             int _port;
             std::string _machine;
 

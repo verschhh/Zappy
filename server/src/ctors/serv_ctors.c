@@ -26,5 +26,7 @@ serv_t *serv_ctor(args_t *arg)
     serv->global_uid = 1;
     serv->map_x = arg->width;
     serv->map_y = arg->height;
+    serv->map = create_map(arg);
+    serv->freq = arg->freq;
     return serv;
 }

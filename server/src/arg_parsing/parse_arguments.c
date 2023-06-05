@@ -13,10 +13,10 @@ args_t *args_constructor(void)
 
     args->names = malloc(sizeof(char *) * MAX_NAMES);
     args-> port = 0;
-    args->namesCount = 0;
+    args->namescount = 0;
     args->height = 10;
     args->width = 10;
-    args->clientsNb = 5;
+    args->clientsnb = 5;
     args->freq = 100;
 
     return args;
@@ -27,7 +27,7 @@ static void arguments_error_handling(args_t *args)
     if (args->port == 0)
         print_and_exit("You must specify a port");
 
-    if (args->namesCount < 2)
+    if (args->namescount < 2)
         print_and_exit("You must specify at least 2 team names");
 }
 

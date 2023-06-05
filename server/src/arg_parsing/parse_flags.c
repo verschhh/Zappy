@@ -13,9 +13,9 @@ int parse_names(char **av, args_t *args)
     for (ac = 0; av[ac] != NULL; ac++);
     int currentArg = optind - 1;
     while (currentArg < ac && *av[currentArg] != '-') {
-        args->names[args->namesCount] = strdup(av[currentArg]);
-        args->names[args->namesCount][strlen(av[currentArg])] = 0;
-        args->namesCount++;
+        args->names[args->namescount] = strdup(av[currentArg]);
+        args->names[args->namescount][strlen(av[currentArg])] = 0;
+        args->namescount++;
         currentArg++;
     }
     optind = currentArg;
@@ -49,7 +49,7 @@ int parse_names_clients_nb_freq(int option, char *optarg, args_t *args,
             parse_names(av, args);
             break;
         case 'c':
-            if ((args->clientsNb = atoi(optarg)) < 1)
+            if ((args->clientsnb = atoi(optarg)) < 1)
                 print_and_exit("ClientsNb must be greater than 0");
             break;
         case 'f':

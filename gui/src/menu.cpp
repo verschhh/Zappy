@@ -16,19 +16,24 @@ zappy::Menu::Menu()
 zappy::Menu::~Menu() {}
 
 void zappy::Menu::loadTextures() {
-    _backgroundTexture.loadFromFile("gui/assets/images/background_space.png");
+    if (!_backgroundTexture.loadFromFile("gui/assets/images/background_space.png"))
+        throw AScene::SceneException("Error: cannot load menu background texture");
     setSpriteProperties(_backgroundSprite, _backgroundTexture, sf::Vector2f(1, 1), sf::Vector2f(960, 540));
 
-    _logoTexture.loadFromFile("gui/assets/zappyLogo.png");
+    if (!_logoTexture.loadFromFile("gui/assets/zappyLogo.png"))
+        throw AScene::SceneException("Error: cannot load menu logo texture");
     setSpriteProperties(_logoSprite, _logoTexture, sf::Vector2f(15, 15), sf::Vector2f(960, 420));
 
-    _playButtonTexture.loadFromFile("gui/assets/buttons/play_button_still.png");
+    if (!_playButtonTexture.loadFromFile("gui/assets/buttons/play_button_still.png"))
+        throw AScene::SceneException("Error: cannot load menu play button texture");
     setSpriteProperties(_playButtonSprite, _playButtonTexture, sf::Vector2f(4, 4), sf::Vector2f(760, 800));
 
-    _quitButtonTexture.loadFromFile("gui/assets/buttons/quit_button_still.png");
+    if (!_quitButtonTexture.loadFromFile("gui/assets/buttons/quit_button_still.png"))
+        throw AScene::SceneException("Error: cannot load menu quit button texture");
     setSpriteProperties(_quitButtonSprite, _quitButtonTexture, sf::Vector2f(4, 4), sf::Vector2f(1160, 800));
 
-    _shiningLightTexture.loadFromFile("gui/assets/shiningLight.png");
+    if (!_shiningLightTexture.loadFromFile("gui/assets/objects/shiningLight.png"))
+        throw AScene::SceneException("Error: cannot load menu shining light texture");
     setSpriteProperties(_shiningLightSprite, _shiningLightTexture, sf::Vector2f(6, 6), sf::Vector2f(1610, 275));
 }
 
