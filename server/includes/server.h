@@ -25,7 +25,7 @@
 static const int MAX_NAMES = 10;
 
 enum nb_command {
-    NB_CMD = 2
+    NB_CMD = 6
 };
 
 enum enum_slot {
@@ -46,9 +46,9 @@ typedef struct args_s {
     int width;
     int height;
     char **names;
-    int clientsNb;
+    int clientsnb;
     float freq;
-    int namesCount;
+    int namescount;
 } args_t;
 
 typedef struct inv_s {
@@ -57,7 +57,6 @@ typedef struct inv_s {
     int deraumere;
     int sibur;
     int mendiane;
-
     int phiras;
     int thystame;
 } inv_t;
@@ -66,8 +65,9 @@ typedef struct player_s {
     int x;
     int y;
     int level;
+    int id;
     inv_t *inventory;
-    int orientation;
+    enum orientation orientation;
     struct player_s *next;
 } player_t;
 
@@ -105,6 +105,7 @@ typedef struct serv_s {
     int global_uid;
     client_t *clients;
     map_t *map;
+    int freq;
 } serv_t;
 
 typedef struct cmd_s {
@@ -120,6 +121,7 @@ int parse_default(void);
 int parse_port_width_height(int option, char *optarg, args_t *args);
 int parse_names_clients_nb_freq(int option, char *optarg, args_t *args,
     char **av);
+player_t *parse_player(int sockfd, serv_t *serv, int nb);
 
 //* Constructors
 serv_t *serv_ctor(args_t *arg);
@@ -127,6 +129,9 @@ map_t *create_map(args_t *arg);
 client_t *root_client_ctor(args_t *arg);
 client_t *client_ctor(client_t *root);
 client_t *pop_client(client_t *client);
+inv_t *inv_ctor(void);
+player_t *player_root_ctor(int nb_client);
+player_t *add_player(player_t *player);
 
 //* Server
 int start_server(args_t *args);
@@ -142,9 +147,14 @@ void usage(void);
 void print_and_exit(char *str);
 void usage(void);
 char** splitStringAtSpaces(const char* input, int* count);
+char *get_orientation(enum orientation orientation);
 
 //* Commands
 int map_size(int sockfd, serv_t *serv, char *buffer);
 int tile_content(int sockef, serv_t *serv, char *buffer);
+int map_content(int sockf, serv_t *serv, char *buffer);
+int get_all_names_group(int sockfd, serv_t *serv, char *buffer);
+int send_unit_time(int sockfd, serv_t *serv, char *buffer);
+int send_player_position(int sockfd, serv_t *serv, char *buffer);
 
 #endif
