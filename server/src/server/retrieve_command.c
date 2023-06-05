@@ -8,7 +8,8 @@
 #include "../includes/server.h"
 
 const cmd_t cmd_list[NB_CMD] = {
-    {"msz\n", &map_command}
+    {"msz\n", &map_size},
+    {"bct", &tile_content}
 };
 
 int parse_command(char *buffer)
@@ -28,9 +29,9 @@ int parse_command(char *buffer)
     return -1;
 }
 
-int lauch_cmd(int cmd, int sockfd, serv_t *serv)
+int lauch_cmd(int cmd, int sockfd, serv_t *serv, char *buffer)
 {
-    if (cmd_list[cmd].pointer(sockfd, serv) == 84)
+    if (cmd_list[cmd].pointer(sockfd, serv, buffer) == 84)
         return 84;
     return 0;
 }
@@ -52,7 +53,7 @@ int receive_client_msg(int sockfd, fd_set *readfds, serv_t *serv)
                 send_x_y_ai(sockfd, serv, send_nb_slot_ai(next));
             return 0;
         }
-        lauch_cmd(cmd, sockfd, serv);
+        lauch_cmd(cmd, sockfd, serv, buffer);
     }
     return 0;
 }

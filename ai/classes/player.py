@@ -5,28 +5,39 @@
 ## player
 ##
 
-from socket import *
 from math import ceil
 import re
 
 SUCESS = 0
 FAIL = 84
+
 class Orientation:
     NORTH = 0
     EAST = 1
     SOUTH = 2
     WEST = 3
 
+class Priority:
+    EXPLORE = 0
+    FOOD = 1
+    LINEMATE = 2
+    DERAUMERE = 3
+    SIBUR = 4
+    MENDIANE = 5
+    PHIRAS = 6
+    THYSTAME = 7
+
 class Player:
     def __init__(self, socket, game):
-        self.x = 0
-        self.y = 0
+        self.x = 5
+        self.y = 5
         self.max_x = game.map_size_x - 1
         self.max_y = game.map_size_y - 1
         self.level = 1
         self.inventory = {"food": 10, "linemate": 0, "deraumere": 0, "sibur": 0, "mendiane": 0, "phiras": 0, "thystame": 0}
         self.team = ""
         self.orientation = Orientation.WEST
+        self.priority = Priority.EXPLORE
         self.socket = socket
         self.vision = []
         self.vision_with_pos = []
@@ -80,7 +91,7 @@ class Player:
         self.socket.receive()
         buff = self.socket.buffer[2:-2]
         i = 0
-        print(buff)
+
         while buff[i] != '\0':
             if buff[i] == ',' and buff[i + 1] == ' ':
                 buff = buff[:i + 1] + buff[i + 2:]
@@ -110,8 +121,6 @@ class Player:
                     self.set_object_pos(abs(c-x), floor, pos_vision)
                 pos_vision += 1
             floor += 1
-
-        print(self.vision_with_pos)
 
     def set_object_pos(self, move, floor, i):
         if self.orientation == Orientation.NORTH:
@@ -218,13 +227,15 @@ class Player:
             if item in self.inventory:
                 self.inventory[item] = int(quantity)
 
+    def update_priority(self):
+        if (self.inventory["food"] < 10):
+            self.priority = Priority.FOOD
+            return
+        if self.priority != Priority.EXPLORE:
+            return
+
     def pick_move(self):
+        move = ""
         self.update_inventory()
-        food_priority = self.get_food_priority()
-        print (f"food: {self.inventory['food']} food priority: {food_priority}")
-    
-    def get_food_priority(self):
-        if self.inventory["food"] < 10:
-            return 1.0
-        else:
-            return 10.0 / self.inventory["food"]
+        self.update_priority()
+        return move

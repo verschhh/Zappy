@@ -21,7 +21,6 @@ class Game:
 
 
     def update_map(self, list_items_to_update):
-        print(list_items_to_update)
         for y, i in enumerate(self.map):
             for  x, _ in enumerate(i):
                 for item in list_items_to_update:
