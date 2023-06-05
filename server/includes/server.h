@@ -156,5 +156,6 @@ int map_content(int sockf, serv_t *serv, char *buffer);
 int get_all_names_group(int sockfd, serv_t *serv, char *buffer);
 int send_unit_time(int sockfd, serv_t *serv, char *buffer);
 int send_player_position(int sockfd, serv_t *serv, char *buffer);
+int send_player_level(int sockfd, serv_t *serv, char *buffer);
 
 #endif

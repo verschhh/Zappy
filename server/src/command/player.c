@@ -28,14 +28,17 @@ int send_player_position(int sockfd, serv_t *serv, char *buffer)
     return 0;
 }
 
-int send_player_level(player_t *player, int sockfd)
+int send_player_level(int sockfd, serv_t *serv, char *buffer)
 {
-    char *msg;
-    int len = 6 + strlen((char *)player->id) + strlen((char *) player->level);
+    int count = 0;
+    char **array = splitStringAtSpaces(buffer, &count);
+    player_t *tmp = parse_player(sockfd, serv, atoi(array[1]));
+    char *msg = NULL;
+    int len = 0;
 
     msg = malloc(sizeof(char) * (len + 1));
     msg[len] = '\0';
-    sprintf(msg, "plv %d %d\n", player->id, player->level);
+    len = snprintf(msg, 0, "plv %d %d\n", tmp->id, tmp->level);
     if (write(sockfd, msg, len) == -1)
         return 84;
     return 0;
