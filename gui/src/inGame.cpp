@@ -62,7 +62,7 @@ void zappy::InGame::createMap()
 }
 
 void zappy::InGame::loadTextures() {
-    _backgroundTexture.loadFromFile("gui/assets/images/test.jpg");
+    _backgroundTexture.loadFromFile("gui/assets/images/space.jpg");
     setSpriteProperties(_backgroundSprite, _backgroundTexture, sf::Vector2f(1, 1), sf::Vector2f(960, 540));
 
     _gridTextures.resize(7);

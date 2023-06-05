@@ -28,7 +28,7 @@ void zappy::Menu::loadTextures() {
     _quitButtonTexture.loadFromFile("gui/assets/buttons/quit_button_still.png");
     setSpriteProperties(_quitButtonSprite, _quitButtonTexture, sf::Vector2f(4, 4), sf::Vector2f(1160, 800));
 
-    _shiningLightTexture.loadFromFile("gui/assets/shiningLight.png");
+    _shiningLightTexture.loadFromFile("gui/assets/objects/shiningLight.png");
     setSpriteProperties(_shiningLightSprite, _shiningLightTexture, sf::Vector2f(6, 6), sf::Vector2f(1610, 275));
 }
 

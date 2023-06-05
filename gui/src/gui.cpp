@@ -76,7 +76,7 @@ zappy::Gui::Gui(int port, std::string machine)
 
 void zappy::Gui::setIcon(sf::RenderWindow& window) {
     sf::Image icon;
-    if (!icon.loadFromFile("gui/assets/zappyFavicon.png")) {
+    if (!icon.loadFromFile("gui/assets/icons/zappyFavicon.png")) {
         throw GuiException("Error: cannot load icon");
     }
     window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
