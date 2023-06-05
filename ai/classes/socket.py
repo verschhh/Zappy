@@ -35,6 +35,10 @@ class Socket:
         elif buff.decode() == "dead\n":
             print("You died")
             sys.exit(0)
+        elif buff.decode().split(' ')[0] == "message":
+            print("Message from %s: %s" % (buff.decode().split(' ')[1], buff.decode().split(' ')[2]))
+            self.buffer = ""
+            self.receive()
         elif buff.decode().split(':')[0] == "eject":
             print
         self.buffer += buff.decode()

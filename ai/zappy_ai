@@ -83,10 +83,7 @@ def main(av, ac):
         print_map(game)
         message = input("-> ")
         while message != "quit":
-            if message == "dead\n":
-                print("You died")
-                return 0
-            elif message == "Look":
+            if message == "Look":
                 game.update_map(player.look())
                 print_map(game)
             elif message == "Forward":
@@ -97,6 +94,9 @@ def main(av, ac):
                 player.left()
             elif message == "Take food":
                 player.take("food")
+            elif message == "Broadcast salut":
+                player.broadcast("salut")
+            print(sock.buffer)
             message = input("-> ")
         sock.close()
 
