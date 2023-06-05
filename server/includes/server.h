@@ -65,7 +65,7 @@ typedef struct player_s {
     int x;
     int y;
     int level;
-    int nb;
+    int id;
     inv_t *inventory;
     enum orientation orientation;
     struct player_s *next;
