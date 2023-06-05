@@ -12,7 +12,10 @@ void fill_new_node(client_t *new_node, args_t *arg, int i)
     new_node->team_name = arg->names[i];
     new_node->addrlen = sizeof(struct sockaddr_in);
     new_node->next = NULL;
-    new_node->slot = arg->clientsNb;
+    new_node->slot = arg->clientsnb;
+    new_node->player = player_root_ctor(0);
+    for (int j = 1; j != arg->clientsnb; j++)
+        add_player(new_node->player);
 }
 
 client_t *root_client_ctor(args_t *arg)
@@ -20,7 +23,7 @@ client_t *root_client_ctor(args_t *arg)
     client_t *root = NULL;
     client_t *current = NULL;
 
-    for (int i = 0; i != arg->namesCount; i++) {
+    for (int i = 0; i != arg->namescount; i++) {
         client_t *new_node = malloc(sizeof(client_t));
         if (new_node == NULL)
             perror("Memory allocation failed");
