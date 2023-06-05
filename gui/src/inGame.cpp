@@ -31,7 +31,8 @@ void zappy::InGame::createMap()
     _gridTextures.resize(7);
     for (int i = 0; i < 7; i++) {
         std::string texturePath = "gui/assets/map/grid" + std::to_string(i + 1) + ".png";
-        _gridTextures[i].loadFromFile(texturePath);
+        if (!_gridTextures[i].loadFromFile(texturePath))
+            throw AScene::SceneException("Error: cannot load grid texture " + std::to_string(i + 1));
     }
 
     int spriteSize = 60;
@@ -66,7 +67,8 @@ void zappy::InGame::createMap()
 }
 
 void zappy::InGame::loadTextures() {
-    _backgroundTexture.loadFromFile("gui/assets/images/space.jpg");
+    if (!_backgroundTexture.loadFromFile("gui/assets/images/space.jpg"))
+        throw AScene::SceneException("Error: cannot load in game background texture");
     setSpriteProperties(_backgroundSprite, _backgroundTexture, sf::Vector2f(1, 1), sf::Vector2f(960, 540));
 }
 
