@@ -42,9 +42,8 @@ int server(fd_set *readfds, serv_t *serv)
         }
         if (i == serv->sockfd) {
             accept_new_client(readfds, serv);
-        // } else {
-        //     receive_client_msg(i, readfds, serv);
-        // }
+        } else {
+            receive_client_msg(i, readfds, serv);
         }
     }
     return 0;
