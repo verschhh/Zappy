@@ -41,6 +41,10 @@ serv_t *serv_ctor(args_t *arg)
     serv->max_y = arg->height;
     serv->map = create_map(arg);
     serv->freq = arg->freq;
-    serv->names = get_tn_serv(serv->names, arg->names);
+    serv->slots = slot_ctor(arg);
+    while (serv->slots->next != NULL) {
+        printf("Team name: %s\n", serv->slots->team_name);
+        serv->slots = serv->slots->next;
+    }
     return serv;
 }
