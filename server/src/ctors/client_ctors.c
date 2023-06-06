@@ -30,13 +30,16 @@ client_t *client_ctor(serv_t *serv)
     return serv->clients;
 }
 
-int fill_client_struct(int sockfd, serv_t *serv)
+int fill_client_struct(int sockfd, serv_t *serv, char *buffer)
 {
     client_t *temp = serv->clients;
 
     while(temp->next != NULL || temp->sockfd != sockfd)
         temp = temp->next;
-    // if (temp->sockfd == sockfd) {
-    //     temp->
-    // }
+    if (temp->sockfd == sockfd) {
+        temp->player = player_ctor(serv);
+        temp->slot -= 1;
+        temp->team_name = buffer;
+    }
+    
 }

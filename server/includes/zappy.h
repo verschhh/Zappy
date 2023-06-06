@@ -33,6 +33,7 @@ slot_t *slot_ctor(args_t *arg);
 player_t *player_root_ctor(int nb_client);
 player_t *add_player(player_t *player);
 slot_t *new_slot(slot_t *slot, char *name);
+int fill_client_struct(int sockfd, serv_t *serv, char *buffer);
 
 //* Server
 int start_server(args_t *args);
