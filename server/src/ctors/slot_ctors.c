@@ -30,7 +30,7 @@ slot_t *slot_ctor(args_t *arg)
     if (slot == NULL)
         perror("Memory allocation failed");
     slot->team_name = arg->names[0];
-    slot->nb = 0;
+    slot->nb = arg->clientsnb;
     slot->next = NULL;
     for (int i = 1; i < arg->namescount; i++)
         slot = new_slot(slot, arg->names[i]);
