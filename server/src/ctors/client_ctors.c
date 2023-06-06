@@ -7,18 +7,6 @@
 
 #include "../includes/zappy.h"
 
-client_t *client_ctor(serv_t *serv)
-{
-    serv->clients = malloc(sizeof(client_t));
-
-
-    if (serv->clients == NULL)
-        return NULL;
-    serv->clients->addrlen = sizeof(struct sockaddr_in);
-    serv->clients->next = NULL;
-    return serv->clients;
-}
-
 client_t *pop_client(client_t *client)
 {
     client_t *tmp = client;
@@ -29,6 +17,17 @@ client_t *pop_client(client_t *client)
         tmp = tmp->next;
     free(tmp);
     return client;
+}
+
+client_t *client_ctor(serv_t *serv)
+{
+    if (serv->clients == NULL)
+        serv->clients = malloc(sizeof(client_t));
+    while (serv->clients->next != NULL)
+        serv->clients = serv->clients->next;
+    serv->clients->addrlen = sizeof(struct sockaddr_in);
+    serv->clients->next = NULL;
+    return serv->clients;
 }
 
 int fill_client_struct(int sockfd, serv_t *serv)

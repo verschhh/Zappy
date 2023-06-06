@@ -25,7 +25,7 @@ zappy::Gui::Gui(int port, std::string machine) : _connection(port, machine), _in
     try {
         _scenes.push_back(new Menu());
 
-        int width = 10;
+        int width = 20;
         int height = 10;
 
         // _connection.send("msz\n");

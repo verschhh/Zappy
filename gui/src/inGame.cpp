@@ -69,10 +69,50 @@ void zappy::InGame::createMap()
     }
 }
 
+void zappy::InGame::createPnj(int x, int y, pnjOrientation orientation) {
+    pnj_t pnj;
+
+    int rnd = randomNumber(1, 3);
+    // ? save texture nb in pnj struct
+    pnj.type = rnd;
+
+    pnj.sprite.setTexture(_pnjTextures[rnd - 1].left);
+
+    pnj.sprite.setTextureRect(pnj.rect);
+
+    // TODO: tweak scale
+    pnj.sprite.setScale(sf::Vector2f(_scaleFactor, _scaleFactor));
+
+    //? set origin
+    pnj.sprite.setOrigin(32 / 2, 32 / 2);
+
+    pnj.position = sf::Vector2f(x, y);
+    pnj.orientation = orientation;
+
+    //! TEMP
+    std::cout << "Pnj created at " << x << ", " << y << std::endl;
+
+    _pnjs.push_back(pnj);
+}
+
 void zappy::InGame::loadTextures() {
     if (!_backgroundTexture.loadFromFile("gui/assets/images/space.jpg"))
         throw AScene::SceneException("Error: cannot load in game background texture");
     setSpriteProperties(_backgroundSprite, _backgroundTexture, sf::Vector2f(1, 1), sf::Vector2f(960, 540));
+
+    for (int i = 0; i < 3; i++) {
+        pnjTextures_t pnjTextures;
+        if (!pnjTextures.left.loadFromFile("gui/assets/pnj/pnj" + std::to_string(i + 1) + "_left.png"))
+            throw AScene::SceneException("Error: cannot load pnj" + std::to_string(i + 1) + "_left.png");
+
+        if (!pnjTextures.right.loadFromFile("gui/assets/pnj/pnj" + std::to_string(i + 1) + "_right.png"))
+            throw AScene::SceneException("Error: cannot load pnj" + std::to_string(i + 1) + "_right.png");
+
+        _pnjTextures.push_back(pnjTextures);
+    }
+
+    // ! TEMP
+    createPnj(64, 64, NORTH);
 }
 
 void zappy::InGame::handleEvents(sf::RenderWindow& window) {
@@ -99,5 +139,11 @@ void zappy::InGame::drawScene(sf::RenderWindow& window, sf::Clock clock) {
         for (int j = 0; j < _mapHeight; j++) {
             window.draw(_map[i][j]);
         }
+    };
+
+    int nbPnj = _pnjs.size();
+    for (int i = 0; i < nbPnj; i++) {
+        _pnjs[i].sprite.setPosition(_pnjs[i].position);
+        window.draw(_pnjs[i].sprite);
     };
 }

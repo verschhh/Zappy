@@ -25,15 +25,16 @@ client_t *accept_new_client(fd_set *readfds, serv_t *serv)
     if (serv->clients == NULL)
         return NULL;
     serv->clients->sockfd = accept(serv->sockfd,
-        (struct sockaddr *)&serv->addr, &serv->clients->addrlen);
+        (struct sockaddr *)&serv->clients->addr, &serv->clients->addrlen);
     inet_ntoa(serv->clients->addr.sin_addr);
-    int temp = ntohs(serv->addr.sin_port);
+    int temp = ntohs(serv->clients->addr.sin_port);
     (void)temp;
     printf("New connection, socket fd is %d, ip is : %s, port : %d\n",
-        serv->clients->sockfd, inet_ntoa(serv->addr.sin_addr), temp);
+        serv->clients->sockfd, inet_ntoa(serv->clients->addr.sin_addr), temp);
     FD_SET(serv->clients->sockfd, readfds);
     if (serv->clients->sockfd > serv->max_sd)
         serv->max_sd = serv->clients->sockfd;
     // send_msg_connection(client, serv);
+    write(serv->clients->sockfd, "Welcome, you are now connected", 31);
     return serv->clients;
 }

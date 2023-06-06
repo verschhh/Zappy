@@ -9,7 +9,6 @@
 
 int map_size(int sockfd, serv_t *serv, char *buffer)
 {
-    printf("Hello\n");
     char msg[10];
     (void)buffer;
 
