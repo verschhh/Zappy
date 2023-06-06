@@ -66,7 +66,6 @@ typedef struct player_s {
     int id;
     inv_t *inventory;
     enum orientation orientation;
-    struct player_s *next;
 } player_t;
 
 typedef struct client_s {
