@@ -7,21 +7,21 @@
 
 #include "../includes/zappy.h"
 
-char **get_tn_serv(char **names, char **arg_names)
-{
-    int len = 0;
+// char **get_tn_serv(char **names, char **arg_names)
+// {
+//     int len = 0;
 
-    for (int i = 0; arg_names[i] != NULL; i++)
-        len++;
-    names = malloc(sizeof(char *) * (len + 1));
-    for (int i = 0; i != len; i++) {
-        names[i] = malloc(sizeof(char) * strlen(arg_names[i]) + 1);
-        strcpy(names[i], arg_names[i]);
-        names[i][strlen(arg_names[i])] = '\0';
-    }
-    names[len] = NULL;
-    return names;
-}
+//     for (int i = 0; arg_names[i] != NULL; i++)
+//         len++;
+//     names = malloc(sizeof(char *) * (len + 1));
+//     for (int i = 0; i != len; i++) {
+//         names[i] = malloc(sizeof(char) * strlen(arg_names[i]) + 1);
+//         strcpy(names[i], arg_names[i]);
+//         names[i][strlen(arg_names[i])] = '\0';
+//     }
+//     names[len] = NULL;
+//     return names;
+// }
 
 serv_t *serv_ctor(args_t *arg)
 {

@@ -29,6 +29,7 @@ client_t *root_client_ctor(args_t *arg);
 client_t *client_ctor(serv_t *serv);
 client_t *pop_client(client_t *client);
 inv_t *inv_ctor(void);
+slot_t *slot_ctor(args_t *arg);
 player_t *player_root_ctor(int nb_client);
 player_t *add_player(player_t *player);
 slot_t *new_slot(slot_t *slot, char *name);

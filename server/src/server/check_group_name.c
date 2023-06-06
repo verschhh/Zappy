@@ -38,18 +38,18 @@ char *send_nb_slot_ai(int slot)
 
 int check_name_team(serv_t *serv, char *buffer)
 {
-    char *copy = malloc(sizeof(char) * (strlen(buffer) + 1));
-    int slot = 0;
+    // char *copy = malloc(sizeof(char) * (strlen(buffer) + 1));
+    // int slot = 0;
 
-    strncpy(copy, buffer, strlen(buffer) - 1);
-    copy[strlen(buffer)] = 0;
-    for (int i = 0; serv->names[i] != NULL; i++) {
-        slot = compare_team_name_buffer(serv->names[i], copy);
-        if (slot == -1)
-            return 0;
-        else if (slot != CONTINUE)
-            return slot;
-    }
+    // strncpy(copy, buffer, strlen(buffer) - 1);
+    // copy[strlen(buffer)] = 0;
+    // for (int i = 0; serv->names[i] != NULL; i++) {
+    //     slot = compare_team_name_buffer(serv->names[i], copy);
+    //     if (slot == -1)
+    //         return 0;
+    //     else if (slot != CONTINUE)
+    //         return slot;
+    // }
     return 0;
 }
 
