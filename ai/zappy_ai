@@ -80,7 +80,7 @@ def main(av, ac):
         player = Player(sock, game)
         game.set_map()
         game.update_map(player.look())
-        # print(f"Max X: {player.max_x} Max Y: {player.max_y}")
+        print(f"Max X: {player.max_x} Max Y: {player.max_y}")
         print_map(game, player)
         message = player.pick_move(game.map)
         while message != "quit":
