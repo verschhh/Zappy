@@ -14,11 +14,30 @@
 zappy::Gui::Gui(int port, std::string machine) : _connection(port, machine), _indexScene(0)
 {
     try {
+        _connection.connect();
+        // std::string response = _connection.receive();
+        // std::cout << response;
+    } catch (const std::runtime_error& e) {
+        std::cerr << "Failed to connect to the server: " << e.what() << std::endl;
+        return;
+    }
+
+    try {
         _scenes.push_back(new Menu());
 
-        int tempWidth = 10;
-        int tempHeight = 10;
-        _scenes.push_back(new InGame(tempWidth, tempHeight));
+        int width = 10;
+        int height = 10;
+
+        // _connection.send("msz\n");
+        // std::string response = _connection.receive();
+        // std::cout << response;
+        // if (sscanf(response.c_str(), "%d %d", &width, &height) == 2) {
+        //     std::cout << "Map size: " << width << "x" << height << std::endl;
+        // } else {
+        //     throw GuiException("Gui error: cannot load map size");
+        // }
+
+        _scenes.push_back(new InGame(width, height));
     } catch (AScene::SceneException& e) {
         std::cerr << e.what() << std::endl;
         throw GuiException("Gui error: cannot load scenes");
@@ -35,12 +54,14 @@ void zappy::Gui::setIcon(sf::RenderWindow& window) {
 
 void zappy::Gui::run() {
 
-    try {
-        _connection.connect();
-    } catch (const std::runtime_error& e) {
-        std::cerr << "Failed to connect to the server: " << e.what() << std::endl;
-        return;
-    }
+    // try {
+    //     _connection.connect();
+    //     std::string response = _connection.receive();
+    //     std::cout << response;
+    // } catch (const std::runtime_error& e) {
+    //     std::cerr << "Failed to connect to the server: " << e.what() << std::endl;
+    //     return;
+    // }
 
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "Zappy", sf::Style::Fullscreen);
     setIcon(window);
