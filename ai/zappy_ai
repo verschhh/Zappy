@@ -81,7 +81,7 @@ def main(av, ac):
         game.set_map()
         game.update_map(player.look())
         print_map(game)
-        message = input("-> ")
+        message = player.pick_move()
         while message != "quit":
             if message == "Look":
                 game.update_map(player.look())
@@ -97,7 +97,8 @@ def main(av, ac):
             elif message == "Broadcast salut":
                 player.broadcast("salut")
             print(sock.buffer)
-            message = input("-> ")
+            print(message)
+            message = player.pick_move()
         sock.close()
 
     else:

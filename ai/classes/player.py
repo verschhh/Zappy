@@ -6,7 +6,9 @@
 ##
 
 from math import ceil
+from random import randint
 import re
+
 
 SUCESS = 0
 FAIL = 84
@@ -227,7 +229,7 @@ class Player:
                 self.inventory[item] = int(quantity)
 
     def update_priority(self):
-        if (self.inventory["food"] < 10):
+        if (self.inventory["food"] < 5):
             self.priority = Priority.FOOD
             return
         if self.priority != Priority.EXPLORE:
@@ -237,4 +239,19 @@ class Player:
         move = ""
         self.update_inventory()
         self.update_priority()
+        match self.priority:
+            case Priority.EXPLORE:
+                move = self.explore()
         return move
+    
+    def explore(self):
+        foo = randint(0,12)
+        if foo < 5:
+            return "Forward"
+        elif foo < 10:
+            return "Look"
+        elif foo < 11:
+            return "Right"
+        else:
+            return "Left"
+            
