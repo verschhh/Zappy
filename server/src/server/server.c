@@ -5,7 +5,7 @@
 ** server.c
 */
 
-#include "../includes/server.h"
+#include "../includes/zappy.h"
 
 void crtld_handler(int signal)
 {
@@ -46,7 +46,6 @@ int server(fd_set *readfds, serv_t *serv)
             receive_client_msg(i, readfds, serv);
         }
     }
-
     return 0;
 }
 

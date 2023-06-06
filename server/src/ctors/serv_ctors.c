@@ -5,15 +5,30 @@
 ** serv_ctors.c
 */
 
-#include "../includes/server.h"
+#include "../includes/zappy.h"
+
+// char **get_tn_serv(char **names, char **arg_names)
+// {
+//     int len = 0;
+
+//     for (int i = 0; arg_names[i] != NULL; i++)
+//         len++;
+//     names = malloc(sizeof(char *) * (len + 1));
+//     for (int i = 0; i != len; i++) {
+//         names[i] = malloc(sizeof(char) * strlen(arg_names[i]) + 1);
+//         strcpy(names[i], arg_names[i]);
+//         names[i][strlen(arg_names[i])] = '\0';
+//     }
+//     names[len] = NULL;
+//     return names;
+// }
 
 serv_t *serv_ctor(args_t *arg)
 {
     serv_t *serv = malloc(sizeof(serv_t));
 
-    serv->portno = arg->port;
     serv->addr.sin_family = AF_INET;
-    serv->addr.sin_port = htons(serv->portno);
+    serv->addr.sin_port = htons(arg->port);
     serv->addr.sin_addr.s_addr = INADDR_ANY;
     if ((serv->sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
         print_and_exit("ERROR opening socket");
@@ -22,11 +37,14 @@ serv_t *serv_ctor(args_t *arg)
         print_and_exit("ERROR on binding");
     if (listen(serv->sockfd, 16) < 0)
         print_and_exit("ERROR on listen");
-    serv->clients = root_client_ctor(arg);
-    serv->global_uid = 1;
-    serv->map_x = arg->width;
-    serv->map_y = arg->height;
+    serv->max_x = arg->width;
+    serv->max_y = arg->height;
     serv->map = create_map(arg);
     serv->freq = arg->freq;
+    serv->slots = slot_ctor(arg);
+    while (serv->slots->next != NULL) {
+        printf("Team name: %s\n", serv->slots->team_name);
+        serv->slots = serv->slots->next;
+    }
     return serv;
 }

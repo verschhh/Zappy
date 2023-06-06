@@ -5,27 +5,27 @@
 ** map.c
 */
 
-#include "../../includes/server.h"
+#include "../../includes/zappy.h"
 
 int map_size(int sockfd, serv_t *serv, char *buffer)
 {
-    char msg[11];
+    char msg[10];
     (void)buffer;
 
-    sprintf(msg, "%s %d %d\n", "msz", serv->map_x, serv->map_y);
-    if (write(sockfd, msg, 11) == -1)
+    sprintf(msg, "%s %d %d\n", "msz", serv->max_x, serv->max_y);
+    if (write(sockfd, msg, 10) == -1)
         return 84;
     return 0;
 }
 
 int send_tile_content(map_t *map, int sockfd)
 {
-    char msg[28];
+    char msg[32];
 
-    sprintf(msg, "%d %d %d %d %d %d %d %d %d\n",
+    sprintf(msg, "bct %d %d %d %d %d %d %d %d %d\n",
         map->x, map->y, map->food, map->linemate, map->deraumere,
             map->sibur, map->mendiane, map->phiras, map->thystame);
-    if (write(sockfd, msg, 28) == -1)
+    if (write(sockfd, msg, 32) == -1)
         return 84;
     return 0;
 }
@@ -34,7 +34,7 @@ int tile_content(int sockfd, serv_t *serv, char *buffer)
 {
     int count = 0;
     int error = 0;
-    char **array = splitStringAtSpaces(buffer, &count);
+    char **array = split_string_at_spaces(buffer, &count);
     int my_x = atoi(array[1]);
     int my_y = atoi(array[2]);
     map_t *temp = serv->map;
@@ -62,17 +62,18 @@ void count_content_tile(int *array, map_t *map)
 
 int map_content(int sockfd, serv_t *serv, char *buffer)
 {
-    int array[6] = {0, 0, 0, 0, 0, 0, 0};
-    char msg[28];
+    int array[7] = {0, 0, 0, 0, 0, 0, 0};
+    char msg[32];
+    (void) buffer;
 
-    for (int i = 0; i != serv->map_x; i++) {
-        for (int j = 0; j != serv->map_y; j++) {
+    for (int i = 0; i != serv->max_x; i++) {
+        for (int j = 0; j != serv->max_y; j++) {
             count_content_tile(array, serv->map);
             serv->map = serv->map->next;
         }
     }
-    sprintf(msg, "%d %d %d %d %d %d %d %d %d\n",
-        serv->map_x, serv->map_y, array[0], array[1], array[2],
+    sprintf(msg, "bct %d %d %d %d %d %d %d %d %d\n",
+        serv->max_x, serv->max_y, array[0], array[1], array[2],
             array[3], array[4], array[5], array[6]);
-    write(sockfd, msg, 28);
+    write(sockfd, msg, 32);
 }

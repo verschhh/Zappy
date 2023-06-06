@@ -4,7 +4,7 @@
 ** File description:
 ** map_ctors.c
 */
-#include "../../includes/server.h"
+#include "../../includes/zappy.h"
 
 void fill_new_node_map(map_t *new_node, args_t *arg)
 {

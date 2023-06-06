@@ -5,15 +5,17 @@
 ** retrieve_command.c
 */
 
-#include "../includes/server.h"
+#include "../includes/zappy.h"
 
 const cmd_t cmd_list[NB_CMD] = {
-    {"msz\n", &map_size},
+    {"msz", &map_size},
     {"bct", &tile_content},
-    {"mct\n", &map_content},
-    {"tna\n", &get_all_names_group},
-    {"sgt\n", &send_unit_time},
-    {"ppo", &send_player_position}
+    {"mct", &map_content},
+    {"tna", &get_all_names_group},
+    {"sgt", &send_unit_time},
+    {"ppo", &send_player_position},
+    {"plv", &send_player_level},
+    {"pin", &send_player_inventory}
 };
 
 int parse_command(char *buffer)
@@ -27,7 +29,7 @@ int parse_command(char *buffer)
     }
     cmd[index] = '\0';
     for (int i = 0; i != NB_CMD; i++) {
-        if (strcmp(cmd, cmd_list[i].command) == 0)
+        if (strstr(cmd, cmd_list[i].command) != NULL)
             return i;
     }
     return -1;
@@ -52,9 +54,10 @@ int receive_client_msg(int sockfd, fd_set *readfds, serv_t *serv)
     } else {
         cmd = parse_command(buffer);
         if (cmd == -1) {
-            next = check_name_team(serv, buffer);
-            if (next != 0)
-                send_x_y_ai(sockfd, serv, send_nb_slot_ai(next));
+            fill_client_struct(sockfd, serv);
+            // next = check_name_team(serv, buffer);
+            // if (next != 0)
+            //     send_x_y_ai(sockfd, serv, send_nb_slot_ai(next));
             return 0;
         }
         lauch_cmd(cmd, sockfd, serv, buffer);

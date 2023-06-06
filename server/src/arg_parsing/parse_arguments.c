@@ -5,7 +5,7 @@
 ** parse_arguments.c
 */
 
-#include "../../includes/server.h"
+#include "../../includes/zappy.h"
 
 args_t *args_constructor(void)
 {

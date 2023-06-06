@@ -5,7 +5,7 @@
 ** get_orientation.c
 */
 
-#include "../includes/server.h"
+#include "../includes/zappy.h"
 
 char *get_orientation(enum orientation orientation)
 {

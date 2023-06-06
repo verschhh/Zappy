@@ -5,7 +5,7 @@
 ** main.c
 */
 
-#include "../includes/server.h"
+#include "../includes/zappy.h"
 
 int main(int ac, char **av)
 {

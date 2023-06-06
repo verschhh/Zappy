@@ -5,7 +5,7 @@
 ** tools.c
 */
 
-#include "../includes/server.h"
+#include "../includes/zappy.h"
 
 void print_and_exit(char *str)
 {
@@ -27,7 +27,7 @@ void usage(void)
     printf("for execution of actions\n");
 }
 
-char** splitStringAtSpaces(const char* input, int* count)
+char** split_string_at_spaces(const char* input, int* count)
 {
     const char* delimiter = " ";
     char* copy = strdup(input);
