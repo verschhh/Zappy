@@ -18,9 +18,9 @@ int check_slot_team(client_t *temp)
 int compare_team_name_buffer(char *name, char *copy)
 {
     if (strcmp(name, copy) == 0) {  // Valgrind HERE
-        if (!check_slot_team(temp))
-            return -1;
-        return temp->slot;
+        // if (!check_slot_team(temp))
+        //     return -1;
+        // return temp->slot;
     }
     return CONTINUE;
 }
@@ -43,10 +43,7 @@ int check_name_team(serv_t *serv, char *buffer)
 
     strncpy(copy, buffer, strlen(buffer) - 1);
     copy[strlen(buffer)] = 0;
-    if (temp == NULL) {
-        return 0;
-    }
-    for (int i = 0; serv->names[i] != NULL, i++) {
+    for (int i = 0; serv->names[i] != NULL; i++) {
         slot = compare_team_name_buffer(serv->names[i], copy);
         if (slot == -1)
             return 0;

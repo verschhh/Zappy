@@ -26,7 +26,7 @@ player_t *parse_player(int sockfd, serv_t *serv, int nb);
 serv_t *serv_ctor(args_t *arg);
 map_t *create_map(args_t *arg);
 client_t *root_client_ctor(args_t *arg);
-client_t *client_ctor(client_t *root);
+client_t *client_ctor(serv_t *serv);
 client_t *pop_client(client_t *client);
 inv_t *inv_ctor(void);
 player_t *player_root_ctor(int nb_client);
