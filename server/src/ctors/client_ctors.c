@@ -7,16 +7,6 @@
 
 #include "../includes/zappy.h"
 
-void fill_new_node(client_t *new_node, args_t *arg, int i)
-{
-    new_node->team_name = arg->names[i];
-    new_node->addrlen = sizeof(struct sockaddr_in);
-    new_node->next = NULL;
-    new_node->slot = arg->clientsnb;
-    new_node->player = player_root_ctor(0);
-    for (int j = 1; j != arg->clientsnb; j++)
-        add_player(new_node->player);
-}
 
 client_t *root_client_ctor(args_t *arg)
 {
@@ -69,24 +59,37 @@ client_t *pop_client(client_t *client)
 client_t *create_client(client_t *root)
 {
     root = malloc(sizeof(client_t));
-    root->team_name = "TEMP";
     root->next = NULL;
 }
 
+void fill_new_node(client_t *new_node, serv_t *serv)
+{
+    new_node->team_name = arg->names[i];
+    new_node->addrlen = sizeof(struct sockaddr_in);
+    new_node->next = NULL;
+    new_node->slot = arg->clientsnb;
+    new_node->player = player_root_ctor(0);
+    for (int j = 1; j != arg->clientsnb; j++)
+        add_player(new_node->player);
+}
+
+
 client_t *client_ctor(serv_t *serv)
 {
-    client_t *root = NULL;
-    client_t *current = NULL;
+    client_t *root = serv->client;
+    // client_t *current = NULL;
+    client_t *new_node;
 
-    if (serv->clients == NULL) {
+    if (root == NULL) {
         create_client(root);
         return root;
     }
-    // while (serv->clients->next != NULL)
-    //     map_t *new_node = malloc(sizeof(map_t));
-    //     if (new_node == NULL)
-    //         perror("Memory allocation failed");
-    //     fill_new_node_map(new_node, arg);
+    while (root->next != NULL)
+        root = root->next;
+    new_node = malloc(sizeof(client_t));
+    if (new_node == NULL)
+        perror("Memory allocation failed");
+    fill_new_node(new_node, serv);
     //     if (root == NULL) {
     //         root = new_node;
     //         current = root;

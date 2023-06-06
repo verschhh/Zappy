@@ -55,8 +55,8 @@ int receive_client_msg(int sockfd, fd_set *readfds, serv_t *serv)
         cmd = parse_command(buffer);
         if (cmd == -1) {
             next = check_name_team(serv, buffer);
-            if (next != 0)
-                send_x_y_ai(sockfd, serv, send_nb_slot_ai(next));
+            // if (next != 0)
+            //     send_x_y_ai(sockfd, serv, send_nb_slot_ai(next));
             return 0;
         }
         lauch_cmd(cmd, sockfd, serv, buffer);

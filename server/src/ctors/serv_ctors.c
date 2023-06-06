@@ -7,6 +7,22 @@
 
 #include "../includes/zappy.h"
 
+char **get_tn_serv(char **names, char *arg_names)
+{
+    int len = 0;
+
+    for (int i = 0; arg_names[i] != NULL; i++)
+        len++;
+    names = malloc(sizeof(char *) * (len + 1);
+    for (int i = 0; i != len; i++) {
+        names[i] = malloc(sizeof(char) * strlen(arg_names) + 1);
+        strcpy(name[i], arg_names[i]);
+        name[i][stlen(arg_names)] = '\0';
+    }
+    names[len] = NULL;
+    return names;
+}
+
 serv_t *serv_ctor(args_t *arg)
 {
     serv_t *serv = malloc(sizeof(serv_t));
@@ -26,5 +42,6 @@ serv_t *serv_ctor(args_t *arg)
     serv->max_y = arg->height;
     serv->map = create_map(arg);
     serv->freq = arg->freq;
+    serv->names = get_tn_serv(serv->names, arg->names);
     return serv;
 }

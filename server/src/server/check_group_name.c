@@ -15,9 +15,9 @@ int check_slot_team(client_t *temp)
     return NOT_FULL;
 }
 
-int compare_team_name_buffer(client_t *temp, char *copy)
+int compare_team_name_buffer(char *name, char *copy)
 {
-    if (strcmp(temp->team_name, copy) == 0) {  // Valgrind HERE
+    if (strcmp(name, copy) == 0) {  // Valgrind HERE
         if (!check_slot_team(temp))
             return -1;
         return temp->slot;
@@ -38,7 +38,6 @@ char *send_nb_slot_ai(int slot)
 
 int check_name_team(serv_t *serv, char *buffer)
 {
-    client_t *temp = serv->clients;
     char *copy = malloc(sizeof(char) * (strlen(buffer) + 1));
     int slot = 0;
 
@@ -47,13 +46,12 @@ int check_name_team(serv_t *serv, char *buffer)
     if (temp == NULL) {
         return 0;
     }
-    while (temp->next != NULL) {
-        slot = compare_team_name_buffer(temp, copy);
+    for (int i = 0; serv->names[i] != NULL, i++) {
+        slot = compare_team_name_buffer(serv->names[i], copy);
         if (slot == -1)
             return 0;
         else if (slot != CONTINUE)
             return slot;
-        temp = temp->next;
     }
     return 0;
 }

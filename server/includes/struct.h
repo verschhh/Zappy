@@ -100,6 +100,7 @@ typedef struct serv_s {
     client_t *clients;
     map_t *map;
     int freq;
+    char **names;
 } serv_t;
 
 typedef struct cmd_s {
