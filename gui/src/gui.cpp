@@ -16,7 +16,7 @@ zappy::Gui::Gui(int port, std::string machine) : _connection(port, machine), _in
     try {
         _scenes.push_back(new Menu());
 
-        int tempWidth = 10;
+        int tempWidth = 20;
         int tempHeight = 10;
         _scenes.push_back(new InGame(tempWidth, tempHeight));
     } catch (AScene::SceneException& e) {
