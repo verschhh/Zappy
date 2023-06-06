@@ -31,6 +31,7 @@ client_t *pop_client(client_t *client);
 inv_t *inv_ctor(void);
 player_t *player_root_ctor(int nb_client);
 player_t *add_player(player_t *player);
+slot_t *new_slot(slot_t *slot, char *name);
 
 //* Server
 int start_server(args_t *args);
