@@ -235,7 +235,7 @@ class Player:
         if self.priority != Priority.EXPLORE:
             return
 
-    def pick_move(self):
+    def pick_move(self, map):
         move = ""
         self.update_inventory()
         self.update_priority()

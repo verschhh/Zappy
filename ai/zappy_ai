@@ -80,12 +80,13 @@ def main(av, ac):
         player = Player(sock, game)
         game.set_map()
         game.update_map(player.look())
-        print_map(game)
-        message = player.pick_move()
+        # print(f"Max X: {player.max_x} Max Y: {player.max_y}")
+        print_map(game, player)
+        message = player.pick_move(game.map)
         while message != "quit":
             if message == "Look":
                 game.update_map(player.look())
-                print_map(game)
+                print_map(game, player)
             elif message == "Forward":
                 player.forward()
             elif message == "Right":
@@ -96,20 +97,24 @@ def main(av, ac):
                 player.take("food")
             elif message == "Broadcast salut":
                 player.broadcast("salut")
-            print(sock.buffer)
-            print(message)
-            message = player.pick_move()
+            # print(sock.buffer)
+            # print(message)
+            print(f"X:{player.x} Y:{player.y}")
+            message = player.pick_move(game.map)
         sock.close()
 
     else:
         print_usage()
         return 84
 
-def print_map(game):
+def print_map(game, player):
+    x = player.x
+    y = player.y
     for i in game.map:
         for z in i:
-            print(z["food"],end="\t")
+                print(z["food"],end="\t")
         print("\n")
+    # print(f"Position: X {x} Y {y}")
 
 if __name__ == "__main__":
     if main(sys.argv, len(sys.argv)) == 84:
