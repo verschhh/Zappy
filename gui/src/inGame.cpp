@@ -112,7 +112,7 @@ void zappy::InGame::loadTextures() {
     }
 
     // ! TEMP
-    createPnj(64, 64, NORTH);
+    createPnj(2, 4, NORTH);
 }
 
 void zappy::InGame::handleEvents(sf::RenderWindow& window) {
@@ -131,6 +131,22 @@ void zappy::InGame::handleEvents(sf::RenderWindow& window) {
     }
 }
 
+void zappy::InGame::drawPnjs(sf::RenderWindow& window, sf::Clock clock) {
+    (void) clock;
+
+    int nbPnj = _pnjs.size();
+    for (int i = 0; i < nbPnj; i++) {
+        int mapX = _pnjs[i].position.x;
+        int mapY = _pnjs[i].position.y;
+
+        sf::Vector2f mapPosition = _map[mapX][mapY].getPosition();
+
+        _pnjs[i].sprite.setPosition(mapPosition);
+
+        window.draw(_pnjs[i].sprite);
+    };
+}
+
 void zappy::InGame::drawScene(sf::RenderWindow& window, sf::Clock clock) {
     (void) clock;
     window.draw(_backgroundSprite);
@@ -141,9 +157,5 @@ void zappy::InGame::drawScene(sf::RenderWindow& window, sf::Clock clock) {
         }
     };
 
-    int nbPnj = _pnjs.size();
-    for (int i = 0; i < nbPnj; i++) {
-        _pnjs[i].sprite.setPosition(_pnjs[i].position);
-        window.draw(_pnjs[i].sprite);
-    };
+    drawPnjs(window, clock);
 }

@@ -134,6 +134,7 @@ namespace zappy {
             } pnj_t;
 
             void createPnj(int x, int y, pnjOrientation orientation);
+            void drawPnjs(sf::RenderWindow& window, sf::Clock clock);
 
         private:
             int _mapWidth;
