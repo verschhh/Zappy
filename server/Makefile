@@ -13,7 +13,7 @@ NAME = zappy_server
 
 CFLAGS = -I./includes
 
-CPPFLAGS = -W -Wall -Wextra -g3
+# CPPFLAGS = -W -Wall -Wextra -g3
 
 all: $(NAME)
 
@@ -26,6 +26,7 @@ clean:
 
 fclean: clean
 	rm -f ../$(NAME)
+	rm -f $(NAME)
 
 re: fclean all
 

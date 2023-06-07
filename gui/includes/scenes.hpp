@@ -101,11 +101,49 @@ namespace zappy {
             void loadTextures();
             void createMap();
 
+            typedef struct pnjTextures_s {
+                sf::Texture left;
+                sf::Texture right;
+            } pnjTextures_t;
+
+            typedef struct inventory_s {
+                int food = 0;
+                int linemate = 0;
+                int deraumere = 0;
+                int sibur = 0;
+                int mendiane = 0;
+                int phiras = 0;
+                int thystame = 0;
+            } inventory_t;
+
+            enum pnjOrientation {
+                NORTH,
+                EAST,
+                SOUTH,
+                WEST
+            };
+
+            typedef struct pnj_s {
+                int type;
+                sf::IntRect rect = sf::IntRect(0, 0, 32, 32);
+                sf::Sprite sprite;
+                sf::Vector2f position;
+                inventory_t inventory;
+                int level = 1;
+                pnjOrientation orientation;
+            } pnj_t;
+
+            void createPnj(int x, int y, pnjOrientation orientation);
+            void drawPnjs(sf::RenderWindow& window, sf::Clock clock);
+
         private:
             int _mapWidth;
             int _mapHeight;
             std::vector<sf::Texture> _gridTextures;
             std::vector<std::vector<sf::Sprite>> _map;
+
+            std::vector<pnjTextures_t> _pnjTextures;
+            std::vector<pnj_t> _pnjs;
 
             float _scaleFactor;
 

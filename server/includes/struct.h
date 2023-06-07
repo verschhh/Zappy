@@ -39,6 +39,13 @@ enum orientation {
     WEST
 };
 
+typedef struct slot_s {
+    char *team_name;
+    int nb;
+    // client **team_member;
+    struct slot_s *next;
+} slot_t;
+
 typedef struct args_s {
     int port;
     int width;
@@ -96,11 +103,11 @@ typedef struct serv_s {
     int max_y;
     int sockfd;
     int max_sd;
+    int freq;
     struct sockaddr_in addr;
     client_t *clients;
     map_t *map;
-    int freq;
-    char **names;
+    slot_t *slots;
 } serv_t;
 
 typedef struct cmd_s {

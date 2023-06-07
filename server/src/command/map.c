@@ -9,7 +9,6 @@
 
 int map_size(int sockfd, serv_t *serv, char *buffer)
 {
-    printf("Hello\n");
     char msg[10];
     (void)buffer;
 
@@ -63,7 +62,7 @@ void count_content_tile(int *array, map_t *map)
 
 int map_content(int sockfd, serv_t *serv, char *buffer)
 {
-    int array[6] = {0, 0, 0, 0, 0, 0, 0};
+    int array[7] = {0, 0, 0, 0, 0, 0, 0};
     char msg[32];
     (void) buffer;
 

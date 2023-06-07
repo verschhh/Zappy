@@ -46,7 +46,6 @@ int server(fd_set *readfds, serv_t *serv)
             receive_client_msg(i, readfds, serv);
         }
     }
-
     return 0;
 }
 

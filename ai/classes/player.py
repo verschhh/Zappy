@@ -6,7 +6,9 @@
 ##
 
 from math import ceil
+from random import randint
 import re
+
 
 SUCESS = 0
 FAIL = 84
@@ -63,12 +65,12 @@ class Player:
         elif self.orientation == Orientation.WEST:
             self.x -= 1
         if self.x < 0:
-            self.x = self.max_x - 1
-        elif self.x >= self.max_x:
+            self.x = self.max_x
+        elif self.x > self.max_x:
             self.x = 0
         if self.y < 0:
-            self.y = self.max_y - 1
-        elif self.y >= self.max_y:
+            self.y = self.max_y
+        elif self.y > self.max_y:
             self.y = 0
 
     def right(self):
@@ -241,8 +243,23 @@ class Player:
         if self.priority != Priority.EXPLORE:
             return
 
-    def pick_move(self):
+    def pick_move(self, map):
         move = ""
         self.update_inventory()
         self.update_priority()
+        match self.priority:
+            case Priority.EXPLORE:
+                move = self.explore()
         return move
+    
+    def explore(self):
+        foo = randint(0,12)
+        if foo < 5:
+            return "Forward"
+        elif foo < 10:
+            return "Look"
+        elif foo < 11:
+            return "Right"
+        else:
+            return "Left"
+            

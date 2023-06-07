@@ -26,11 +26,14 @@ player_t *parse_player(int sockfd, serv_t *serv, int nb);
 serv_t *serv_ctor(args_t *arg);
 map_t *create_map(args_t *arg);
 client_t *root_client_ctor(args_t *arg);
-client_t *client_ctor(client_t *root);
+client_t *client_ctor(serv_t *serv);
 client_t *pop_client(client_t *client);
 inv_t *inv_ctor(void);
+slot_t *slot_ctor(args_t *arg);
 player_t *player_root_ctor(int nb_client);
 player_t *add_player(player_t *player);
+slot_t *new_slot(slot_t *slot, char *name);
+int fill_client_struct(int sockfd, serv_t *serv, char *buffer);
 
 //* Server
 int start_server(args_t *args);
@@ -38,7 +41,7 @@ int receive_client_msg(int sockfd, fd_set *readfds, serv_t *serv);
 client_t *accept_new_client(fd_set *readfds, serv_t *serv);
 // void get_group_name(client_t *client, serv_t *serv, fd_set *readfds);
 int check_name_team(serv_t *serv, char *buffer);
-void send_x_y_ai(int sockfd, serv_t *serv, char *number);
+void send_x_y_ai(int sockfd, serv_t *serv, int slot);
 char *send_nb_slot_ai(int slot);
 
 //* Tools
