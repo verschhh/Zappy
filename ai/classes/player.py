@@ -233,7 +233,7 @@ class Player:
         inventory_regex = r"(\w+)\s+(\d+)"
         matches = re.findall(inventory_regex, self.socket.buffer)
         for item, quantity in matches:
-            if item in self.inventory:
+            if item in self._inventory:
                 self._inventory[item] = int(quantity)
 
     def update_priority(self):
