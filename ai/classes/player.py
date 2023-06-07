@@ -34,7 +34,7 @@ class Player:
         self.max_x = game.map_size_x - 1
         self.max_y = game.map_size_y - 1
         self.level = 1
-        self.inventory = {"food": 10, "linemate": 0, "deraumere": 0, "sibur": 0, "mendiane": 0, "phiras": 0, "thystame": 0}
+        self._inventory = {"food": 10, "linemate": 0, "deraumere": 0, "sibur": 0, "mendiane": 0, "phiras": 0, "thystame": 0}
         self.team = ""
         self.orientation = Orientation.WEST
         self.priority = Priority.EXPLORE
@@ -187,12 +187,18 @@ class Player:
         self.socket.send(f"Broadcast {message}")
         self.socket.receive()
 
+    def inventory(self):
+        self.socket.send("Inventory")
+        self.socket.receive()
+        buff = self.socket.buffer
+        print(buff)
+
     def take(self, item):
         self.socket.send(f"Take {item}")
         self.socket.receive()
         buff = self.socket.buffer
         if buff == "ok":
-            self.inventory[item] += 1
+            self._inventory[item] += 1
             return SUCESS
         else:
             return FAIL
@@ -202,7 +208,7 @@ class Player:
         self.socket.receive()
         buff = self.socket.buffer
         if buff == "ok":
-            self.inventory[item] -= 1
+            self._inventory[item] -= 1
             return SUCESS
         else:
             return FAIL
@@ -211,7 +217,9 @@ class Player:
         self.socket.send("Incantation")
         self.socket.receive()
         buff = self.socket.buffer
-        if buff == "Elevation underway":
+        print(buff)
+        if buff == "Elevation underway\n":
+            self.socket.receive()
             self.level += 1
         else:
             return FAIL
@@ -224,10 +232,10 @@ class Player:
         matches = re.findall(inventory_regex, self.socket.buffer)
         for item, quantity in matches:
             if item in self.inventory:
-                self.inventory[item] = int(quantity)
+                self._inventory[item] = int(quantity)
 
     def update_priority(self):
-        if (self.inventory["food"] < 10):
+        if (self._inventory["food"] < 10):
             self.priority = Priority.FOOD
             return
         if self.priority != Priority.EXPLORE:
