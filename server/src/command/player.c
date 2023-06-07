@@ -42,16 +42,16 @@ int send_player_level(int sockfd, serv_t *serv, char *buffer)
 
 int send_player_inventory(int sockfd, serv_t *serv, char *buffer)
 {
-    int count = 0;
-    char *msg = NULL;
-    char **array = split_string_at_spaces(buffer, &count);
-    player_t *tmp = parse_player(sockfd, serv, atoi(array[1]));
+    char msg[0];
+    player_t *tmp = serv->clients->player;
     inv_t *inv = tmp->inventory;
     int len = snprintf(msg, 0, "pin %d %d %d %d %d %d %d %d\n", tmp->id
         , inv->food, inv->linemate, inv->deraumere, inv->sibur, inv->mendiane,
         inv->phiras, inv->thystame);
-    char s[len];
+    char s[len + 1];
+    (void)buffer;
 
+    printf("id: %d\n", tmp->id);
     snprintf(s, len, "pin %d %d %d %d %d %d %d %d\n", tmp->id
         , inv->food, inv->linemate, inv->deraumere, inv->sibur, inv->mendiane,
         inv->phiras, inv->thystame);
