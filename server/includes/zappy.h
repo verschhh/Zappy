@@ -66,5 +66,6 @@ void send_connection_msg(client_t *client);
 int send_death_player(int sockfd, serv_t *serv, char *buffer);
 int send_expulsion(int sockfd, serv_t *serv, char *buffer);
 int send_egg_laying(int sockfd, serv_t *serv, char *buffer);
+int send_serv_msg(int sockfd, serv_t *serv, char *buffer);
 
 #endif
