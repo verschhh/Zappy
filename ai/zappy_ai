@@ -92,10 +92,18 @@ def main(av, ac):
                 player.right()
             elif message == "Left":
                 player.left()
-            elif message == "Take food":
-                player.take("food")
+            elif message == "Inventory":
+                player.inventory()
+            
+            elif message.split(" ")[0] == "Take":
+                print(message.split(" ")[1])
+                player.take(message.split(" ")[1])
             elif message == "Broadcast salut":
                 player.broadcast("salut")
+            elif message == "Incantation":
+                player.incantation()
+            else:
+                print("Unknown command")
             print(sock.buffer)
             message = input("-> ")
         sock.close()
