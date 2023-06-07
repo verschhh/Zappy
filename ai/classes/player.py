@@ -225,7 +225,7 @@ class Player:
             self.level += 1
         else:
             return FAIL
-    
+
     # * AI Strategy
     def update_inventory(self):
         self.socket.send("Inventory")
@@ -251,7 +251,7 @@ class Player:
             case Priority.EXPLORE:
                 move = self.explore()
         return move
-    
+
     def explore(self):
         foo = randint(0,12)
         if foo < 5:
@@ -262,4 +262,4 @@ class Player:
             return "Right"
         else:
             return "Left"
-            
+

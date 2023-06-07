@@ -17,7 +17,7 @@ int check_slot_team(slot_t *slot)
 
 int compare_team_name_buffer(slot_t *slot, char *copy)
 {
-    if (strcmp(slot->team_name, copy) == 0) {  // Valgrind HERE
+    if (strcmp(slot->team_name, copy) == 0) {
         if (!check_slot_team(slot))
             return -1;
         return slot->nb;
@@ -44,8 +44,8 @@ int check_name_team(serv_t *serv, char *buffer)
 
 void send_x_y_ai(int sockfd, serv_t *serv, int slot)
 {
-    char msg[12];
+    char msg[14];
 
-    sprintf(msg, "%d %d %d", slot, serv->max_x, serv->max_y);
+    sprintf(msg, "%d\n %d %d\n", slot, serv->max_x, serv->max_y);
     write(sockfd, msg, strlen(msg));
 }
