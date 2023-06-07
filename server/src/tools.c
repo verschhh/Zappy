@@ -45,3 +45,14 @@ char** split_string_at_spaces(const char* input, int* count)
     free(copy);
     return result;
 }
+
+client_t *get_correct_client(serv_t *serv, int sockfd)
+{
+    client_t *copy = serv->clients;
+
+    while (copy->next != NULL) {
+        if (copy->sockfd == sockfd)
+            return copy;
+        copy = copy->next;
+    }
+}

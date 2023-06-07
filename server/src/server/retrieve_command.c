@@ -13,9 +13,11 @@ const cmd_t cmd_list[NB_CMD] = {
     {"mct", &map_content},
     {"tna", &get_all_names_group},
     {"sgt", &send_unit_time},
+    {"sst", &modify_unit_time},
     {"ppo", &send_player_position},
     {"plv", &send_player_level},
     {"pin", &send_player_inventory}
+    // {"Eject", &send_expulsion}
 };
 
 int parse_command(char *buffer)
@@ -56,9 +58,10 @@ int receive_client_msg(int sockfd, fd_set *readfds, serv_t *serv)
         if (cmd == -1) {
             next = check_name_team(serv, buffer);
             if (next > 0) {
-                // fill_client_struct(sockfd, serv, buffer);
+                fill_client_struct(sockfd, serv, buffer);
                 send_x_y_ai(sockfd, serv, next);
-            }
+            } else
+                write(sockfd, "suc\n", 4);
             return 0;
         }
         lauch_cmd(cmd, sockfd, serv, buffer);

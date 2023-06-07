@@ -9,23 +9,29 @@
 
 int map_size(int sockfd, serv_t *serv, char *buffer)
 {
-    char msg[10];
+    char get_len[0];
     (void)buffer;
+    int len = snprintf(get_len, 0, "msz %d %d\n", serv->max_x, serv->max_y);
+    char msg[len + 1];
 
     sprintf(msg, "%s %d %d\n", "msz", serv->max_x, serv->max_y);
-    if (write(sockfd, msg, 10) == -1)
+    if (write(sockfd, msg, len) == -1)
         return 84;
     return 0;
 }
 
 int send_tile_content(map_t *map, int sockfd)
 {
-    char msg[32];
+    char get_len[0];
+    int len = snprintf(get_len, 0, "bct %d %d %d %d %d %d %d %d %d\n",
+        map->x, map->y, map->food, map->linemate, map->deraumere,
+            map->sibur, map->mendiane, map->phiras, map->thystame);
+    char msg[len + 1];
 
     sprintf(msg, "bct %d %d %d %d %d %d %d %d %d\n",
         map->x, map->y, map->food, map->linemate, map->deraumere,
             map->sibur, map->mendiane, map->phiras, map->thystame);
-    if (write(sockfd, msg, 32) == -1)
+    if (write(sockfd, msg, len) == -1)
         return 84;
     return 0;
 }
@@ -62,9 +68,13 @@ void count_content_tile(int *array, map_t *map)
 
 int map_content(int sockfd, serv_t *serv, char *buffer)
 {
-    int array[7] = {0, 0, 0, 0, 0, 0, 0};
-    char msg[32];
     (void) buffer;
+    int array[7] = {0, 0, 0, 0, 0, 0, 0};
+    char get_len[32];
+    int len = snprintf(get_len, 0, "bct %d %d %d %d %d %d %d %d %d\n",
+        serv->max_x, serv->max_y, array[0], array[1], array[2],
+            array[3], array[4], array[5], array[6]);
+    char msg[len + 15];
 
     for (int i = 0; i != serv->max_x; i++) {
         for (int j = 0; j != serv->max_y; j++) {
@@ -75,5 +85,5 @@ int map_content(int sockfd, serv_t *serv, char *buffer)
     sprintf(msg, "bct %d %d %d %d %d %d %d %d %d\n",
         serv->max_x, serv->max_y, array[0], array[1], array[2],
             array[3], array[4], array[5], array[6]);
-    write(sockfd, msg, 32);
+    write(sockfd, msg, len);
 }
