@@ -48,6 +48,7 @@ void print_and_exit(char *str);
 void usage(void);
 char** split_string_at_spaces(const char* input, int* count);
 char *get_orientation(enum orientation orientation);
+client_t *get_correct_client(serv_t *serv, int sockfd);
 
 //* Commands
 int map_size(int sockfd, serv_t *serv, char *buffer);
