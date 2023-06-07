@@ -41,6 +41,7 @@ serv_t *serv_ctor(args_t *arg)
     serv->max_y = arg->height;
     serv->map = create_map(arg);
     serv->freq = arg->freq;
+    serv->clients = NULL;
     serv->slots = slot_ctor(arg);
     return serv;
 }

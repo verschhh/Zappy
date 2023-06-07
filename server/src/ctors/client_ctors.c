@@ -21,8 +21,10 @@ client_t *pop_client(client_t *client)
 
 client_t *client_ctor(serv_t *serv)
 {
-    if (serv->clients == NULL)
+    if (serv->clients == NULL) {
         serv->clients = malloc(sizeof(client_t));
+        serv->clients->next = NULL;
+    }
     while (serv->clients->next != NULL)
         serv->clients = serv->clients->next;
     serv->clients->addrlen = sizeof(struct sockaddr_in);

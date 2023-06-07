@@ -9,11 +9,13 @@
 
 int map_size(int sockfd, serv_t *serv, char *buffer)
 {
-    char msg[10];
+    char msg[0];
     (void)buffer;
+    int len = snprintf(msg, 0, "msz %d %d\n", serv->max_x, serv->max_y);
+    char test[len + 1];
 
-    sprintf(msg, "%s %d %d\n", "msz", serv->max_x, serv->max_y);
-    if (write(sockfd, msg, 10) == -1)
+    sprintf(test, "%s %d %d\n", "msz", serv->max_x, serv->max_y);
+    if (write(sockfd, test, len) == -1)
         return 84;
     return 0;
 }
