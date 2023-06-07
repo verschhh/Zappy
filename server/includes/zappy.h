@@ -25,13 +25,11 @@ player_t *parse_player(int sockfd, serv_t *serv, int nb);
 //* Constructors
 serv_t *serv_ctor(args_t *arg);
 map_t *create_map(args_t *arg);
-client_t *root_client_ctor(args_t *arg);
 client_t *client_ctor(serv_t *serv);
 client_t *pop_client(client_t *client);
 inv_t *inv_ctor(void);
 slot_t *slot_ctor(args_t *arg);
-player_t *player_root_ctor(int nb_client);
-player_t *add_player(player_t *player);
+player_t *player_ctor(serv_t *server);
 slot_t *new_slot(slot_t *slot, char *name);
 int fill_client_struct(int sockfd, serv_t *serv, char *buffer);
 
@@ -60,5 +58,8 @@ int send_unit_time(int sockfd, serv_t *serv, char *buffer);
 int send_player_position(int sockfd, serv_t *serv, char *buffer);
 int send_player_level(int sockfd, serv_t *serv, char *buffer);
 int send_player_inventory(int sockfd, serv_t *serv, char *buffer);
+
+//* Server Commands
+void send_connection_msg(client_t *client);
 
 #endif

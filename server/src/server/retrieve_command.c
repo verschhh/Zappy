@@ -16,6 +16,7 @@ const cmd_t cmd_list[NB_CMD] = {
     {"ppo", &send_player_position},
     {"plv", &send_player_level},
     {"pin", &send_player_inventory}
+    // {"Eject", &send_expulsion}
 };
 
 int parse_command(char *buffer)
@@ -54,9 +55,10 @@ int receive_client_msg(int sockfd, fd_set *readfds, serv_t *serv)
     } else {
         cmd = parse_command(buffer);
         if (cmd == -1) {
+            write(sockfd, "suc\n", 4);
             next = check_name_team(serv, buffer);
             if (next > 0) {
-                // fill_client_struct(sockfd, serv, buffer);
+                fill_client_struct(sockfd, serv, buffer);
                 send_x_y_ai(sockfd, serv, next);
             }
             return 0;
