@@ -41,5 +41,5 @@ int fill_client_struct(int sockfd, serv_t *serv, char *buffer)
         temp->slot -= 1;
         temp->team_name = buffer;
     }
-    
+    send_connection_msg(temp);
 }

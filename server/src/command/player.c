@@ -66,3 +66,8 @@ int send_player_inventory(int sockfd, serv_t *serv, char *buffer)
         return 84;
     return 0;
 }
+
+int send_expulsion(int sockfd, serv_t *serv, char *buffer)
+{
+    
+}
