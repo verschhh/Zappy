@@ -59,6 +59,7 @@ int send_unit_time(int sockfd, serv_t *serv, char *buffer);
 int send_player_position(int sockfd, serv_t *serv, char *buffer);
 int send_player_level(int sockfd, serv_t *serv, char *buffer);
 int send_player_inventory(int sockfd, serv_t *serv, char *buffer);
+int modify_unit_time(int sockfd, serv_t *serv, char *buffer);
 
 //* Server Commands
 void send_connection_msg(client_t *client);

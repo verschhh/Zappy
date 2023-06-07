@@ -13,6 +13,7 @@ const cmd_t cmd_list[NB_CMD] = {
     {"mct", &map_content},
     {"tna", &get_all_names_group},
     {"sgt", &send_unit_time},
+    {"sst", &modify_unit_time},
     {"ppo", &send_player_position},
     {"plv", &send_player_level},
     {"pin", &send_player_inventory}
