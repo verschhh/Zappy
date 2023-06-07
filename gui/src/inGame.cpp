@@ -73,7 +73,6 @@ void zappy::InGame::createPnj(int x, int y, pnjOrientation orientation) {
     pnj_t pnj;
 
     int rnd = randomNumber(1, 3);
-    // ? save texture nb in pnj struct
     pnj.type = rnd;
 
     pnj.sprite.setTexture(_pnjTextures[rnd - 1].left);
@@ -95,12 +94,19 @@ void zappy::InGame::createPnj(int x, int y, pnjOrientation orientation) {
     _pnjs.push_back(pnj);
 }
 
+void zappy::InGame::createRessources(int x, int y, ressources_t ressources) {
+    (void) x;
+    (void) y;
+    (void) ressources;
+}
+
 void zappy::InGame::loadTextures() {
     if (!_backgroundTexture.loadFromFile("gui/assets/images/space.jpg"))
         throw AScene::SceneException("Error: cannot load in game background texture");
     setSpriteProperties(_backgroundSprite, _backgroundTexture, sf::Vector2f(1, 1), sf::Vector2f(960, 540));
 
-    for (int i = 0; i < 3; i++) {
+    int nbPnjTextures = 3;
+    for (int i = 0; i < nbPnjTextures; i++) {
         pnjTextures_t pnjTextures;
         if (!pnjTextures.left.loadFromFile("gui/assets/pnj/pnj" + std::to_string(i + 1) + "_left.png"))
             throw AScene::SceneException("Error: cannot load pnj" + std::to_string(i + 1) + "_left.png");
@@ -111,8 +117,19 @@ void zappy::InGame::loadTextures() {
         _pnjTextures.push_back(pnjTextures);
     }
 
+    int nbRessourcesTextures = 6;
+    for (int i = 0; i < nbRessourcesTextures; i++) {
+        sf::Texture texture;
+        if (!texture.loadFromFile("gui/assets/objects/crystals/crystal" + std::to_string(i + 1) + ".png"))
+            throw AScene::SceneException("Error: cannot load crystal" + std::to_string(i + 1) + ".png");
+
+        _ressourcesTextures.push_back(texture);
+    }
+
     // ! TEMP
-    createPnj(2, 4, NORTH);
+    createPnj(10, 4, NORTH);
+    // createPnj(5, 8, EAST);
+    // createPnj(10, 2, SOUTH);
 }
 
 void zappy::InGame::handleEvents(sf::RenderWindow& window) {
@@ -147,8 +164,12 @@ void zappy::InGame::drawPnjs(sf::RenderWindow& window, sf::Clock clock) {
     };
 }
 
-void zappy::InGame::drawScene(sf::RenderWindow& window, sf::Clock clock) {
+void zappy::InGame::drawRessources(sf::RenderWindow& window, sf::Clock clock) {
     (void) clock;
+    (void) window;
+}
+
+void zappy::InGame::drawScene(sf::RenderWindow& window, sf::Clock clock) {
     window.draw(_backgroundSprite);
 
     for (int i = 0; i < _mapWidth; i++) {
