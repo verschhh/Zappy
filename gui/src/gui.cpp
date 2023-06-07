@@ -63,7 +63,7 @@ void zappy::Gui::run() {
 
         window.clear();
 
-        _scenes[_indexScene]->drawScene(window, clock);
+        _scenes[_indexScene]->drawScene(window);
 
         window.display();
     }

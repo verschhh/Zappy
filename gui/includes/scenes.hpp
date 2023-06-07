@@ -18,7 +18,7 @@ namespace zappy {
     class IScene {
         public:
             virtual void handleEvents(sf::RenderWindow& window) = 0;
-            virtual void drawScene(sf::RenderWindow& window, sf::Clock clock) = 0;
+            virtual void drawScene(sf::RenderWindow& window) = 0;
             virtual void setSpriteProperties(sf::Sprite& sprite, sf::Texture& texture, sf::Vector2f scale, sf::Vector2f position) = 0;
 
             virtual int getIndexScene(void) = 0;
@@ -66,12 +66,12 @@ namespace zappy {
             ~Menu();
 
             void handleEvents(sf::RenderWindow& window);
-            void drawScene(sf::RenderWindow& window, sf::Clock clock);
+            void drawScene(sf::RenderWindow& window);
 
             void loadTextures();
             void handleHoverButtons(sf::Vector2i mousePosition);
             void handleMouseClicks(sf::RenderWindow &window, sf::Event event, sf::Vector2i mousePosition);
-            void animateStar(sf::Clock clock, float baseScale);
+            void animateStar(float baseScale);
 
         private:
             sf::Texture _backgroundTexture;
@@ -88,6 +88,7 @@ namespace zappy {
 
             sf::Texture _shiningLightTexture;
             sf::Sprite _shiningLightSprite;
+            sf::Clock _shiningLightClock;
     };
 
     class InGame : public AScene {
@@ -96,7 +97,7 @@ namespace zappy {
             ~InGame();
 
             void handleEvents(sf::RenderWindow& window);
-            void drawScene(sf::RenderWindow& window, sf::Clock clock);
+            void drawScene(sf::RenderWindow& window);
 
             void loadTextures();
             void createMap();
@@ -134,7 +135,7 @@ namespace zappy {
             } pnj_t;
 
             void createPnj(int x, int y, pnjOrientation orientation);
-            void drawPnjs(sf::RenderWindow& window, sf::Clock clock);
+            void drawPnjs(sf::RenderWindow& window);
             void createRessources(int x, int y, ressources_t ressources);
             void drawRessources(sf::RenderWindow& window, sf::Clock clock);
 
@@ -153,5 +154,7 @@ namespace zappy {
 
             sf::Texture _backgroundTexture;
             sf::Sprite _backgroundSprite;
+
+            std::vector<sf::Clock> _pnjMoveClocks;
     };
 }
