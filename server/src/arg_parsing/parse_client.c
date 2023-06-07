@@ -16,5 +16,7 @@ player_t *parse_player(int sockfd, serv_t *serv, int nb)
         }
         temp = temp->next;
     }
+    if (temp->next == NULL)
+        return temp->player;
     return NULL;
 }
