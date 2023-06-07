@@ -62,10 +62,34 @@ int send_player_inventory(int sockfd, serv_t *serv, char *buffer)
 
 int send_expulsion(int sockfd, serv_t *serv, char *buffer)
 {
+    (void)buffer;
     client_t *cpy = get_correct_client(serv, sockfd);
     char msg[10];
 
     sprintf(msg, "pex %d\n", cpy->player->id);
+    write(serv->sockfd, msg, 10);
+    return 0;
+}
+
+
+int send_death_player(int sockfd, serv_t *serv, char *buffer)
+{
+    (void)buffer;
+    client_t *cpy = get_correct_client(serv, sockfd);
+    char msg[10];
+
+    sprintf(msg, "pdi %d\n", cpy->player->id);
+    write(serv->sockfd, msg, 10);
+    return 0;
+}
+
+int send_egg_laying(int sockfd, serv_t *serv, char *buffer)
+{
+    (void)buffer;
+    client_t *cpy = get_correct_client(serv, sockfd);
+    char msg[10];
+
+    sprintf(msg, "pfk %d\n", cpy->player->id);
     write(serv->sockfd, msg, 10);
     return 0;
 }
