@@ -237,7 +237,7 @@ class Player:
                 self._inventory[item] = int(quantity)
 
     def update_priority(self):
-        if (self._inventory["food"] < 10):
+        if (self._inventory["food"] < 12):
             self.priority = Priority.FOOD
             return
         if self.priority != Priority.EXPLORE:
@@ -250,7 +250,41 @@ class Player:
         match self.priority:
             case Priority.EXPLORE:
                 move = self.explore()
+            case Priority.FOOD:
+                move = self.fetch_food(map)
         return move
+
+    def find_nearest_resource(self, resource_type, map):
+        map_height = len(map)
+        map_width = len(map[0])
+
+        nearest_distance = float('inf')
+        nearest_coords = None
+
+        for y in range(map_height):
+            for x in range(map_width):
+                tile = map[y][x]
+                if tile[resource_type] > 0:
+                    distance = self.get_distance(x, y)
+                    if distance < nearest_distance:
+                        nearest_distance = distance
+                        nearest_coords = (x, y)
+        if nearest_coords == None:
+            return -1, -1
+        return nearest_coords
+
+    def fetch_food(self, map):
+        if map[self.y][self.x]["food"] > 0:
+            self.priority = Priority.EXPLORE
+            map[self.y][self.x]["food"] -= 1
+            return "Take food"
+        # find food
+        return self.explore()
+        # TODO : Implement navigation to nearest food
+        # x, y = self.find_nearest_resource("food", map)
+        # if x > -1:
+        #     print(f"there is food at Y {y}, X {x}")
+        # return "Forward"
 
     def explore(self):
         foo = randint(0,12)
