@@ -10,6 +10,8 @@
 int parse_names(char **av, args_t *args)
 {
     int ac = 0;
+    int len = 0;
+
     for (ac = 0; av[ac] != NULL; ac++);
     int currentArg = optind - 1;
     while (currentArg < ac && *av[currentArg] != '-') {
@@ -17,7 +19,9 @@ int parse_names(char **av, args_t *args)
         args->names[args->namescount][strlen(av[currentArg])] = 0;
         args->namescount++;
         currentArg++;
+        len++;
     }
+    args->names[len] = NULL;
     optind = currentArg;
     return 0;
 }
