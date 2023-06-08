@@ -45,7 +45,6 @@ int fill_client_struct(int sockfd, serv_t *serv, char *buffer)
     new_node->next = NULL;
     new_node->sockfd = sockfd;
     new_node->player = player_ctor(serv);
-    printf("payer #%d\n", new_node->player->id);
     new_node->slot -= 1;
     new_node->team_name = buffer;
 

@@ -12,9 +12,15 @@ int send_player_position(int sockfd, serv_t *serv, char *buffer)
     int count = 0;
     char *str = NULL;
     char **array = split_string_at_spaces(buffer, &count);
+    array[1] = array[1] + 1;
+    if (serv->clients->next == NULL) {
+        printf("LA GROSSE DARONNE A KENTIN\n");
+    }
     player_t *t = parse_player(sockfd, serv, atoi(array[1]));
-    if (t == NULL)
+    if (t == NULL) {
+        printf("EXIT\n");
         return 84;
+    }
     char *dir = get_orientation(t->orientation);
     int len = snprintf(str, 0, "ppo %d %d %d %s\n", t->id, t->x, t->y, dir);
     char s[len + 1];

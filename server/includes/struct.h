@@ -107,7 +107,6 @@ typedef struct serv_s {
     int nb_client;
     struct sockaddr_in addr;
     client_t *clients;
-    client_t *gui;
     map_t *map;
     slot_t *slots;
 } serv_t;
