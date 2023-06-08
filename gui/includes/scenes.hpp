@@ -194,5 +194,8 @@ namespace zappy {
 
             //* Class Values
             float _scaleFactor;
+
+            //* Tile selection
+            sf::Vector2i _selectedTile;
     };
 }

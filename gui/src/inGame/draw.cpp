@@ -104,6 +104,24 @@ void zappy::InGame::drawScene(sf::RenderWindow& window)
         }
     };
 
+    if (_selectedTile.x >= 0 && _selectedTile.y >= 0 && _selectedTile.x < _mapWidth && _selectedTile.y < _mapHeight) {
+        const sf::Sprite& gridSprite = _map[_selectedTile.x][_selectedTile.y].gridSprite;
+        sf::FloatRect bounds = gridSprite.getGlobalBounds();    
+        // Draw a colored border around the selected tile
+        sf::RectangleShape border;
+        border.setSize(sf::Vector2f(bounds.width, bounds.height));
+        border.setPosition(bounds.left, bounds.top);
+        border.setOutlineThickness(5.0f);
+        border.setOutlineColor(sf::Color::Red);
+        border.setFillColor(sf::Color::Transparent);
+        window.draw(border);    
+        // Display the received information on the selected tile
+        // Modify the code according to your specific requirements
+        // const tile_content_t& tileContent = _map[_selectedTile.x][_selectedTile.y].content;
+        // Draw the received information on the selected tile
+        // ...
+    }
+
     drawRessources(window);
     drawPnjs(window);
 }
