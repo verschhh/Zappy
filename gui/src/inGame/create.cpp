@@ -76,14 +76,14 @@ void zappy::InGame::createPnj(int x, int y, pnjOrientation orientation)
 
 void zappy::InGame::createRessources(int x, int y, ressources_t ressources)
 {
-    std::cout << "Ressources" << std::endl;
-    std::cout << "Food: " << ressources.food << std::endl;
-    std::cout << "Linemate: " << ressources.linemate << std::endl;
-    std::cout << "Deraumere: " << ressources.deraumere << std::endl;
-    std::cout << "Sibur: " << ressources.sibur << std::endl;
-    std::cout << "Mendiane: " << ressources.mendiane << std::endl;
-    std::cout << "Phiras: " << ressources.phiras << std::endl;
-    std::cout << "Thystame: " << ressources.thystame << std::endl;
+    // std::cout << "Ressources" << std::endl;
+    // std::cout << "Food: " << ressources.food << std::endl;
+    // std::cout << "Linemate: " << ressources.linemate << std::endl;
+    // std::cout << "Deraumere: " << ressources.deraumere << std::endl;
+    // std::cout << "Sibur: " << ressources.sibur << std::endl;
+    // std::cout << "Mendiane: " << ressources.mendiane << std::endl;
+    // std::cout << "Phiras: " << ressources.phiras << std::endl;
+    // std::cout << "Thystame: " << ressources.thystame << std::endl;
 
     tile_content_t tileContent;
 
@@ -94,7 +94,10 @@ void zappy::InGame::createRessources(int x, int y, ressources_t ressources)
         sprite.setTexture(_foodTexture);
         sprite.setScale(sf::Vector2f(_scaleFactor, _scaleFactor));
         sprite.setOrigin(20 / 2, 20 / 2);
-        sprite.setPosition(_map[x][y].gridSprite.getPosition());
+        sf::Vector2f position = _map[x][y].gridSprite.getPosition();
+        int randomX = randomNumber(-25, 25);
+        int randomY = randomNumber(-25, 25);
+        sprite.setPosition(position.x + randomX, position.y + randomY);
         tileContent.foodSprites.push_back(sprite);
     }
 
@@ -103,7 +106,10 @@ void zappy::InGame::createRessources(int x, int y, ressources_t ressources)
         sprite.setTexture(_ressourcesTextures[0]);
         sprite.setScale(sf::Vector2f(_scaleFactor, _scaleFactor));
         sprite.setOrigin(20 / 2, 20 / 2);
-        sprite.setPosition(_map[x][y].gridSprite.getPosition());
+        sf::Vector2f position = _map[x][y].gridSprite.getPosition();
+        int randomX = randomNumber(-25, 25);
+        int randomY = randomNumber(-25, 25);
+        sprite.setPosition(position.x + randomX, position.y + randomY);
         tileContent.linemateSprites.push_back(sprite);
     }
 
@@ -112,7 +118,10 @@ void zappy::InGame::createRessources(int x, int y, ressources_t ressources)
         sprite.setTexture(_ressourcesTextures[1]);
         sprite.setScale(sf::Vector2f(_scaleFactor, _scaleFactor));
         sprite.setOrigin(20 / 2, 20 / 2);
-        sprite.setPosition(_map[x][y].gridSprite.getPosition());
+        sf::Vector2f position = _map[x][y].gridSprite.getPosition();
+        int randomX = randomNumber(-25, 25);
+        int randomY = randomNumber(-25, 25);
+        sprite.setPosition(position.x + randomX, position.y + randomY);
         tileContent.deraumereSprites.push_back(sprite);
     }
 
@@ -121,7 +130,10 @@ void zappy::InGame::createRessources(int x, int y, ressources_t ressources)
         sprite.setTexture(_ressourcesTextures[2]);
         sprite.setScale(sf::Vector2f(_scaleFactor, _scaleFactor));
         sprite.setOrigin(20 / 2, 20 / 2);
-        sprite.setPosition(_map[x][y].gridSprite.getPosition());
+        sf::Vector2f position = _map[x][y].gridSprite.getPosition();
+        int randomX = randomNumber(-25, 25);
+        int randomY = randomNumber(-25, 25);
+        sprite.setPosition(position.x + randomX, position.y + randomY);
         tileContent.siburSprites.push_back(sprite);
     }
 
@@ -130,7 +142,10 @@ void zappy::InGame::createRessources(int x, int y, ressources_t ressources)
         sprite.setTexture(_ressourcesTextures[3]);
         sprite.setScale(sf::Vector2f(_scaleFactor, _scaleFactor));
         sprite.setOrigin(20 / 2, 20 / 2);
-        sprite.setPosition(_map[x][y].gridSprite.getPosition());
+        sf::Vector2f position = _map[x][y].gridSprite.getPosition();
+        int randomX = randomNumber(-25, 25);
+        int randomY = randomNumber(-25, 25);
+        sprite.setPosition(position.x + randomX, position.y + randomY);
         tileContent.mendianeSprites.push_back(sprite);
     }
 
@@ -139,7 +154,10 @@ void zappy::InGame::createRessources(int x, int y, ressources_t ressources)
         sprite.setTexture(_ressourcesTextures[4]);
         sprite.setScale(sf::Vector2f(_scaleFactor, _scaleFactor));
         sprite.setOrigin(20 / 2, 20 / 2);
-        sprite.setPosition(_map[x][y].gridSprite.getPosition());
+        sf::Vector2f position = _map[x][y].gridSprite.getPosition();
+        int randomX = randomNumber(-25, 25);
+        int randomY = randomNumber(-25, 25);
+        sprite.setPosition(position.x + randomX, position.y + randomY);
         tileContent.phirasSprites.push_back(sprite);
     }
 
@@ -148,7 +166,10 @@ void zappy::InGame::createRessources(int x, int y, ressources_t ressources)
         sprite.setTexture(_ressourcesTextures[5]);
         sprite.setScale(sf::Vector2f(_scaleFactor, _scaleFactor));
         sprite.setOrigin(20 / 2, 20 / 2);
-        sprite.setPosition(_map[x][y].gridSprite.getPosition());
+        sf::Vector2f position = _map[x][y].gridSprite.getPosition();
+        int randomX = randomNumber(-25, 25);
+        int randomY = randomNumber(-25, 25);
+        sprite.setPosition(position.x + randomX, position.y + randomY);
         tileContent.thystameSprites.push_back(sprite);
     }
 
