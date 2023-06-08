@@ -7,8 +7,8 @@
 
 #include "../../includes/scenes.hpp"
 
-zappy::InGame::InGame(int mapWidth, int mapHeight)
-: _mapWidth(mapWidth), _mapHeight(mapHeight), _scaleFactor(1)
+zappy::InGame::InGame(Connection& connection, int mapWidth, int mapHeight)
+    : _connection(connection), _mapWidth(mapWidth), _mapHeight(mapHeight)
 {
     setIndexScene(1);
     createMap();

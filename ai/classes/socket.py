@@ -41,7 +41,8 @@ class Socket:
             self.receive()
         elif buff.decode().split(':')[0] == "eject":
             print
-        self.buffer += buff.decode()
+        else:
+            self.buffer += buff.decode()
 
     def close(self):
         self._sock.close()

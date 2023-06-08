@@ -15,7 +15,7 @@ slot_t *new_slot(slot_t *slot, char *name)
     if (slot == NULL)
         return NULL;
     new_slot->team_name = name;
-    new_slot->nb = 0;
+    new_slot->nb = slot->nb;
     new_slot->next = NULL;
     while (tmp->next != NULL)
         tmp = tmp->next;

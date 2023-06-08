@@ -30,22 +30,44 @@ client_t *client_ctor(serv_t *serv)
     serv->clients->addrlen = sizeof(struct sockaddr_in);
     serv->clients->slot = serv->slots->nb;
     serv->clients->next = NULL;
+    printf("POV: J'ME SUIS CREE\n");
     return serv->clients;
 }
 
 int fill_client_struct(int sockfd, serv_t *serv, char *buffer)
 {
     client_t *temp = serv->clients;
-    int nb_client = 0;
+    client_t *new_node = malloc(sizeof(client_t));
 
-    while(temp->next != NULL || temp->sockfd != sockfd) {
-        nb_client++;
-        temp = temp->next;
+    if (new_node == NULL)
+        return 84;
+
+    new_node->next = NULL;
+    new_node->sockfd = sockfd;
+    new_node->player = player_ctor(serv);
+    printf("payer #%d\n", new_node->player->id);
+    new_node->slot -= 1;
+    new_node->team_name = buffer;
+
+    if (temp == NULL) {
+        serv->clients = new_node;
+    } else {
+        while (temp->next != NULL || temp->sockfd != sockfd)
+            temp = temp->next;
+        temp->next = new_node;
     }
-    if (temp->sockfd == sockfd) {
-        temp->player = player_ctor(serv, nb_client);
-        temp->slot -= 1;
-        temp->team_name = buffer;
-    }
-    // send_connection_msg(temp);
+
+    return 0;
 }
+// {
+//     client_t *temp = serv->clients;
+
+//     while(temp->next != NULL || temp->sockfd != sockfd)
+//         temp = temp->next;
+//     if (temp->sockfd == sockfd) {
+//         temp->player = player_ctor(serv);
+//         temp->slot -= 1;
+//         temp->team_name = buffer;
+//     }
+//     // send_connection_msg(temp);
+// }

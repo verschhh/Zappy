@@ -32,7 +32,7 @@ int check_name_team(serv_t *serv, char *buffer)
     int slot = 0;
 
     strncpy(copy, buffer, strlen(buffer) - 1);
-    copy[strlen(buffer)] = 0;
+    copy[strlen(buffer) - 1] = 0;
     while (temp->next != NULL) {
         slot = compare_team_name_buffer(temp, copy);
         if (slot != -1)
