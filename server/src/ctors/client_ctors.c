@@ -7,41 +7,34 @@
 
 #include "../includes/zappy.h"
 
-client_t *pop_client(client_t *client)
+client_t *pop_client(client_t **client)
 {
-    client_t *tmp = client;
+    client_t* temp = *client;
 
-    if (client == NULL)
+    if (temp == NULL)
         return NULL;
-    while (tmp->next != NULL)
-        tmp = tmp->next;
-    free(tmp);
-    return client;
+    *client = temp->next;
+    free(temp);
+    return *client;
 }
 
 client_t *client_ctor(serv_t *serv)
 {
-    if (serv->clients == NULL) {
-        serv->clients = malloc(sizeof(client_t));
-        serv->clients->next = NULL;
-    }
-    while (serv->clients->next != NULL)
-        serv->clients = serv->clients->next;
+    serv->clients = malloc(sizeof(client_t));
     serv->clients->addrlen = sizeof(struct sockaddr_in);
     serv->clients->slot = serv->slots->nb;
     serv->clients->next = NULL;
-    printf("POV: J'ME SUIS CREE\n");
+    serv->clients->next = NULL;
     return serv->clients;
 }
 
-int fill_client_struct(int sockfd, serv_t *serv, char *buffer)
+client_t *fill_client_struct(int sockfd, serv_t *serv, char *buffer)
 {
     client_t *temp = serv->clients;
     client_t *new_node = malloc(sizeof(client_t));
 
     if (new_node == NULL)
-        return 84;
-
+        return NULL;
     new_node->next = NULL;
     new_node->sockfd = sockfd;
     new_node->player = player_ctor(serv);
@@ -56,7 +49,7 @@ int fill_client_struct(int sockfd, serv_t *serv, char *buffer)
         temp->next = new_node;
     }
 
-    return 0;
+    return serv->clients;
 }
 // {
 //     client_t *temp = serv->clients;

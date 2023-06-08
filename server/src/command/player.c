@@ -7,15 +7,22 @@
 
 #include "../../includes/zappy.h"
 
+void erase_first_characters(char* str, int numChars) {
+    int len = strlen(str);
+    if (numChars >= len) {
+        str[0] = '\0';
+    } else {
+        memmove(str, str + numChars, len - numChars + 1);
+    }
+}
+
 int send_player_position(int sockfd, serv_t *serv, char *buffer)
 {
     int count = 0;
     char *str = NULL;
     char **array = split_string_at_spaces(buffer, &count);
-    array[1] = array[1] + 1;
-    if (serv->clients->next == NULL) {
-        printf("LA GROSSE DARONNE A KENTIN\n");
-    }
+    erase_first_characters(array[1], 1);
+    printf("array[1] = %s", array[1]);
     player_t *t = parse_player(sockfd, serv, atoi(array[1]));
     if (t == NULL) {
         printf("EXIT\n");
