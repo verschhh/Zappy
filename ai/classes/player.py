@@ -225,7 +225,7 @@ class Player:
             self.level += 1
         else:
             return FAIL
-    
+
     # * AI Strategy
     def update_inventory(self):
         self.socket.send("Inventory")
@@ -273,7 +273,6 @@ class Player:
             return -1, -1
         return nearest_coords
 
-
     def fetch_food(self, map):
         if map[self.y][self.x]["food"] > 0:
             self.priority = Priority.EXPLORE
@@ -297,4 +296,4 @@ class Player:
             return "Right"
         else:
             return "Left"
-            
+

@@ -8,7 +8,11 @@
 SRC = 	src/gui.cpp \
 		src/main.cpp \
 		src/menu.cpp \
-		src/inGame.cpp \
+		src/inGame/inGame.cpp \
+		src/inGame/tools.cpp \
+		src/inGame/draw.cpp \
+		src/inGame/create.cpp \
+		src/inGame/handleEvents.cpp \
 		src/connection.cpp \
 
 OBJ = $(SRC:.cpp=.o)

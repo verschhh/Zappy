@@ -18,7 +18,7 @@ namespace zappy {
     class IScene {
         public:
             virtual void handleEvents(sf::RenderWindow& window) = 0;
-            virtual void drawScene(sf::RenderWindow& window, sf::Clock clock) = 0;
+            virtual void drawScene(sf::RenderWindow& window) = 0;
             virtual void setSpriteProperties(sf::Sprite& sprite, sf::Texture& texture, sf::Vector2f scale, sf::Vector2f position) = 0;
 
             virtual int getIndexScene(void) = 0;
@@ -62,16 +62,20 @@ namespace zappy {
 
     class Menu : public AScene {
         public:
+            //* Constructor / Destructor
             Menu();
             ~Menu();
 
-            void handleEvents(sf::RenderWindow& window);
-            void drawScene(sf::RenderWindow& window, sf::Clock clock);
-
             void loadTextures();
+
+            //* Abstract functions
+            void handleEvents(sf::RenderWindow& window);
+            void drawScene(sf::RenderWindow& window);
+
+            //* Class methods
             void handleHoverButtons(sf::Vector2i mousePosition);
             void handleMouseClicks(sf::RenderWindow &window, sf::Event event, sf::Vector2i mousePosition);
-            void animateStar(sf::Clock clock, float baseScale);
+            void animateStar(float baseScale);
 
         private:
             sf::Texture _backgroundTexture;
@@ -88,19 +92,26 @@ namespace zappy {
 
             sf::Texture _shiningLightTexture;
             sf::Sprite _shiningLightSprite;
+            sf::Clock _shiningLightClock;
     };
 
     class InGame : public AScene {
         public:
+            //* Constructor / Destructor
             InGame(int mapWidth, int mapHeight);
             ~InGame();
 
-            void handleEvents(sf::RenderWindow& window);
-            void drawScene(sf::RenderWindow& window, sf::Clock clock);
-
-            void loadTextures();
             void createMap();
+            void loadTextures();
 
+            //* Abstract functions
+            void handleEvents(sf::RenderWindow& window);
+            void drawScene(sf::RenderWindow& window);
+
+            //* Tools
+            int randomNumber(int min, int max);
+
+            //* Structures
             typedef struct pnjTextures_s {
                 sf::Texture left;
                 sf::Texture right;
@@ -133,25 +144,32 @@ namespace zappy {
                 pnjOrientation orientation;
             } pnj_t;
 
+            //* Class methods
             void createPnj(int x, int y, pnjOrientation orientation);
-            void drawPnjs(sf::RenderWindow& window, sf::Clock clock);
+            void drawPnjs(sf::RenderWindow& window);
             void createRessources(int x, int y, ressources_t ressources);
             void drawRessources(sf::RenderWindow& window, sf::Clock clock);
 
         private:
+            //* Background
+            sf::Texture _backgroundTexture;
+            sf::Sprite _backgroundSprite;
+
+            //* Map
             int _mapWidth;
             int _mapHeight;
             std::vector<sf::Texture> _gridTextures;
             std::vector<std::vector<sf::Sprite>> _map;
 
+            //* PNJ
             std::vector<pnjTextures_t> _pnjTextures;
             std::vector<pnj_t> _pnjs;
+            std::vector<sf::Clock> _pnjMoveClocks;
 
+            //* Ressources
             std::vector<sf::Texture> _ressourcesTextures;
 
+            //* Class Values
             float _scaleFactor;
-
-            sf::Texture _backgroundTexture;
-            sf::Sprite _backgroundSprite;
     };
 }

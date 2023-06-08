@@ -29,7 +29,7 @@ client_t *client_ctor(serv_t *serv);
 client_t *pop_client(client_t *client);
 inv_t *inv_ctor(void);
 slot_t *slot_ctor(args_t *arg);
-player_t *player_ctor(serv_t *server);
+player_t *player_ctor(serv_t *server, int nb);
 slot_t *new_slot(slot_t *slot, char *name);
 int fill_client_struct(int sockfd, serv_t *serv, char *buffer);
 

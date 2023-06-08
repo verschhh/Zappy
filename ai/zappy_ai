@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.10
 
 ##
 ## EPITECH PROJECT, 2023
@@ -79,10 +79,11 @@ def main(av, ac):
         game = Game(int(buff[1].split()[0]), int(buff[1].split()[1]))
         player = Player(sock, game)
         game.set_map()
-        game.update_map(player.look())
-        print(f"Max X: {player.max_x} Max Y: {player.max_y}")
-        print_map(game, player)
-        message = player.pick_move(game.map)
+        # game.update_map(player.look())
+        # print(f"Max X: {player.max_x} Max Y: {player.max_y}")
+        # print_map(game, player)
+        # message = player.pick_move(game.map)
+        message = input("> ")
         while message != "quit":
             if message == "Look":
                 game.update_map(player.look())
@@ -95,7 +96,6 @@ def main(av, ac):
                 player.left()
             elif message == "Inventory":
                 player.inventory()
-            
             elif message.split(" ")[0] == "Take":
                 print(message.split(" ")[1])
                 player.take(message.split(" ")[1])
@@ -108,7 +108,7 @@ def main(av, ac):
             print(sock.buffer)
             message = input("-> ")
             # print(sock.buffer)
-            # # print(message)
+            # print(message)
             # print(f"X:{player.x} Y:{player.y}")
             # message = player.pick_move(game.map)
         sock.close()

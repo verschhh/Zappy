@@ -28,6 +28,7 @@ client_t *client_ctor(serv_t *serv)
     while (serv->clients->next != NULL)
         serv->clients = serv->clients->next;
     serv->clients->addrlen = sizeof(struct sockaddr_in);
+    serv->clients->slot = serv->slots->nb;
     serv->clients->next = NULL;
     return serv->clients;
 }
@@ -35,13 +36,16 @@ client_t *client_ctor(serv_t *serv)
 int fill_client_struct(int sockfd, serv_t *serv, char *buffer)
 {
     client_t *temp = serv->clients;
+    int nb_client = 0;
 
-    while(temp->next != NULL || temp->sockfd != sockfd)
+    while(temp->next != NULL || temp->sockfd != sockfd) {
+        nb_client++;
         temp = temp->next;
+    }
     if (temp->sockfd == sockfd) {
-        temp->player = player_ctor(serv);
+        temp->player = player_ctor(serv, nb_client);
         temp->slot -= 1;
         temp->team_name = buffer;
     }
-    send_connection_msg(temp);
+    // send_connection_msg(temp);
 }

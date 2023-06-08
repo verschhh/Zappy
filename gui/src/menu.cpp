@@ -82,7 +82,7 @@ void zappy::Menu::handleEvents(sf::RenderWindow& window) {
     }
 }
 
-void zappy::Menu::animateStar(sf::Clock clock, float baseScale)
+void zappy::Menu::animateStar(float baseScale)
 {
     float initialRotation = 0.0f;
     float targetRotation = 360.0f;
@@ -92,7 +92,7 @@ void zappy::Menu::animateStar(sf::Clock clock, float baseScale)
     float initialScale = 1.0f;
     float targetScale = 1.5f;
 
-    float elapsedTime = clock.getElapsedTime().asSeconds();
+    float elapsedTime = _shiningLightClock.getElapsedTime().asSeconds();
 
     float scaledElapsedTime = std::fmod(elapsedTime, animationDuration);
 
@@ -109,12 +109,12 @@ void zappy::Menu::animateStar(sf::Clock clock, float baseScale)
 
 }
 
-void zappy::Menu::drawScene(sf::RenderWindow& window, sf::Clock clock) {
+void zappy::Menu::drawScene(sf::RenderWindow& window) {
     window.draw(_backgroundSprite);
     window.draw(_logoSprite);
     window.draw(_playButtonSprite);
     window.draw(_quitButtonSprite);
 
-    animateStar(clock, 6.0f);
+    animateStar(6.0f);
     window.draw(_shiningLightSprite);
 }
