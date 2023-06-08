@@ -93,3 +93,15 @@ int send_egg_laying(int sockfd, serv_t *serv, char *buffer)
     write(serv->sockfd, msg, 10);
     return 0;
 }
+
+int send_broadcast(int sockfd, serv_t *serv, char *buffer)
+{
+    char msg[0];
+    client_t *cpy = get_correct_client(serv, sockfd);
+    int len = snprintf(msg, 0, "pbc %d %s", cpy->player->id, buffer);
+    char send[len];
+
+    sprintf(send, "pbc %d %s", cpy->player->id, buffer);
+    write(serv->sockfd, send, len);
+    return 0;
+}
