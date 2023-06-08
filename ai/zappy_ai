@@ -105,7 +105,6 @@ def main(av, ac):
                 player.incantation()
             else:
                 print("Unknown command")
-            print(sock.buffer)
             message = input("-> ")
             # print(sock.buffer)
             # print(message)
