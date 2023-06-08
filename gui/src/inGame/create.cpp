@@ -52,6 +52,9 @@ void zappy::InGame::createMap()
 
 void zappy::InGame::createPnj(int x, int y, pnjOrientation orientation)
 {
+    if (x < 0 || x >= _mapWidth || y < 0 || y >= _mapHeight)
+        throw AScene::SceneException("Error: cannot create pnj outside of the map");
+
     pnj_t pnj;
 
     int rnd = randomNumber(1, 3);
@@ -76,6 +79,9 @@ void zappy::InGame::createPnj(int x, int y, pnjOrientation orientation)
 
 void zappy::InGame::createRessources(int x, int y, ressources_t ressources)
 {
+    if (x < 0 || x >= _mapWidth || y < 0 || y >= _mapHeight)
+        throw AScene::SceneException("Error: cannot create ressources outside of the map");
+
     // std::cout << "Ressources" << std::endl;
     // std::cout << "Food: " << ressources.food << std::endl;
     // std::cout << "Linemate: " << ressources.linemate << std::endl;
