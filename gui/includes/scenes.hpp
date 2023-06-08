@@ -167,6 +167,7 @@ namespace zappy {
             std::vector<sf::Clock> _pnjMoveClocks;
 
             //* Ressources
+            sf::Texture _foodTexture;
             std::vector<sf::Texture> _ressourcesTextures;
 
             //* Class Values

@@ -35,14 +35,17 @@ void zappy::InGame::loadTextures()
         _pnjTextures.push_back(pnjTextures);
     }
 
-    int nbRessourcesTextures = 6;
-    for (int i = 0; i < nbRessourcesTextures; i++) {
+    int nbCrystalsTextures = 6;
+    for (int i = 0; i < nbCrystalsTextures; i++) {
         sf::Texture texture;
         if (!texture.loadFromFile("gui/assets/objects/crystals/crystal" + std::to_string(i + 1) + ".png"))
             throw AScene::SceneException("Error: cannot load crystal" + std::to_string(i + 1) + ".png");
 
         _ressourcesTextures.push_back(texture);
     }
+
+    if (!_foodTexture.loadFromFile("gui/assets/objects/apple.png"))
+        throw AScene::SceneException("Error: cannot load apple.png");
 
     // ! TEMP
     createPnj(10, 4, NORTH);
