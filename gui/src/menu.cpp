@@ -7,7 +7,7 @@
 
 #include "../includes/scenes.hpp"
 
-zappy::Menu::Menu()
+zappy::Menu::Menu(Connection& connection) : _connection(connection)
 {
     setIndexScene(0);
     loadTextures();

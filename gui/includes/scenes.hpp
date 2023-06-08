@@ -10,6 +10,7 @@
 #include <SFML/Graphics.hpp>
 #include <cmath>
 #include <random>
+#include "connection.hpp"
 
 static const int WINDOW_WIDTH = 1920;
 static const int WINDOW_HEIGHT = 1080;
@@ -63,7 +64,7 @@ namespace zappy {
     class Menu : public AScene {
         public:
             //* Constructor / Destructor
-            Menu();
+            Menu(Connection& connection);
             ~Menu();
 
             void loadTextures();
@@ -93,12 +94,14 @@ namespace zappy {
             sf::Texture _shiningLightTexture;
             sf::Sprite _shiningLightSprite;
             sf::Clock _shiningLightClock;
+
+            Connection& _connection;
     };
 
     class InGame : public AScene {
         public:
             //* Constructor / Destructor
-            InGame(int mapWidth, int mapHeight);
+            InGame(Connection& _connection, int mapWidth, int mapHeight);
             ~InGame();
 
             void createMap();
@@ -154,6 +157,9 @@ namespace zappy {
             //* Background
             sf::Texture _backgroundTexture;
             sf::Sprite _backgroundSprite;
+
+            //* connection
+            Connection& _connection;
 
             //* Map
             int _mapWidth;
