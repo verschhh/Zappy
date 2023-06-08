@@ -92,7 +92,7 @@ class Player:
         self.socket.receive()
         buff = self.socket.buffer[2:-2]
         i = 0
-
+        print(buff)
         while buff[i] != '\0':
             if buff[i] == ',' and buff[i + 1] == ' ':
                 buff = buff[:i + 1] + buff[i + 2:]
@@ -172,8 +172,7 @@ class Player:
         buff = self.socket.buffer
         if buff == "ok":
             return SUCESS
-        else:
-            return FAIL
+        return FAIL
 
     def fork(self):
         self.socket.send("Fork")
@@ -182,8 +181,7 @@ class Player:
     def connect_nbr(self):
         self.socket.send("Connect_nbr")
         self.socket.receive()
-        buff = self.socket.buffer
-        return int(buff)
+        return int(self.socket.buffer)
 
     def broadcast(self, message):
         self.socket.send(f"Broadcast {message}")
@@ -192,39 +190,51 @@ class Player:
     def inventory(self):
         self.socket.send("Inventory")
         self.socket.receive()
-        buff = self.socket.buffer
-        print(buff)
+        print(f"Inventory: {self.socket.buffer}")
+        print(f"My inventory: {self._inventory}")
+        return self._inventory
 
     def take(self, item):
         self.socket.send(f"Take {item}")
         self.socket.receive()
-        buff = self.socket.buffer
-        if buff == "ok":
+        if self.socket.buffer == "ok\n":
             self._inventory[item] += 1
+            print("Success")
             return SUCESS
-        else:
-            return FAIL
+        print("Fail")
+        return FAIL
 
     def set(self, item):
         self.socket.send(f"Set {item}")
         self.socket.receive()
-        buff = self.socket.buffer
-        if buff == "ok":
+        if self.socket.buffer == "ok\n":
             self._inventory[item] -= 1
+            print("Success")
             return SUCESS
-        else:
-            return FAIL
+        print("Fail")
+        return FAIL
 
     def incantation(self):
         self.socket.send("Incantation")
         self.socket.receive()
         buff = self.socket.buffer
-        print(buff)
-        if buff == "Elevation underway\n":
+        if buff == "ko\n":
+            print("Incantation Failed")
+            self.socket.buffer = ""
+            print("Wait to feel better")
             self.socket.receive()
-            self.level += 1
-        else:
+            print("END")
             return FAIL
+        print("Elevation Started\n")
+        self.socket.buffer = ""
+        self.socket.receive()
+        if self.socket.buffer.split(' ')[0] == "Current":
+            self.level += 1
+            print("Elevation Finished")
+            print("You are now level %d" % (self.level))
+            return SUCESS
+        print("Elevation Failed")
+        return FAIL
 
     # * AI Strategy
     def update_inventory(self):
