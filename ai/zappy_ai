@@ -13,6 +13,7 @@ from time import sleep
 from ai.classes.game import Game
 from ai.classes.player import Player
 from ai.classes.socket import Socket
+from ai.classes.ai import AI
 
 def check_args(av, ac):
     nb_param = 0
@@ -78,12 +79,14 @@ def main(av, ac):
         print(f"  map size:\nx:{buff[1].split()[0]}\ty:{buff[1].split()[1]}\n")
         game = Game(int(buff[1].split()[0]), int(buff[1].split()[1]))
         player = Player(sock, game)
+        ai = AI(sock, game)
         game.set_map()
         # game.update_map(player.look())
         # print(f"Max X: {player.max_x} Max Y: {player.max_y}")
         # print_map(game, player)
         # message = player.pick_move(game.map)
-        message = input("> ")
+        # message = input("> ")
+        message =""
         while message != "quit":
             if message == "Look":
                 game.update_map(player.look())
@@ -105,11 +108,11 @@ def main(av, ac):
                 player.incantation()
             else:
                 print("Unknown command")
-            message = input("-> ")
+            # message = input("-> ")
             # print(sock.buffer)
             # print(message)
-            # print(f"X:{player.x} Y:{player.y}")
-            # message = player.pick_move(game.map)
+            print(f"X:{player.x} Y:{player.y}")
+            message = ai.pick_move(game.map)
         sock.close()
 
     else:
