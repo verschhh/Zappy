@@ -6,6 +6,7 @@
 */
 
 #include "../../includes/scenes.hpp"
+#include <iostream> //! TEMP
 
 void zappy::InGame::createMap()
 {
@@ -40,7 +41,7 @@ void zappy::InGame::createMap()
         _map[i].resize(_mapHeight);
         for (int j = 0; j < _mapHeight; j++) {
             setSpriteProperties(
-                _map[i][j],
+                _map[i][j].gridSprite,
                 _gridTextures[randomNumber(0, 6)],
                 sf::Vector2f(_scaleFactor, _scaleFactor),
                 sf::Vector2f(startX + i * (scaledSpriteSize + scaledGap), startY + j * (scaledSpriteSize + scaledGap))
@@ -75,7 +76,81 @@ void zappy::InGame::createPnj(int x, int y, pnjOrientation orientation)
 
 void zappy::InGame::createRessources(int x, int y, ressources_t ressources)
 {
-    (void) x;
-    (void) y;
-    (void) ressources;
+    std::cout << "Ressources" << std::endl;
+    std::cout << "Food: " << ressources.food << std::endl;
+    std::cout << "Linemate: " << ressources.linemate << std::endl;
+    std::cout << "Deraumere: " << ressources.deraumere << std::endl;
+    std::cout << "Sibur: " << ressources.sibur << std::endl;
+    std::cout << "Mendiane: " << ressources.mendiane << std::endl;
+    std::cout << "Phiras: " << ressources.phiras << std::endl;
+    std::cout << "Thystame: " << ressources.thystame << std::endl;
+
+    tile_content_t tileContent;
+
+    tileContent.quantity = ressources;
+
+    for (int i = 0; i < ressources.food; i++) {
+        sf::Sprite sprite;
+        sprite.setTexture(_foodTexture);
+        sprite.setScale(sf::Vector2f(_scaleFactor, _scaleFactor));
+        sprite.setOrigin(20 / 2, 20 / 2);
+        sprite.setPosition(_map[x][y].gridSprite.getPosition());
+        tileContent.foodSprites.push_back(sprite);
+    }
+
+    for (int i = 0; i < ressources.linemate; i++) {
+        sf::Sprite sprite;
+        sprite.setTexture(_ressourcesTextures[0]);
+        sprite.setScale(sf::Vector2f(_scaleFactor, _scaleFactor));
+        sprite.setOrigin(20 / 2, 20 / 2);
+        sprite.setPosition(_map[x][y].gridSprite.getPosition());
+        tileContent.linemateSprites.push_back(sprite);
+    }
+
+    for (int i = 0; i < ressources.deraumere; i++) {
+        sf::Sprite sprite;
+        sprite.setTexture(_ressourcesTextures[1]);
+        sprite.setScale(sf::Vector2f(_scaleFactor, _scaleFactor));
+        sprite.setOrigin(20 / 2, 20 / 2);
+        sprite.setPosition(_map[x][y].gridSprite.getPosition());
+        tileContent.deraumereSprites.push_back(sprite);
+    }
+
+    for (int i = 0; i < ressources.sibur; i++) {
+        sf::Sprite sprite;
+        sprite.setTexture(_ressourcesTextures[2]);
+        sprite.setScale(sf::Vector2f(_scaleFactor, _scaleFactor));
+        sprite.setOrigin(20 / 2, 20 / 2);
+        sprite.setPosition(_map[x][y].gridSprite.getPosition());
+        tileContent.siburSprites.push_back(sprite);
+    }
+
+    for (int i = 0; i < ressources.mendiane; i++) {
+        sf::Sprite sprite;
+        sprite.setTexture(_ressourcesTextures[3]);
+        sprite.setScale(sf::Vector2f(_scaleFactor, _scaleFactor));
+        sprite.setOrigin(20 / 2, 20 / 2);
+        sprite.setPosition(_map[x][y].gridSprite.getPosition());
+        tileContent.mendianeSprites.push_back(sprite);
+    }
+
+    for (int i = 0; i < ressources.phiras; i++) {
+        sf::Sprite sprite;
+        sprite.setTexture(_ressourcesTextures[4]);
+        sprite.setScale(sf::Vector2f(_scaleFactor, _scaleFactor));
+        sprite.setOrigin(20 / 2, 20 / 2);
+        sprite.setPosition(_map[x][y].gridSprite.getPosition());
+        tileContent.phirasSprites.push_back(sprite);
+    }
+
+    for (int i = 0; i < ressources.thystame; i++) {
+        sf::Sprite sprite;
+        sprite.setTexture(_ressourcesTextures[5]);
+        sprite.setScale(sf::Vector2f(_scaleFactor, _scaleFactor));
+        sprite.setOrigin(20 / 2, 20 / 2);
+        sprite.setPosition(_map[x][y].gridSprite.getPosition());
+        tileContent.thystameSprites.push_back(sprite);
+    }
+
+    _map[x][y].content = tileContent;
 }

@@ -144,11 +144,27 @@ namespace zappy {
                 pnjOrientation orientation;
             } pnj_t;
 
+            typedef struct tile_content_s {
+                ressources_t quantity;
+                std::vector<sf::Sprite> foodSprites;
+                std::vector<sf::Sprite> linemateSprites;
+                std::vector<sf::Sprite> deraumereSprites;
+                std::vector<sf::Sprite> siburSprites;
+                std::vector<sf::Sprite> mendianeSprites;
+                std::vector<sf::Sprite> phirasSprites;
+                std::vector<sf::Sprite> thystameSprites;
+            } tile_content_t;
+
+            typedef struct tile_s {
+                sf::Sprite gridSprite;
+                tile_content_t content;
+            } tile_t;
+
             //* Class methods
             void createPnj(int x, int y, pnjOrientation orientation);
             void drawPnjs(sf::RenderWindow& window);
             void createRessources(int x, int y, ressources_t ressources);
-            void drawRessources(sf::RenderWindow& window, sf::Clock clock);
+            void drawRessources(sf::RenderWindow& window);
 
         private:
             //* Background
@@ -159,7 +175,7 @@ namespace zappy {
             int _mapWidth;
             int _mapHeight;
             std::vector<sf::Texture> _gridTextures;
-            std::vector<std::vector<sf::Sprite>> _map;
+            std::vector<std::vector<tile_t>> _map;
 
             //* PNJ
             std::vector<pnjTextures_t> _pnjTextures;
