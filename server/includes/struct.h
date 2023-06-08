@@ -104,8 +104,10 @@ typedef struct serv_s {
     int sockfd;
     int max_sd;
     int freq;
+    int nb_client;
     struct sockaddr_in addr;
     client_t *clients;
+    client_t *gui;
     map_t *map;
     slot_t *slots;
 } serv_t;

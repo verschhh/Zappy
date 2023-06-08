@@ -26,7 +26,6 @@
 serv_t *serv_ctor(args_t *arg)
 {
     serv_t *serv = malloc(sizeof(serv_t));
-
     serv->addr.sin_family = AF_INET;
     serv->addr.sin_port = htons(arg->port);
     serv->addr.sin_addr.s_addr = INADDR_ANY;
@@ -41,6 +40,7 @@ serv_t *serv_ctor(args_t *arg)
     serv->max_y = arg->height;
     serv->map = create_map(arg);
     serv->freq = arg->freq;
+    serv->nb_client = 0;
     serv->clients = NULL;
     serv->slots = slot_ctor(arg);
     for (int i = 1; arg->names[i] != NULL; i++)

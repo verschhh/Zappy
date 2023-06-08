@@ -7,7 +7,7 @@
 
 #include "../includes/zappy.h"
 
-player_t *player_ctor(serv_t *server, int nb)
+player_t *player_ctor(serv_t *server)
 {
     player_t *player = malloc(sizeof(player_t));
 
@@ -15,8 +15,8 @@ player_t *player_ctor(serv_t *server, int nb)
         perror("Memory allocation failed");
     player->x = (rand() % (server->max_x - 0 + 1) + 0);
     player->y = (rand() % (server->max_y - 0 + 1) + 0);
-    player->id = nb;
-    printf("ID SALE FDP DE MERDE:%d\n", player->id);
+    player->id = server->nb_client;
+    server->nb_client++;
     player->level = 1;
     player->orientation = NORTH;
     player->inventory = inv_ctor();
