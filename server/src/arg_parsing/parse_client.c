@@ -9,15 +9,16 @@
 
 player_t *parse_player(int sockfd, serv_t *serv, int nb)
 {
-    client_t *temp = serv->clients;
+    serv_t *tmp = serv;
     printf("JE SUIS RENTRE\n");
-    while (temp->next != NULL) {
-        if (temp->player->id == nb) {
-            return temp->player;
+    while (tmp->clients->next != NULL) {
+        printf("%d %d %d\n", tmp->clients->player->id, nb, tmp->clients->next->player->id);
+        if (tmp->clients->player->id == nb) {
+            return tmp->clients->player;
         }
         printf("J'AI TOURNÉ\n");
-        temp = temp->next;
+        tmp->clients = tmp->clients->next;
     }
-    printf("JE SUIS SORTI\n");
+    printf("J'AI PAS TROUVE LE N#%d\n", nb);
     return NULL;
 }

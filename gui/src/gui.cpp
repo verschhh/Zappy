@@ -24,7 +24,8 @@ zappy::Gui::Gui(int port, std::string machine) : _connection(port, machine), _in
     }
 
     try {
-        _scenes.push_back(new Menu());
+        // Pass the connection reference to the Menu scene
+        _scenes.push_back(new Menu(_connection));
 
         int width = 20;
         int height = 10;
@@ -35,7 +36,8 @@ zappy::Gui::Gui(int port, std::string machine) : _connection(port, machine), _in
         std::string cmd;
         iss >> cmd >> width >> height;
 
-        _scenes.push_back(new InGame(width, height));
+        // Pass the connection reference to the InGame scene
+        _scenes.push_back(new InGame(_connection, width, height));
     } catch (AScene::SceneException& e) {
         std::cerr << e.what() << std::endl;
         throw GuiException("Gui error: cannot load scenes");

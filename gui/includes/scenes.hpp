@@ -10,6 +10,7 @@
 #include <SFML/Graphics.hpp>
 #include <cmath>
 #include <random>
+#include "connection.hpp"
 
 static const int WINDOW_WIDTH = 1920;
 static const int WINDOW_HEIGHT = 1080;
@@ -63,7 +64,7 @@ namespace zappy {
     class Menu : public AScene {
         public:
             //* Constructor / Destructor
-            Menu();
+            Menu(Connection& connection);
             ~Menu();
 
             void loadTextures();
@@ -93,12 +94,14 @@ namespace zappy {
             sf::Texture _shiningLightTexture;
             sf::Sprite _shiningLightSprite;
             sf::Clock _shiningLightClock;
+
+            Connection& _connection;
     };
 
     class InGame : public AScene {
         public:
             //* Constructor / Destructor
-            InGame(int mapWidth, int mapHeight);
+            InGame(Connection& _connection, int mapWidth, int mapHeight);
             ~InGame();
 
             void createMap();
@@ -144,22 +147,41 @@ namespace zappy {
                 pnjOrientation orientation;
             } pnj_t;
 
+            typedef struct tile_content_s {
+                ressources_t quantity;
+                std::vector<sf::Sprite> foodSprites;
+                std::vector<sf::Sprite> linemateSprites;
+                std::vector<sf::Sprite> deraumereSprites;
+                std::vector<sf::Sprite> siburSprites;
+                std::vector<sf::Sprite> mendianeSprites;
+                std::vector<sf::Sprite> phirasSprites;
+                std::vector<sf::Sprite> thystameSprites;
+            } tile_content_t;
+
+            typedef struct tile_s {
+                sf::Sprite gridSprite;
+                tile_content_t content;
+            } tile_t;
+
             //* Class methods
             void createPnj(int x, int y, pnjOrientation orientation);
             void drawPnjs(sf::RenderWindow& window);
             void createRessources(int x, int y, ressources_t ressources);
-            void drawRessources(sf::RenderWindow& window, sf::Clock clock);
+            void drawRessources(sf::RenderWindow& window);
 
         private:
             //* Background
             sf::Texture _backgroundTexture;
             sf::Sprite _backgroundSprite;
 
+            //* connection
+            Connection& _connection;
+
             //* Map
             int _mapWidth;
             int _mapHeight;
             std::vector<sf::Texture> _gridTextures;
-            std::vector<std::vector<sf::Sprite>> _map;
+            std::vector<std::vector<tile_t>> _map;
 
             //* PNJ
             std::vector<pnjTextures_t> _pnjTextures;

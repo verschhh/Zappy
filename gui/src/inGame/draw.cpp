@@ -15,7 +15,7 @@ void zappy::InGame::drawPnjs(sf::RenderWindow& window)
         int mapX = _pnjs[i].position.x;
         int mapY = _pnjs[i].position.y;
 
-        sf::Vector2f mapPosition = _map[mapX][mapY].getPosition();
+        sf::Vector2f mapPosition = _map[mapX][mapY].gridSprite.getPosition();
         if (_pnjMoveClocks[i].getElapsedTime().asSeconds() > 0.5) {
             float xOffset = randomNumber(-25, 25.0);
             float yOffset = randomNumber(-25, 25.0);
@@ -52,10 +52,46 @@ void zappy::InGame::drawPnjs(sf::RenderWindow& window)
 //     };
 // }
 
-void zappy::InGame::drawRessources(sf::RenderWindow& window, sf::Clock clock)
+void zappy::InGame::drawRessources(sf::RenderWindow& window)
 {
-    (void) clock;
-    (void) window;
+    for (int i = 0; i < _mapWidth; i++) {
+        for (int j = 0; j < _mapHeight; j++) {
+            int foodSize = _map[i][j].content.quantity.food;
+            for (int k = 0; k < foodSize; k++) {
+                window.draw(_map[i][j].content.foodSprites[k]);
+            }
+
+            int linemateSize = _map[i][j].content.quantity.linemate;
+            for (int k = 0; k < linemateSize; k++) {
+                window.draw(_map[i][j].content.linemateSprites[k]);
+            }
+
+            int deraumereSize = _map[i][j].content.quantity.deraumere;
+            for (int k = 0; k < deraumereSize; k++) {
+                window.draw(_map[i][j].content.deraumereSprites[k]);
+            }
+
+            int siburSize = _map[i][j].content.quantity.sibur;
+            for (int k = 0; k < siburSize; k++) {
+                window.draw(_map[i][j].content.siburSprites[k]);
+            }
+
+            int mendianeSize = _map[i][j].content.quantity.mendiane;
+            for (int k = 0; k < mendianeSize; k++) {
+                window.draw(_map[i][j].content.mendianeSprites[k]);
+            }
+
+            int phirasSize = _map[i][j].content.quantity.phiras;
+            for (int k = 0; k < phirasSize; k++) {
+                window.draw(_map[i][j].content.phirasSprites[k]);
+            }
+
+            int thystameSize = _map[i][j].content.quantity.thystame;
+            for (int k = 0; k < thystameSize; k++) {
+                window.draw(_map[i][j].content.thystameSprites[k]);
+            }
+        }
+    }
 }
 
 void zappy::InGame::drawScene(sf::RenderWindow& window)
@@ -64,9 +100,10 @@ void zappy::InGame::drawScene(sf::RenderWindow& window)
 
     for (int i = 0; i < _mapWidth; i++) {
         for (int j = 0; j < _mapHeight; j++) {
-            window.draw(_map[i][j]);
+            window.draw(_map[i][j].gridSprite);
         }
     };
 
+    drawRessources(window);
     drawPnjs(window);
 }

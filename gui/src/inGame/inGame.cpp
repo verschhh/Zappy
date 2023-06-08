@@ -7,8 +7,8 @@
 
 #include "../../includes/scenes.hpp"
 
-zappy::InGame::InGame(int mapWidth, int mapHeight)
-: _mapWidth(mapWidth), _mapHeight(mapHeight), _scaleFactor(1)
+zappy::InGame::InGame(Connection& connection, int mapWidth, int mapHeight)
+    : _connection(connection), _mapWidth(mapWidth), _mapHeight(mapHeight)
 {
     setIndexScene(1);
     createMap();
@@ -52,4 +52,14 @@ void zappy::InGame::loadTextures()
     createPnj(5, 8, WEST);
     createPnj(5, 8, EAST);
     createPnj(10, 2, SOUTH);
+
+    createRessources(10, 6, {1, 1, 1, 1, 1, 1, 1});
+    createRessources(2, 1, {1, 0, 0, 0, 0, 0, 0});
+    createRessources(2, 2, {0, 1, 0, 0, 0, 0, 0});
+    createRessources(2, 3, {0, 0, 1, 0, 0, 0, 0});
+    createRessources(2, 4, {0, 0, 0, 1, 0, 0, 0});
+    createRessources(2, 5, {0, 0, 0, 0, 1, 0, 0});
+    createRessources(2, 6, {0, 0, 0, 0, 0, 1, 0});
+    createRessources(2, 7, {0, 0, 0, 0, 0, 0, 1});
+    createRessources(5, 8, {1, 1, 1, 1, 1, 1, 1});
 }
