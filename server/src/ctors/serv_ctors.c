@@ -43,5 +43,7 @@ serv_t *serv_ctor(args_t *arg)
     serv->freq = arg->freq;
     serv->clients = NULL;
     serv->slots = slot_ctor(arg);
+    for (int i = 1; arg->names[i] != NULL; i++)
+        new_slot(serv->slots, arg->names[i]);
     return serv;
 }
