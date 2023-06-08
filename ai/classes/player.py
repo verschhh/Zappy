@@ -90,7 +90,7 @@ class Player:
         self.socket.receive()
         buff = self.socket.buffer[2:-2]
         i = 0
-        print(buff)
+        # print(buff)
         while buff[i] != '\0':
             if buff[i] == ',' and buff[i + 1] == ' ':
                 buff = buff[:i + 1] + buff[i + 2:]

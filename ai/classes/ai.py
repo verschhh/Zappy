@@ -5,16 +5,28 @@
 ## ai
 ##
 
-from .player import Priority, Player
+from .player import Priority, Player, Orientation
+from .game import Game
 import re
 from random import randint
 
 
-class AI(Player):
+class AI(Player, Game, Priority, Orientation):
     def __init__(self, socket, game):
         super().__init__(socket, game)
 
     # * AI Strategy
+    def pick_move(self, map):
+        move = ""
+        self.update_inventory()
+        self.update_priority()
+        match self.priority:
+            case Priority.EXPLORE:
+                move = self.explore()
+            case Priority.FOOD:
+                move = self.fetch_food(map)
+        return move
+
     def update_inventory(self):
         self.socket.send("Inventory")
         self.socket.receive()
@@ -31,17 +43,6 @@ class AI(Player):
             return
         if self.priority != Priority.EXPLORE:
             return
-
-    def pick_move(self, map):
-        move = ""
-        self.update_inventory()
-        self.update_priority()
-        match self.priority:
-            case Priority.EXPLORE:
-                move = self.explore()
-            case Priority.FOOD:
-                move = self.fetch_food(map)
-        return move
 
     def find_nearest_resource(self, resource_type, map):
         map_height = len(map)
@@ -62,18 +63,48 @@ class AI(Player):
             return -1, -1
         return nearest_coords
 
+    def get_next_move(self, target_coords):
+        x, y = target_coords
+        orientation_diff = (self.orientation - self.get_target_orientation(x, y)) % 4
+
+        if orientation_diff == 0:
+            return "Forward"
+        elif orientation_diff == 1 or orientation_diff == -3:
+            return "Right"
+        elif orientation_diff == 3 or orientation_diff == -1:
+            return "Left"
+
+    def get_target_orientation(self, target_x, target_y):
+        if target_x < 0:
+            target_x = target_x % self.map_size_x
+        if target_y < 0:
+            target_y = target_y % self.map_size_y
+
+        if target_x < self.x:
+            return self.WEST
+        elif target_x > self.x:
+            return self.EAST
+        elif target_y < self.y:
+            return self.NORTH
+        elif target_y > self.y:
+            return self.SOUTH
+        else:
+            return self.orientation
+
     def fetch_food(self, map):
         if map[self.y][self.x]["food"] > 0:
             self.priority = Priority.EXPLORE
             map[self.y][self.x]["food"] -= 1
+            print("I JUST ATE")
             return "Take food"
         # find food
         return self.explore()
-        # TODO : Implement navigation to nearest food
-        # x, y = self.find_nearest_resource("food", map)
-        # if x > -1:
-        #     print(f"there is food at Y {y}, X {x}")
-        # return "Forward"
+        x, y = self.find_nearest_resource("food", map)
+        if x > -1:
+            print(f"I'm going to X:{x}, Y:{y}")
+            return self.get_next_move((x, y))
+        else:
+            return self.explore()
 
     def explore(self):
         foo = randint(0,12)
