@@ -22,7 +22,7 @@ void fill_new_node_map(map_t *new_node, args_t *arg)
     new_node->thystame = 2;
     new_node->next = NULL;
     save_y++;
-    if (save_y == arg->height) {
+    if (save_y >= arg->height) {
         save_x++;
         save_y = 0;
     }

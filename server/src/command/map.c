@@ -32,7 +32,7 @@ int send_tile_content(map_t *map, int sockfd)
     sprintf(msg, "bct %d %d %d %d %d %d %d %d %d\n",
         map->x, map->y, map->food, map->linemate, map->deraumere,
             map->sibur, map->mendiane, map->phiras, map->thystame);
-    if (write(sockfd, msg, len) == -1)
+    if (write(sockfd, msg, len + 1) == -1)
         return 84;
     return 0;
 }
@@ -46,7 +46,7 @@ int tile_content(int sockfd, serv_t *serv, char *buffer)
     int my_y = atoi(array[2]);
     map_t *temp = serv->map;
 
-    while (temp->next != NULL) {
+    while (temp != NULL) {
         if (temp->x == my_x && temp->y == my_y) {
             error = send_tile_content(temp, sockfd);
             return error;
