@@ -7,7 +7,7 @@
 
 #include "../../includes/zappy.h"
 
-void update_team(serv_t *serv)
+void update_teams(serv_t *serv)
 {
     slot_t *tmp = serv->slots;
     client_t *tmp2 = serv->clients;
