@@ -150,7 +150,7 @@ int end_of_game(int sockfd, serv_t *serv, char *buffer)
     (void)buffer;
     char msg[10];
     int end = 0;
-    update_teams(serv);
+    // update_teams(serv);
     end = check_end_game(serv);
     if (end == 0)
         return 0;
