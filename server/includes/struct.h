@@ -42,7 +42,7 @@ enum orientation {
 typedef struct slot_s {
     char *team_name;
     int nb;
-    // client **team_member;
+    client *team_member;
     struct slot_s *next;
 } slot_t;
 

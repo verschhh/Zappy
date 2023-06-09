@@ -35,6 +35,6 @@ client_t *accept_new_client(fd_set *readfds, serv_t *serv)
     if (serv->clients->sockfd > serv->max_sd)
         serv->max_sd = serv->clients->sockfd;
     // send_msg_connection(client, serv);
-    write(serv->clients->sockfd, "Welcome, you are now connected", 31);
+    write(serv->clients->sockfd, "Welcome, you are now connected\n", 32);
     return serv->clients;
 }

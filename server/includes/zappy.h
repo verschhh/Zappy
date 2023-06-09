@@ -26,12 +26,12 @@ player_t *parse_player(int sockfd, serv_t *serv, int nb);
 serv_t *serv_ctor(args_t *arg);
 map_t *create_map(args_t *arg);
 client_t *client_ctor(serv_t *serv);
-client_t *pop_client(client_t *client);
+client_t *pop_client(client_t **client);
 inv_t *inv_ctor(void);
 slot_t *slot_ctor(args_t *arg);
 player_t *player_ctor(serv_t *server);
 slot_t *new_slot(slot_t *slot, char *name);
-int fill_client_struct(int sockfd, serv_t *serv, char *buffer);
+client_t *fill_client_struct(int sockfd, serv_t *serv, char *buffer);
 
 //* Server
 int start_server(args_t *args);
