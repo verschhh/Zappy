@@ -125,6 +125,8 @@ void zappy::InGame::drawScene(sf::RenderWindow& window)
         border.setOutlineColor(sf::Color::Red);
         border.setFillColor(sf::Color::Transparent);
         window.draw(border);
+        window.draw(_contentBarSprite);
+
         // Display the received information on the selected tile
         // Modify the code according to your specific requirements
         // const tile_content_t& tileContent = _map[_selectedTile.x][_selectedTile.y].content;

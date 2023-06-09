@@ -23,6 +23,10 @@ void zappy::InGame::loadTextures()
         throw AScene::SceneException("Error: cannot load in game background texture");
     setSpriteProperties(_backgroundSprite, _backgroundTexture, sf::Vector2f(1, 1), sf::Vector2f(960, 540));
 
+    if (!_contentBarTexture.loadFromFile("gui/assets/hud/contentBar.png"))
+        throw AScene::SceneException("Error: cannot load contentBar.png");
+    setSpriteProperties(_contentBarSprite, _contentBarTexture, sf::Vector2f(1, 1), sf::Vector2f(960, 1005));
+
     int nbPnjTextures = 3;
     for (int i = 0; i < nbPnjTextures; i++) {
         pnjTextures_t pnjTextures;

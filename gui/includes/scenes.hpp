@@ -198,5 +198,7 @@ namespace zappy {
 
             //* Tile selection
             sf::Vector2i _selectedTile;
+            sf::Texture _contentBarTexture;
+            sf::Sprite _contentBarSprite;
     };
 }
