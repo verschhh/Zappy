@@ -20,8 +20,18 @@ void zappy::InGame::drawPnjs(sf::RenderWindow& window)
             float xOffset = randomNumber(-25, 25.0);
             float yOffset = randomNumber(-25, 25.0);
 
+            if (_pnjs[i].offset.x < xOffset) {
+                _pnjs[i].sprite.setTexture(_pnjTextures[i].right);
+            }
+            else if (_pnjs[i].offset.x > xOffset) {
+                _pnjs[i].sprite.setTexture(_pnjTextures[i].left);
+            }
+
+
             sf::Vector2f spritePosition = mapPosition + sf::Vector2f(xOffset, yOffset);
             _pnjs[i].sprite.setPosition(spritePosition);
+
+            _pnjs[i].offset = sf::Vector2f(xOffset, yOffset);
 
             _pnjMoveClocks[i].restart();
         }

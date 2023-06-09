@@ -142,6 +142,7 @@ namespace zappy {
                 sf::IntRect rect = sf::IntRect(0, 0, 32, 32);
                 sf::Sprite sprite;
                 sf::Vector2f position;
+                sf::Vector2f offset;
                 ressources_t inventory;
                 int level = 1;
                 pnjOrientation orientation;
