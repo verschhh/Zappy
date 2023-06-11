@@ -78,6 +78,7 @@ typedef struct client_s {
     struct player_s *player;
     struct client_s *next;
 } client_t;
+
 typedef struct slot_s {
     char *team_name;
     int nb;

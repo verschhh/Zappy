@@ -33,7 +33,7 @@ int send_player_position(int sockfd, serv_t *serv, char *buffer)
     char s[len + 1];
 
     if (t == NULL)
-        return 84;
+        return unknown_command(sockfd, serv, buffer);
     sprintf(s, "ppo %d %d %d %s\n", t->id, t->x, t->y, dir);
     if (write(sockfd, s, len) == -1)
         return 84;
@@ -49,6 +49,8 @@ int send_player_level(int sockfd, serv_t *serv, char *buffer)
     int len = snprintf(msg, 0, "plv %d %d\n", tmp->id, tmp->level);
     char s[len];
 
+    if (tmp == NULL)
+        return unknown_command(sockfd, serv, buffer);
     snprintf(s, len, "plv %d %d\n", tmp->id, tmp->level);
     if (write(sockfd, s, len) == -1)
         return 84;
@@ -66,7 +68,8 @@ int send_player_inventory(int sockfd, serv_t *serv, char *buffer)
     char s[len + 1];
     (void)buffer;
 
-    printf("id: %d\n", tmp->id);
+    if (tmp == NULL)
+        return unknown_command(sockfd, serv, buffer);
     snprintf(s, len, "pin %d %d %d %d %d %d %d %d\n", tmp->id
         , inv->food, inv->linemate, inv->deraumere, inv->sibur, inv->mendiane,
         inv->phiras, inv->thystame);
@@ -81,6 +84,8 @@ int send_expulsion(int sockfd, serv_t *serv, char *buffer)
     client_t *cpy = get_correct_client(serv, sockfd);
     char msg[10];
 
+    if (cpy->player == NULL)
+        return unknown_command(sockfd, serv, buffer);
     sprintf(msg, "pex %d\n", cpy->player->id);
     write(serv->sockfd, msg, 10);
     return 0;
@@ -104,6 +109,8 @@ int send_egg_laying(int sockfd, serv_t *serv, char *buffer)
     client_t *cpy = get_correct_client(serv, sockfd);
     char msg[10];
 
+    if (cpy->player == NULL)
+        return unknown_command(sockfd, serv, buffer);
     sprintf(msg, "pfk %d\n", cpy->player->id);
     write(serv->sockfd, msg, 10);
     return 0;
@@ -115,7 +122,8 @@ int send_broadcast(int sockfd, serv_t *serv, char *buffer)
     client_t *cpy = get_correct_client(serv, sockfd);
     int len = snprintf(msg, 0, "pbc %d %s", cpy->player->id, buffer);
     char send[len];
-
+    if (buffer == NULL)
+        return unknown_command(sockfd, serv, buffer);
     sprintf(send, "pbc %d %s", cpy->player->id, buffer);
     write(serv->sockfd, send, len);
     return 0;
@@ -150,11 +158,23 @@ int end_of_game(int sockfd, serv_t *serv, char *buffer)
     (void)buffer;
     char msg[10];
     int end = 0;
-    // update_teams(serv);
+    update_teams(serv);
     end = check_end_game(serv);
     if (end == 0)
         return 0;
+    if (serv->clients->team_name == NULL)
+        return unknown_command(sockfd, serv, buffer);
     sprintf(msg, "seg %s\n", serv->clients->team_name);
     write(serv->sockfd, msg, 10);
     exit (0);
+}
+
+int unknown_command(int sockfd, serv_t *serv, char *buffer)
+{
+    (void)buffer;
+    char msg[4];
+
+    sprintf(msg, "suc\n");
+    write(serv->sockfd, msg, 4);
+    return 0;
 }
