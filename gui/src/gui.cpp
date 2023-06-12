@@ -19,7 +19,7 @@ zappy::Gui::Gui(int port, std::string machine) : _connection(port, machine), _in
         std::string response = _connection.receive();
         std::cout << response << std::endl;
     } catch (const std::runtime_error& e) {
-        std::cerr << "Failed to connect to the server: " << e.what() << std::endl;
+        throw GuiException("Gui error: cannot connect to the server");
         return;
     }
 
