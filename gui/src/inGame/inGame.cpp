@@ -19,6 +19,9 @@ zappy::InGame::~InGame() {}
 
 void zappy::InGame::loadTextures()
 {
+    if (!_font.loadFromFile("gui/assets/font/DeterminationMono.ttf"))
+        throw AScene::SceneException("Error: cannot load font");
+
     if (!_backgroundTexture.loadFromFile("gui/assets/images/space.jpg"))
         throw AScene::SceneException("Error: cannot load in game background texture");
     setSpriteProperties(_backgroundSprite, _backgroundTexture, sf::Vector2f(1, 1), sf::Vector2f(960, 540));

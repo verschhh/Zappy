@@ -120,11 +120,15 @@ void zappy::InGame::drawScene(sf::RenderWindow& window)
         window.draw(border);
         window.draw(_contentBarSprite);
 
-        // Display the received information on the selected tile
-        // Modify the code according to your specific requirements
-        // const tile_content_t& tileContent = _map[_selectedTile.x][_selectedTile.y].content;
-        // Draw the received information on the selected tile
-        // ...
+        ressources_t quantity = _map[_selectedTile.x][_selectedTile.y].content.quantity;
+
+        sf::Text food_text;
+        food_text.setFont(_font);
+        food_text.setString(std::to_string(quantity.food));
+        food_text.setCharacterSize(30);
+        food_text.setFillColor(sf::Color::White);
+        food_text.setPosition(sf::Vector2f(710, 985));
+        window.draw(food_text);
     }
 
     drawRessources(window);
