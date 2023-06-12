@@ -13,7 +13,7 @@ SRC = 	src/gui.cpp \
 		src/inGame/draw.cpp \
 		src/inGame/create.cpp \
 		src/inGame/handleEvents.cpp \
-		src/connection.cpp \
+		src/network/connection.cpp \
 
 OBJ = $(SRC:.cpp=.o)
 
