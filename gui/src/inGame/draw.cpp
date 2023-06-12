@@ -21,12 +21,11 @@ void zappy::InGame::drawPnjs(sf::RenderWindow& window)
             float yOffset = randomNumber(-25, 25.0);
 
             if (_pnjs[i].offset.x < xOffset) {
-                _pnjs[i].sprite.setTexture(_pnjTextures[i].right);
+                _pnjs[i].sprite.setTexture(_pnjTextures[_pnjs[i].type - 1].right);
             }
             else if (_pnjs[i].offset.x > xOffset) {
-                _pnjs[i].sprite.setTexture(_pnjTextures[i].left);
+                _pnjs[i].sprite.setTexture(_pnjTextures[_pnjs[i].type - 1].left);
             }
-
 
             sf::Vector2f spritePosition = mapPosition + sf::Vector2f(xOffset, yOffset);
             _pnjs[i].sprite.setPosition(spritePosition);
@@ -42,19 +41,13 @@ void zappy::InGame::drawPnjs(sf::RenderWindow& window)
 }
 
 //! TEMP: keep this version of the function without the animation
-// void zappy::InGame::drawPnjs(sf::RenderWindow& window, sf::Clock clock) {
-//     (void) clock;
-
-//     _pnjMoveClock.restart();
-
-//     float elapsedTime = _pnjMoveClock.getElapsedTime().asSeconds();
-
+// void zappy::InGame::drawPnjs(sf::RenderWindow& window) {
 //     int nbPnj = _pnjs.size();
 //     for (int i = 0; i < nbPnj; i++) {
 //         int mapX = _pnjs[i].position.x;
 //         int mapY = _pnjs[i].position.y;
 
-//         sf::Vector2f mapPosition = _map[mapX][mapY].getPosition();
+//         sf::Vector2f mapPosition = _map[mapX][mapY].gridSprite.getPosition();
 
 //         _pnjs[i].sprite.setPosition(mapPosition);
 

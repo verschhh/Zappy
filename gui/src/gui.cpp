@@ -24,6 +24,9 @@ zappy::Gui::Gui(int port, std::string machine) : _connection(port, machine), _in
     }
 
     try {
+        if (!_font.loadFromFile("gui/assets/font/DeterminationMono.ttf"))
+            throw GuiException("Gui error: cannot load font");
+
         // Pass the connection reference to the Menu scene
         _scenes.push_back(new Menu(_connection));
 

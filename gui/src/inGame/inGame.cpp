@@ -56,6 +56,7 @@ void zappy::InGame::loadTextures()
     createPnj(5, 8, WEST);
     createPnj(5, 8, EAST);
     createPnj(10, 2, SOUTH);
+    createPnj(10, 3, SOUTH);
 
     createRessources(10, 6, {1, 1, 1, 1, 1, 1, 1});
     createRessources(2, 1, {1, 0, 0, 0, 0, 0, 0});
