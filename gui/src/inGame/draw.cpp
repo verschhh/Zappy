@@ -97,6 +97,17 @@ void zappy::InGame::drawRessources(sf::RenderWindow& window)
     }
 }
 
+sf::Text zappy::InGame::setText(std::string content, sf::Vector2f pos, int charSize, sf::Color color)
+{
+    sf::Text text;
+    text.setFont(_font);
+    text.setString(content);
+    text.setCharacterSize(charSize);
+    text.setFillColor(color);
+    text.setPosition(pos);
+    return text;
+}
+
 void zappy::InGame::drawScene(sf::RenderWindow& window)
 {
     window.draw(_backgroundSprite);
@@ -118,17 +129,66 @@ void zappy::InGame::drawScene(sf::RenderWindow& window)
         border.setOutlineColor(sf::Color::Red);
         border.setFillColor(sf::Color::Transparent);
         window.draw(border);
+
+        // Draw the content bar
         window.draw(_contentBarSprite);
 
         ressources_t quantity = _map[_selectedTile.x][_selectedTile.y].content.quantity;
 
-        sf::Text food_text;
-        food_text.setFont(_font);
-        food_text.setString(std::to_string(quantity.food));
-        food_text.setCharacterSize(30);
-        food_text.setFillColor(sf::Color::White);
-        food_text.setPosition(sf::Vector2f(710, 985));
+        sf::Text food_text = setText(
+            std::to_string(quantity.food),
+            sf::Vector2f(710, 985),
+            30,
+            sf::Color::White);
         window.draw(food_text);
+
+        sf::Text linemate_text = setText(
+            std::to_string(quantity.linemate),
+            sf::Vector2f(802, 1015),
+            20,
+            sf::Color::White
+        );
+        window.draw(linemate_text);
+
+        sf::Text deraumere_text = setText(
+            std::to_string(quantity.deraumere),
+            sf::Vector2f(892, 1015),
+            20,
+            sf::Color::White
+        );
+        window.draw(deraumere_text);
+
+        sf::Text sibur_text = setText(
+            std::to_string(quantity.sibur),
+            sf::Vector2f(982, 1015),
+            20,
+            sf::Color::White
+        );
+        window.draw(sibur_text);
+
+        sf::Text mendiane_text = setText(
+            std::to_string(quantity.mendiane),
+            sf::Vector2f(1072, 1015),
+            20,
+            sf::Color::White
+        );
+        window.draw(mendiane_text);
+
+        sf::Text phiras_text = setText(
+            std::to_string(quantity.phiras),
+            sf::Vector2f(1162, 1015),
+            20,
+            sf::Color::White
+        );
+        window.draw(phiras_text);
+
+        sf::Text thystame_text = setText(
+            std::to_string(quantity.thystame),
+            sf::Vector2f(1252, 1015),
+            20,
+            sf::Color::White
+        );
+        window.draw(thystame_text);
     }
 
     drawRessources(window);
