@@ -51,15 +51,3 @@ client_t *fill_client_struct(int sockfd, serv_t *serv, char *buffer)
 
     return serv->clients;
 }
-// {
-//     client_t *temp = serv->clients;
-
-//     while(temp->next != NULL || temp->sockfd != sockfd)
-//         temp = temp->next;
-//     if (temp->sockfd == sockfd) {
-//         temp->player = player_ctor(serv);
-//         temp->slot -= 1;
-//         temp->team_name = buffer;
-//     }
-//     // send_connection_msg(temp);
-// }
