@@ -30,6 +30,10 @@ void zappy::InGame::loadTextures()
         throw AScene::SceneException("Error: cannot load contentBar.png");
     setSpriteProperties(_contentBarSprite, _contentBarTexture, sf::Vector2f(1, 1), sf::Vector2f(960, 1005));
 
+    if (!_levelBarTexture.loadFromFile("gui/assets/hud/levelBar.png"))
+        throw AScene::SceneException("Error: cannot load levelBar.png");
+    setSpriteProperties(_levelBarSprite, _levelBarTexture, sf::Vector2f(1.25, 1.25), sf::Vector2f(1873, 500));
+
     int nbPnjTextures = 3;
     for (int i = 0; i < nbPnjTextures; i++) {
         pnjTextures_t pnjTextures;

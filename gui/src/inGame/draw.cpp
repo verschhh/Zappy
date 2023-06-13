@@ -118,6 +118,9 @@ void zappy::InGame::drawScene(sf::RenderWindow& window)
         }
     };
 
+    window.draw(_levelBarSprite);
+
+    // Draw the selected tile and content bar
     if (_selectedTile.x >= 0 && _selectedTile.y >= 0 && _selectedTile.x < _mapWidth && _selectedTile.y < _mapHeight) {
         const sf::Sprite& gridSprite = _map[_selectedTile.x][_selectedTile.y].gridSprite;
         sf::FloatRect bounds = gridSprite.getGlobalBounds();

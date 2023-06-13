@@ -202,5 +202,9 @@ namespace zappy {
             sf::Vector2i _selectedTile;
             sf::Texture _contentBarTexture;
             sf::Sprite _contentBarSprite;
+
+            //* Levels Bar
+            sf::Texture _levelBarTexture;
+            sf::Sprite _levelBarSprite;
     };
 }
