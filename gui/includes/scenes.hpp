@@ -169,6 +169,8 @@ namespace zappy {
             void drawPnjs(sf::RenderWindow& window);
             void createRessources(int x, int y, ressources_t ressources);
             void drawRessources(sf::RenderWindow& window);
+            void drawRessourceBar(sf::RenderWindow& window);
+
             sf::Text setText(std::string content, sf::Vector2f pos, int charSize, sf::Color color);
 
         private:
