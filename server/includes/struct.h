@@ -34,10 +34,10 @@ enum enum_slot {
 };
 
 enum orientation {
-    NORTH,
-    EAST,
-    SOUTH,
-    WEST
+    NORTH = 1,
+    EAST = 2,
+    SOUTH = 3,
+    WEST = 4
 };
 
 

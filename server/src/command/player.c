@@ -22,7 +22,6 @@ int send_player_position(int sockfd, serv_t *serv, char *buffer)
     char *str = NULL;
     char **array = split_string_at_spaces(buffer, &count);
     erase_first_characters(array[1], 1);
-    printf("array[1] = %s", array[1]);
     player_t *t = parse_player(sockfd, serv, atoi(array[1]));
     if (t == NULL) {
         printf("EXIT\n");

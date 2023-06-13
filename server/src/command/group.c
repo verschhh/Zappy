@@ -24,10 +24,20 @@ int get_all_names_group(int sockfd, serv_t *serv, char *buffer)
 
 void send_connection_msg(client_t *client)
 {
-    char msg[26];
+    client_t *cpy = client;
 
-    sprintf(msg, "pnw #%d %d %d %d %d", client->player->id, client->player->x,
-        client->player->y, client->player->orientation,
-            client->player->level, client->team_name);
-    write(client->sockfd, msg, 26);
+    while (cpy->next != NULL)
+        cpy = cpy->next;
+    char msg[1024];
+    int len = snprintf(msg, sizeof(msg), "pnw #%d %d %d %d %d %s\n",
+        cpy->player->id, cpy->player->x,
+            cpy->player->y, cpy->player->orientation,
+                cpy->player->level, cpy->team_name);
+    char send[len];
+    sprintf(send, "pnw #%d %d %d %d %d %s\n",
+        cpy->player->id, cpy->player->x,
+            cpy->player->y, cpy->player->orientation,
+                cpy->player->level, cpy->team_name);
+    write(cpy->sockfd, send, len);
+    printf("msg = %s", msg);
 }
