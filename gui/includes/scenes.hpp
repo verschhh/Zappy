@@ -10,6 +10,7 @@
 #include <SFML/Graphics.hpp>
 #include <cmath>
 #include <random>
+#include <array>
 #include "connection.hpp"
 
 static const int WINDOW_WIDTH = 1920;
@@ -170,6 +171,7 @@ namespace zappy {
             void createRessources(int x, int y, ressources_t ressources);
             void drawRessources(sf::RenderWindow& window);
             void drawRessourceBar(sf::RenderWindow& window);
+            void drawLevelsBar(sf::RenderWindow& window);
 
             sf::Text setText(std::string content, sf::Vector2f pos, int charSize, sf::Color color);
 

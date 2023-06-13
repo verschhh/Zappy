@@ -123,6 +123,8 @@ void zappy::InGame::drawRessourceBar(sf::RenderWindow& window)
     window.draw(border);
 
     // Draw the content bar
+    // TODO: Maybe instead of redeclaring each text at each frame, declare in the class and update each frame
+
     window.draw(_contentBarSprite);
     ressources_t quantity = _map[_selectedTile.x][_selectedTile.y].content.quantity;
     sf::Text food_text = setText(
@@ -181,6 +183,29 @@ void zappy::InGame::drawRessourceBar(sf::RenderWindow& window)
     window.draw(thystame_text);
 }
 
+void zappy::InGame::drawLevelsBar(sf::RenderWindow& window)
+{
+    // Draw level bar
+    window.draw(_levelBarSprite);
+
+    // Draw level count
+    int pnjSize = _pnjs.size();
+    std::array<int, 8> levelCount = {};
+    for (int i = 0; i < pnjSize; i++) {
+        levelCount[_pnjs[i].level - 1]++;
+    }
+
+    for (int i = 0; i < 8; i++) {
+        sf::Text level_text = setText(
+            std::to_string(levelCount[i]),
+            sf::Vector2f(1884, 328 + (i * 50)),
+            30,
+            sf::Color::White
+        );
+        window.draw(level_text);
+    }
+}
+
 void zappy::InGame::drawScene(sf::RenderWindow& window)
 {
     window.draw(_backgroundSprite);
@@ -191,7 +216,7 @@ void zappy::InGame::drawScene(sf::RenderWindow& window)
         }
     };
 
-    window.draw(_levelBarSprite);
+    drawLevelsBar(window);
 
     if (_selectedTile.x >= 0 && _selectedTile.y >= 0 && _selectedTile.x < _mapWidth && _selectedTile.y < _mapHeight) {
         drawRessourceBar(window);
