@@ -86,11 +86,13 @@ def main(av, ac):
         # print_map(game, player)
         # message = player.pick_move(game.map)
         # message = input("> ")
-        message =""
+        message = ""
         while message != "quit":
+            message = ai.pick_move(game.map)
+            print(message)
             if message == "Look":
                 game.update_map(player.look())
-                print_map(game, player)
+                # print_map(game, player)
             elif message == "Forward":
                 player.forward()
             elif message == "Right":
@@ -111,8 +113,7 @@ def main(av, ac):
             # message = input("-> ")
             # print(sock.buffer)
             # print(message)
-            print(f"X:{player.x} Y:{player.y}")
-            message = ai.pick_move(game.map)
+            # print(f"X:{player.x} Y:{player.y}")
         sock.close()
 
     else:
