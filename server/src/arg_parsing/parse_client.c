@@ -15,7 +15,7 @@ player_t *parse_player(int sockfd, serv_t *serv, int nb)
         if (temp->player->id == nb) {
             return temp->player;
         }
-        temp = serv->clients->next;
+        temp = temp->next;
     }
     return NULL;
 }

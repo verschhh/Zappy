@@ -24,30 +24,28 @@ client_t *client_ctor(serv_t *serv)
     serv->clients->addrlen = sizeof(struct sockaddr_in);
     serv->clients->slot = serv->slots->nb;
     serv->clients->next = NULL;
-    serv->clients->next = NULL;
     return serv->clients;
 }
 
-client_t *fill_client_struct(int sockfd, serv_t *serv, char *buffer)
+void fill_client_struct(int sockfd, serv_t *serv, char *buffer)
 {
-    client_t *temp = serv->clients;
     client_t *new_node = malloc(sizeof(client_t));
 
     if (new_node == NULL)
-        return NULL;
-    new_node->next = NULL;
+        return;
+    new_node->team_name = strdup(buffer);
     new_node->sockfd = sockfd;
     new_node->player = player_ctor(serv);
     new_node->slot -= 1;
-    new_node->team_name = buffer;
+    new_node->next = NULL;
 
-    if (temp == NULL) {
+    if (serv->clients == NULL) {
         serv->clients = new_node;
     } else {
-        while (temp->next != NULL || temp->sockfd != sockfd)
+        client_t *temp = serv->clients;
+        while (temp->next != NULL) {
             temp = temp->next;
+        }
         temp->next = new_node;
     }
-
-    return serv->clients;
 }

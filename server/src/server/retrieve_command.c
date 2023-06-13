@@ -58,9 +58,9 @@ int receive_client_msg(int sockfd, fd_set *readfds, serv_t *serv)
         if (cmd == -1) {
             next = check_name_team(serv, buffer);
             if (next > 0) {
-                serv->clients = fill_client_struct(sockfd, &serv, buffer);
-                printf("id = %d\n", serv->clients->player->id);
+                fill_client_struct(sockfd, serv, buffer);
                 send_x_y_ai(sockfd, serv, next);
+                send_connection_msg(serv->clients);
             } else
                 write(sockfd, "suc\n", 4);
             return 0;
