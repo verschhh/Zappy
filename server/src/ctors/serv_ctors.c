@@ -23,6 +23,17 @@
 //     return names;
 // }
 
+void serv_ctor2(serv_t *serv, args_t *arg)
+{
+    serv->nb_client = 0;
+    serv->clients = NULL;
+    serv->slots = slot_ctor(arg);
+    for (int i = 1; arg->names[i] != NULL; i++)
+        new_slot(serv->slots, arg->names[i]);
+    serv->start = clock();
+    return serv;
+}
+
 serv_t *serv_ctor(args_t *arg)
 {
     serv_t *serv = malloc(sizeof(serv_t));
@@ -40,10 +51,6 @@ serv_t *serv_ctor(args_t *arg)
     serv->max_y = arg->height;
     serv->map = create_map(arg);
     serv->freq = arg->freq;
-    serv->nb_client = 0;
-    serv->clients = NULL;
-    serv->slots = slot_ctor(arg);
-    for (int i = 1; arg->names[i] != NULL; i++)
-        new_slot(serv->slots, arg->names[i]);
+    serv_ctor2(serv, arg);
     return serv;
 }
