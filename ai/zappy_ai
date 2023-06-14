@@ -86,10 +86,10 @@ def main(av, ac):
         # print_map(game, player)
         # message = player.pick_move(game.map)
         # message = input("> ")
-        message = ""
+        message = "Look"
+        print("-> Look")
         while message != "quit":
-            message = ai.pick_move(game.map)
-            print(message)
+            # message = ai.pick_move(game.map)
             if message == "Look":
                 game.update_map(player.look())
                 # print_map(game, player)
@@ -110,7 +110,7 @@ def main(av, ac):
                 player.incantation()
             else:
                 print("Unknown command")
-            # message = input("-> ")
+            message = input("-> ")
             # print(sock.buffer)
             # print(message)
             # print(f"X:{player.x} Y:{player.y}")
