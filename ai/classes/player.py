@@ -216,6 +216,7 @@ class Player:
         self.socket.send("Incantation")
         self.socket.receive()
         buff = self.socket.buffer
+        print(buff)
         if buff == "ko\n":
             print("Incantation Failed")
             self.socket.buffer = ""
