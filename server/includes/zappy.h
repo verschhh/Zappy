@@ -70,4 +70,7 @@ int send_serv_msg(int sockfd, serv_t *serv, char *buffer);
 void update_teams(serv_t *serv);
 int unknown_command(int sockfd, serv_t *serv, char *buffer);
 
+//* Player Commands
+int inventory(int sockfd, serv_t *serv, char *buffer);
+
 #endif
