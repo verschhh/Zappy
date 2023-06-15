@@ -74,3 +74,33 @@ int right(int sockfd, serv_t *serv, char *buffer)
     write(sockfd, "ok\n", 4);
     return 0;
 }
+
+char *get_inv(inv_t *inv)
+{
+    char msg[1024];
+    char tmp[1024];
+    int len = 0;
+    char *buf = NULL;
+    sprintf(tmp, "food %d, linemate %d, deraumere %d, ", inv->food,
+        inv->linemate, inv->deraumere);
+    sprintf(tmp, "sibur %d, mendiane %d, phiras %d, thystame %d\n",
+        inv->sibur, inv->mendiane, inv->phiras, inv->thystame);
+    strcat(msg, tmp);
+    len = strlen(msg);
+    buf = malloc(sizeof(char) * (len + 1));
+    strcpy(buf, msg);
+    return buf;
+}
+
+int inventory(int sockfd, serv_t *serv, char *buffer)
+{
+    (void) buffer;
+    client_t *client = get_correct_client(serv, sockfd);
+    inv_t *tmp = client->player->inventory;
+    char *msg = get_inv(tmp);
+    int len = strlen(msg);
+
+    if (write(sockfd, msg, len) == -1)
+        return 84;
+    return 0;
+}
