@@ -20,7 +20,8 @@ const cmd_t cmd_list[NB_CMD] = {
     {"Forward", &forward},
     {"Left", &left},
     {"Right", &right},
-    {"Connect_nbr", &unused_slot}
+    {"Connect_nbr", &unused_slot},
+    {"Look", &look}
     // {"Eject", &send_expulsion}
 };
 

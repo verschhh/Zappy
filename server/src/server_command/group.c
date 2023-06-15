@@ -30,15 +30,16 @@ void send_connection_msg(client_t *client, serv_t *serv)
     while (cpy->next != NULL)
         cpy = cpy->next;
     char msg[1024];
-    int len = snprintf(msg, sizeof(msg), "pnw #%d %d %d %d %d %s\n",
+    int len = snprintf(msg, sizeof(msg), "pnw #%d %d %d %d %d %s",
         cpy->player->id, cpy->player->x,
             cpy->player->y, cpy->player->orientation,
                 cpy->player->level, cpy->team_name);
     char send[len];
-    sprintf(send, "pnw #%d %d %d %d %d %s\n",
+    sprintf(send, "pnw #%d %d %d %d %d %s",
         cpy->player->id, cpy->player->x,
             cpy->player->y, cpy->player->orientation,
                 cpy->player->level, cpy->team_name);
-    write(serv->sockfd, send, len);
-    printf("msg = %s", msg);
+    printf("msg = %s", send);
+    printf("sockfd = %d\n", serv->sockfd);
+    // write(serv->sockfd, send, len);
 }

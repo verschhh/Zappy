@@ -80,5 +80,6 @@ int forward(int sockfd, serv_t *serv, char *buffer);
 int right(int sockfd, serv_t *serv, char *buffer);
 int left(int sockfd, serv_t *serv, char *buffer);
 int unused_slot(int sockfd, serv_t *serv, char *buffer);
+int look(int sockfd, serv_t *serv, char *buffer);
 
 #endif

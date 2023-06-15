@@ -50,7 +50,7 @@ client_t *get_correct_client(serv_t *serv, int sockfd)
 {
     client_t *copy = serv->clients;
 
-    while (copy->next != NULL) {
+    while (copy != NULL) {
         if (copy->sockfd == sockfd)
             return copy;
         copy = copy->next;
