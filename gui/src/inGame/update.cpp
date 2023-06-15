@@ -15,4 +15,10 @@ void zappy::InGame::updateScene(void)
     // Send mct to get all map content
     // Parse mct message
     // Update map
+
+    std::string command = "mct\n";
+    _connection.send(command);
+
+    std::string response = _connection.receive();
+    std::cout << "response: " << response << std::endl;
 }
