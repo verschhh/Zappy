@@ -11,15 +11,8 @@
 void zappy::InGame::updateScene(void)
 {
     std::cout << "update scene" << std::endl;
-    // Receive message from serv
-    // if !message, skip function
-    // else, parse message
-
-    std::string message = _connection.receive();
-    std::cout << "Message received: " << message << std::endl;
-    if (message.empty()) {
-        return;
-    } else {
-        std::cout << "Message received: " << message << std::endl;
-    }
+    // TODO:
+    // Send mct to get all map content
+    // Parse mct message
+    // Update map
 }
