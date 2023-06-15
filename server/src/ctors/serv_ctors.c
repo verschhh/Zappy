@@ -30,7 +30,6 @@ void serv_ctor2(serv_t *serv, args_t *arg)
     serv->slots = slot_ctor(arg);
     for (int i = 1; arg->names[i] != NULL; i++)
         new_slot(serv->slots, arg->names[i]);
-    serv->start = clock();
     return serv;
 }
 
