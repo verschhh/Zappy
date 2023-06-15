@@ -23,14 +23,15 @@
 //     return names;
 // }
 
-void serv_ctor2(serv_t *serv, args_t *arg)
+serv_t *serv_ctor2(serv_t *serv, args_t *arg)
 {
     serv->nb_client = 0;
     serv->clients = NULL;
+    serv->clock = clock();
     serv->slots = slot_ctor(arg);
     for (int i = 1; arg->names[i] != NULL; i++)
         new_slot(serv->slots, arg->names[i]);
-    return;
+    return serv;
 }
 
 serv_t *serv_ctor(args_t *arg)
@@ -50,6 +51,6 @@ serv_t *serv_ctor(args_t *arg)
     serv->max_y = arg->height;
     serv->map = create_map(arg);
     serv->freq = arg->freq;
-    serv_ctor2(serv, arg);
+    serv = serv_ctor2(serv, arg);
     return serv;
 }

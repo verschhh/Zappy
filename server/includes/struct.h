@@ -108,6 +108,8 @@ typedef struct serv_s {
     int max_sd;
     int freq;
     int nb_client;
+    clock_t clock;
+    clock_t clock2;
     struct sockaddr_in addr;
     clock_t start;
     client_t *clients;
