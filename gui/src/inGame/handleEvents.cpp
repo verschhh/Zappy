@@ -57,14 +57,14 @@ void zappy::InGame::handleEvents(sf::RenderWindow& window)
                         }
                         std::cout << "Selected tile: " << _selectedTile.x << ", " << _selectedTile.y << std::endl;
                         std::string command = "bct " + std::to_string(x) + " " + std::to_string(y) + "\n";
-                        _connection.send(command);
+                        // _connection.send(command);
 
-                        // Receive the response from the server
-                        std::string response = _connection.receive();
-                        std::cout << "Response: " << response << std::endl;
+                        // // Receive the response from the server
+                        // std::string response = _connection.receive();
+                        // std::cout << "Response: " << response << std::endl;
 
-                        // Handle the received message using the MessageHandler
-                        MessageHandler::handleBctMessage(response, _map);
+                        // // Handle the received message using the MessageHandler
+                        // MessageHandler::handleBctMessage(response, _map);
 
                         std::cout << "after message handler" << std::endl;
                         // Send the appropriate command to the server using the Connection class

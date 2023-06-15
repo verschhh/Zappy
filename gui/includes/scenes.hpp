@@ -167,11 +167,14 @@ namespace zappy {
 
             //* Class methods
             void createPnj(int x, int y, pnjOrientation orientation);
-            void drawPnjs(sf::RenderWindow& window);
             void createRessources(int x, int y, ressources_t ressources);
+
+            void drawPnjs(sf::RenderWindow& window);
             void drawRessources(sf::RenderWindow& window);
             void drawRessourceBar(sf::RenderWindow& window);
             void drawLevelsBar(sf::RenderWindow& window);
+
+            void updateScene(void);
 
             sf::Text setText(std::string content, sf::Vector2f pos, int charSize, sf::Color color);
 
@@ -180,7 +183,7 @@ namespace zappy {
             sf::Texture _backgroundTexture;
             sf::Sprite _backgroundSprite;
 
-            //* connection
+            //* Connection
             Connection& _connection;
 
             //* Map
