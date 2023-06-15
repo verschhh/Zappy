@@ -19,6 +19,7 @@ void zappy::InGame::updateScene(void)
     std::string command = "mct\n";
     _connection.send(command);
 
-    std::string response = _connection.receive();
+    int mctBufferSize = _mapHeight * _mapWidth * MAX_BCT_SIZE;
+    std::string response = _connection.receive(mctBufferSize);
     std::cout << "response: " << response << std::endl;
 }

@@ -11,6 +11,8 @@
 #include <string>
 #include <netinet/in.h>
 
+static const int MAX_BCT_SIZE = 35;
+
 namespace zappy {
     class Connection {
         public:
@@ -20,7 +22,7 @@ namespace zappy {
             void connect();
             void disconnect();
             void send(const std::string& message);
-            std::string receive();
+            std::string receive(int bufferSize = 1024);
 
         private:
             int _sockfd;

@@ -60,13 +60,12 @@ void zappy::Connection::send(const std::string& message)
 }
 
 //! Old receive function (keep for reference)
-std::string zappy::Connection::receive()
+std::string zappy::Connection::receive(int bufferSize)
 {
     if (_sockfd == -1) {
         throw std::runtime_error("Error: Not connected to the server");
     }
 
-    const int bufferSize = 1024;  // Adjust the buffer size as needed
     char buffer[bufferSize];
     int bytesRead = ::recv(_sockfd, buffer, bufferSize - 1, 0);
 
