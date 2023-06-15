@@ -16,7 +16,12 @@ const cmd_t cmd_list[NB_CMD] = {
     {"sst", &modify_unit_time},
     {"ppo", &send_player_position},
     {"plv", &send_player_level},
-    {"pin", &send_player_inventory}
+    {"pin", &send_player_inventory},
+    {"Forward", &forward},
+    {"Left", &left},
+    {"Right", &right},
+    {"Connect_nbr", &unused_slot},
+    {"Look", &look}
     // {"Eject", &send_expulsion}
 };
 
@@ -30,6 +35,7 @@ int parse_command(char *buffer)
         index++;
     }
     cmd[index] = '\0';
+    printf("cmd = %s\n", cmd);
     for (int i = 0; i != NB_CMD; i++) {
         if (strstr(cmd, cmd_list[i].command) != NULL)
             return i;
@@ -60,7 +66,7 @@ int receive_client_msg(int sockfd, fd_set *readfds, serv_t *serv)
             if (next > 0) {
                 fill_client_struct(sockfd, serv, buffer);
                 send_x_y_ai(sockfd, serv, next);
-                send_connection_msg(serv->clients);
+                send_connection_msg(serv->clients, serv);
             } else
                 write(sockfd, "suc\n", 4);
             return 0;

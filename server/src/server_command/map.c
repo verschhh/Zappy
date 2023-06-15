@@ -14,7 +14,7 @@ int map_size(int sockfd, serv_t *serv, char *buffer)
     int len = snprintf(get_len, 0, "msz %d %d\n", serv->max_x, serv->max_y);
     char msg[len + 1];
 
-    pop_client(&serv->clients);
+    // pop_client(&serv->clients);
     serv->start = clock();
     sprintf(msg, "%s %d %d\n", "msz", serv->max_x, serv->max_y);
     if (write(sockfd, msg, len) == -1)
@@ -57,36 +57,18 @@ int tile_content(int sockfd, serv_t *serv, char *buffer)
     return 0;
 }
 
-void count_content_tile(int *array, map_t *map)
-{
-    array[0] += map->food;
-    array[1] += map->linemate;
-    array[2] += map->deraumere;
-    array[3] += map->sibur;
-    array[4] += map->mendiane;
-    array[5] += map->phiras;
-    array[6] += map->thystame;
-}
-
 int map_content(int sockfd, serv_t *serv, char *buffer)
 {
     (void) buffer;
-    int array[7] = {0, 0, 0, 0, 0, 0, 0};
-    char get_len[32];
-    int len = snprintf(get_len, 0, "bct %d %d %d %d %d %d %d %d %d\n",
-        serv->max_x, serv->max_y, array[0], array[1], array[2],
-            array[3], array[4], array[5], array[6]);
-    char msg[len + 15];
+    char msg[5000] = "";
+    map_t *map = serv->map;
 
-    for (int i = 0; i != serv->max_x; i++) {
-        for (int j = 0; j != serv->max_y; j++) {
-            count_content_tile(array, serv->map);
-            serv->map = serv->map->next;
-        }
+    while (map != NULL) {
+        sprintf(msg + strlen(msg), "bct %d %d %d %d %d %d %d %d %d\n",
+        map->x, map->y, map->food, map->linemate, map->deraumere,
+            map->sibur, map->mendiane, map->phiras, map->thystame);
+        map = map->next;
     }
-    sprintf(msg, "bct %d %d %d %d %d %d %d %d %d\n",
-        serv->max_x, serv->max_y, array[0], array[1], array[2],
-            array[3], array[4], array[5], array[6]);
-    write(sockfd, msg, len);
+    write(sockfd, msg, strlen(msg));
     return 0;
 }
