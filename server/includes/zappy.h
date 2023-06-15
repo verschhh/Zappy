@@ -64,7 +64,7 @@ int send_player_inventory(int sockfd, serv_t *serv, char *buffer);
 int modify_unit_time(int sockfd, serv_t *serv, char *buffer);
 
 //* Server Commands
-void send_connection_msg(client_t *client);
+void send_connection_msg(client_t *client, serv_t *serv);
 int send_death_player(int sockfd, serv_t *serv, char *buffer);
 int send_expulsion(int sockfd, serv_t *serv, char *buffer);
 int send_egg_laying(int sockfd, serv_t *serv, char *buffer);
