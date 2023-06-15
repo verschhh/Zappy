@@ -15,6 +15,7 @@ int map_size(int sockfd, serv_t *serv, char *buffer)
     char msg[len + 1];
 
     pop_client(&serv->clients);
+    serv->start = clock();
     sprintf(msg, "%s %d %d\n", "msz", serv->max_x, serv->max_y);
     if (write(sockfd, msg, len) == -1)
         return 84;
@@ -87,4 +88,5 @@ int map_content(int sockfd, serv_t *serv, char *buffer)
         serv->max_x, serv->max_y, array[0], array[1], array[2],
             array[3], array[4], array[5], array[6]);
     write(sockfd, msg, len);
+    return 0;
 }

@@ -11,6 +11,7 @@
 #include <cmath>
 #include <random>
 #include "network.hpp"
+#include <array>
 
 static const int WINDOW_WIDTH = 1920;
 static const int WINDOW_HEIGHT = 1080;
@@ -169,6 +170,10 @@ namespace zappy {
             void drawPnjs(sf::RenderWindow& window);
             void createRessources(int x, int y, ressources_t ressources);
             void drawRessources(sf::RenderWindow& window);
+            void drawRessourceBar(sf::RenderWindow& window);
+            void drawLevelsBar(sf::RenderWindow& window);
+
+            sf::Text setText(std::string content, sf::Vector2f pos, int charSize, sf::Color color);
 
         private:
             //* Background
@@ -195,10 +200,15 @@ namespace zappy {
 
             //* Class Values
             float _scaleFactor;
+            sf::Font _font;
 
             //* Tile selection
             sf::Vector2i _selectedTile;
             sf::Texture _contentBarTexture;
             sf::Sprite _contentBarSprite;
+
+            //* Levels Bar
+            sf::Texture _levelBarTexture;
+            sf::Sprite _levelBarSprite;
     };
 }

@@ -20,6 +20,7 @@
     #include <string.h>
     #include <signal.h>
     #include <termios.h>
+    #include <time.h>
 
 
 enum nb_command {
@@ -33,10 +34,10 @@ enum enum_slot {
 };
 
 enum orientation {
-    NORTH,
-    EAST,
-    SOUTH,
-    WEST
+    NORTH = 1,
+    EAST = 2,
+    SOUTH = 3,
+    WEST = 4
 };
 
 
@@ -106,6 +107,7 @@ typedef struct serv_s {
     int freq;
     int nb_client;
     struct sockaddr_in addr;
+    clock_t start;
     client_t *clients;
     map_t *map;
     slot_t *slots;

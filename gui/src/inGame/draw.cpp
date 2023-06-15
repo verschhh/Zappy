@@ -22,12 +22,11 @@ void zappy::InGame::drawPnjs(sf::RenderWindow& window)
             float yOffset = randomNumber(-25, 25.0);
 
             if (_pnjs[i].offset.x < xOffset) {
-                _pnjs[i].sprite.setTexture(_pnjTextures[i].right);
+                _pnjs[i].sprite.setTexture(_pnjTextures[_pnjs[i].type - 1].right);
             }
             else if (_pnjs[i].offset.x > xOffset) {
-                _pnjs[i].sprite.setTexture(_pnjTextures[i].left);
+                _pnjs[i].sprite.setTexture(_pnjTextures[_pnjs[i].type - 1].left);
             }
-
 
             sf::Vector2f spritePosition = mapPosition + sf::Vector2f(xOffset, yOffset);
             _pnjs[i].sprite.setPosition(spritePosition);
@@ -43,19 +42,13 @@ void zappy::InGame::drawPnjs(sf::RenderWindow& window)
 }
 
 //! TEMP: keep this version of the function without the animation
-// void zappy::InGame::drawPnjs(sf::RenderWindow& window, sf::Clock clock) {
-//     (void) clock;
-
-//     _pnjMoveClock.restart();
-
-//     float elapsedTime = _pnjMoveClock.getElapsedTime().asSeconds();
-
+// void zappy::InGame::drawPnjs(sf::RenderWindow& window) {
 //     int nbPnj = _pnjs.size();
 //     for (int i = 0; i < nbPnj; i++) {
 //         int mapX = _pnjs[i].position.x;
 //         int mapY = _pnjs[i].position.y;
 
-//         sf::Vector2f mapPosition = _map[mapX][mapY].getPosition();
+//         sf::Vector2f mapPosition = _map[mapX][mapY].gridSprite.getPosition();
 
 //         _pnjs[i].sprite.setPosition(mapPosition);
 
@@ -119,6 +112,115 @@ void zappy::InGame::drawRessources(sf::RenderWindow& window)
     }
 }
 
+sf::Text zappy::InGame::setText(std::string content, sf::Vector2f pos, int charSize, sf::Color color)
+{
+    sf::Text text;
+    text.setFont(_font);
+    text.setString(content);
+    text.setCharacterSize(charSize);
+    text.setFillColor(color);
+    text.setPosition(pos);
+    return text;
+}
+
+void zappy::InGame::drawRessourceBar(sf::RenderWindow& window)
+{
+    const sf::Sprite& gridSprite = _map[_selectedTile.x][_selectedTile.y].gridSprite;
+    sf::FloatRect bounds = gridSprite.getGlobalBounds();
+
+    // Draw a colored border around the selected tile
+    sf::RectangleShape border;
+    border.setSize(sf::Vector2f(bounds.width, bounds.height));
+    border.setPosition(bounds.left, bounds.top);
+    border.setOutlineThickness(5.0f);
+    border.setOutlineColor(sf::Color::Red);
+    border.setFillColor(sf::Color::Transparent);
+    window.draw(border);
+
+    // Draw the content bar
+    // TODO: Maybe instead of redeclaring each text at each frame, declare in the class and update each frame
+
+    window.draw(_contentBarSprite);
+    ressources_t quantity = _map[_selectedTile.x][_selectedTile.y].content.quantity;
+    sf::Text food_text = setText(
+        std::to_string(quantity.food),
+        sf::Vector2f(710, 985),
+        30,
+        sf::Color::White);
+    window.draw(food_text);
+
+    sf::Text linemate_text = setText(
+        std::to_string(quantity.linemate),
+        sf::Vector2f(802, 1015),
+        20,
+        sf::Color::White
+    );
+    window.draw(linemate_text);
+
+    sf::Text deraumere_text = setText(
+        std::to_string(quantity.deraumere),
+        sf::Vector2f(892, 1015),
+        20,
+        sf::Color::White
+    );
+    window.draw(deraumere_text);
+
+    sf::Text sibur_text = setText(
+        std::to_string(quantity.sibur),
+        sf::Vector2f(982, 1015),
+        20,
+        sf::Color::White
+    );
+    window.draw(sibur_text);
+
+    sf::Text mendiane_text = setText(
+        std::to_string(quantity.mendiane),
+        sf::Vector2f(1072, 1015),
+        20,
+        sf::Color::White
+    );
+    window.draw(mendiane_text);
+
+    sf::Text phiras_text = setText(
+        std::to_string(quantity.phiras),
+        sf::Vector2f(1162, 1015),
+        20,
+        sf::Color::White
+    );
+    window.draw(phiras_text);
+
+    sf::Text thystame_text = setText(
+        std::to_string(quantity.thystame),
+        sf::Vector2f(1252, 1015),
+        20,
+        sf::Color::White
+    );
+    window.draw(thystame_text);
+}
+
+void zappy::InGame::drawLevelsBar(sf::RenderWindow& window)
+{
+    // Draw level bar
+    window.draw(_levelBarSprite);
+
+    // Draw level count
+    int pnjSize = _pnjs.size();
+    std::array<int, 8> levelCount = {};
+    for (int i = 0; i < pnjSize; i++) {
+        levelCount[_pnjs[i].level - 1]++;
+    }
+
+    for (int i = 0; i < 8; i++) {
+        sf::Text level_text = setText(
+            std::to_string(levelCount[i]),
+            sf::Vector2f(1884, 328 + (i * 50)),
+            30,
+            sf::Color::White
+        );
+        window.draw(level_text);
+    }
+}
+
 void zappy::InGame::drawScene(sf::RenderWindow& window)
 {
     std::cout << "draw scene" << std::endl;
@@ -129,25 +231,11 @@ void zappy::InGame::drawScene(sf::RenderWindow& window)
             window.draw(_map[i][j].gridSprite);
         }
     };
-    std::cout << "draw grid complete" << std::endl;
-    if (_selectedTile.x >= 0 && _selectedTile.y >= 0 && _selectedTile.x < _mapWidth && _selectedTile.y < _mapHeight) {
-        const sf::Sprite& gridSprite = _map[_selectedTile.x][_selectedTile.y].gridSprite;
-        sf::FloatRect bounds = gridSprite.getGlobalBounds();
-        // Draw a colored border around the selected tile
-        sf::RectangleShape border;
-        border.setSize(sf::Vector2f(bounds.width, bounds.height));
-        border.setPosition(bounds.left, bounds.top);
-        border.setOutlineThickness(5.0f);
-        border.setOutlineColor(sf::Color::Red);
-        border.setFillColor(sf::Color::Transparent);
-        window.draw(border);
-        window.draw(_contentBarSprite);
 
-        // Display the received information on the selected tile
-        // Modify the code according to your specific requirements
-        // const tile_content_t& tileContent = _map[_selectedTile.x][_selectedTile.y].content;
-        // Draw the received information on the selected tile
-        // ...
+    drawLevelsBar(window);
+
+    if (_selectedTile.x >= 0 && _selectedTile.y >= 0 && _selectedTile.x < _mapWidth && _selectedTile.y < _mapHeight) {
+        drawRessourceBar(window);
     }
     std::cout << "draw selected tile complete" << std::endl;
     drawRessources(window);

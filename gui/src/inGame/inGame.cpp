@@ -19,6 +19,9 @@ zappy::InGame::~InGame() {}
 
 void zappy::InGame::loadTextures()
 {
+    if (!_font.loadFromFile("gui/assets/font/DeterminationMono.ttf"))
+        throw AScene::SceneException("Error: cannot load font");
+
     if (!_backgroundTexture.loadFromFile("gui/assets/images/space.jpg"))
         throw AScene::SceneException("Error: cannot load in game background texture");
     setSpriteProperties(_backgroundSprite, _backgroundTexture, sf::Vector2f(1, 1), sf::Vector2f(960, 540));
@@ -26,6 +29,10 @@ void zappy::InGame::loadTextures()
     if (!_contentBarTexture.loadFromFile("gui/assets/hud/contentBar.png"))
         throw AScene::SceneException("Error: cannot load contentBar.png");
     setSpriteProperties(_contentBarSprite, _contentBarTexture, sf::Vector2f(1, 1), sf::Vector2f(960, 1005));
+
+    if (!_levelBarTexture.loadFromFile("gui/assets/hud/levelBar.png"))
+        throw AScene::SceneException("Error: cannot load levelBar.png");
+    setSpriteProperties(_levelBarSprite, _levelBarTexture, sf::Vector2f(1.25, 1.25), sf::Vector2f(1873, 500));
 
     int nbPnjTextures = 3;
     for (int i = 0; i < nbPnjTextures; i++) {
@@ -56,6 +63,7 @@ void zappy::InGame::loadTextures()
     createPnj(5, 8, WEST);
     createPnj(5, 8, EAST);
     createPnj(10, 2, SOUTH);
+    createPnj(10, 3, SOUTH);
 
     createRessources(10, 6, {1, 1, 1, 1, 1, 1, 1});
     createRessources(2, 1, {1, 0, 0, 0, 0, 0, 0});

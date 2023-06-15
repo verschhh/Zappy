@@ -31,7 +31,7 @@ inv_t *inv_ctor(void);
 slot_t *slot_ctor(args_t *arg);
 player_t *player_ctor(serv_t *server);
 slot_t *new_slot(slot_t *slot, char *name);
-client_t *fill_client_struct(int sockfd, serv_t *serv, char *buffer);
+void fill_client_struct(int sockfd, serv_t *serv, char *buffer);
 
 //* Server
 int start_server(args_t *args);
@@ -68,5 +68,9 @@ int send_expulsion(int sockfd, serv_t *serv, char *buffer);
 int send_egg_laying(int sockfd, serv_t *serv, char *buffer);
 int send_serv_msg(int sockfd, serv_t *serv, char *buffer);
 void update_teams(serv_t *serv);
+int unknown_command(int sockfd, serv_t *serv, char *buffer);
+
+//* Player Commands
+int inventory(int sockfd, serv_t *serv, char *buffer);
 
 #endif

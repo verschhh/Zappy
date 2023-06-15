@@ -22,7 +22,6 @@ int send_player_position(int sockfd, serv_t *serv, char *buffer)
     char *str = NULL;
     char **array = split_string_at_spaces(buffer, &count);
     erase_first_characters(array[1], 1);
-    printf("array[1] = %s", array[1]);
     player_t *t = parse_player(sockfd, serv, atoi(array[1]));
     if (t == NULL) {
         printf("EXIT\n");
@@ -144,7 +143,6 @@ int check_level(slot_t *tmp)
 
 int check_end_game(serv_t *serv)
 {
-    int count = 0;
     slot_t *slot = serv->slots;
     while (slot->next != NULL) {
         if (check_level(slot) == 1)
@@ -172,9 +170,10 @@ int end_of_game(int sockfd, serv_t *serv, char *buffer)
 int unknown_command(int sockfd, serv_t *serv, char *buffer)
 {
     (void)buffer;
-    char msg[4];
+    (void) sockfd;
+    char msg[5];
 
     sprintf(msg, "suc\n");
-    write(serv->sockfd, msg, 4);
+    write(serv->sockfd, msg, 5);
     return 0;
 }

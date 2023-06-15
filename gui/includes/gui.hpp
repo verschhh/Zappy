@@ -62,6 +62,8 @@ namespace zappy {
             int _port;
             std::string _machine;
 
+            sf::Font _font;
+
             int _indexScene;
             std::vector<IScene*> _scenes;
     };
