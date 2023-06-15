@@ -87,6 +87,7 @@ typedef struct slot_s {
     client_t *team_member;
     struct slot_s *next;
 } slot_t;
+
 typedef struct map_s {
     int x;
     int y;
