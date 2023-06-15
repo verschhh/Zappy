@@ -19,7 +19,8 @@ const cmd_t cmd_list[NB_CMD] = {
     {"pin", &send_player_inventory},
     {"Forward", &forward},
     {"Left", &left},
-    {"Right", &right}
+    {"Right", &right},
+    {"Connect_nbr", &unused_slot}
     // {"Eject", &send_expulsion}
 };
 
