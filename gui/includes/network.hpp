@@ -2,11 +2,12 @@
 ** EPITECH PROJECT, 2022
 ** B-YEP-400-BER-4-1-zappy-kentin.paille
 ** File description:
-** connection.hpp
+** network.hpp
 */
 
 #pragma once
 
+#include <sstream>
 #include <string>
 #include <netinet/in.h>
 

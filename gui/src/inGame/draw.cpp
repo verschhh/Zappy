@@ -6,6 +6,7 @@
 */
 
 #include "../../includes/scenes.hpp"
+#include <iostream>
 
 //! Kentin's version
 void zappy::InGame::drawPnjs(sf::RenderWindow& window)
@@ -67,38 +68,52 @@ void zappy::InGame::drawRessources(sf::RenderWindow& window)
     for (int i = 0; i < _mapWidth; i++) {
         for (int j = 0; j < _mapHeight; j++) {
             int foodSize = _map[i][j].content.quantity.food;
+            // std::cout << "Food size: " << foodSize << std::endl;
             for (int k = 0; k < foodSize; k++) {
                 window.draw(_map[i][j].content.foodSprites[k]);
+                // std::cout << "Drawing food sprite" << std::endl;
             }
 
             int linemateSize = _map[i][j].content.quantity.linemate;
+            // std::cout << "Linemate size: " << linemateSize << std::endl;
             for (int k = 0; k < linemateSize; k++) {
                 window.draw(_map[i][j].content.linemateSprites[k]);
+                // std::cout << "Drawing linemate sprite" << std::endl;
             }
 
             int deraumereSize = _map[i][j].content.quantity.deraumere;
+            // std::cout << "Deraumere size: " << deraumereSize << std::endl;
             for (int k = 0; k < deraumereSize; k++) {
                 window.draw(_map[i][j].content.deraumereSprites[k]);
+                // std::cout << "Drawing deraumere sprite" << std::endl;
             }
 
             int siburSize = _map[i][j].content.quantity.sibur;
+            // std::cout << "Sibur size: " << siburSize << std::endl;
             for (int k = 0; k < siburSize; k++) {
                 window.draw(_map[i][j].content.siburSprites[k]);
+                // std::cout << "Drawing sibur sprite" << std::endl;
             }
 
             int mendianeSize = _map[i][j].content.quantity.mendiane;
+            // std::cout << "Mendiane size: " << mendianeSize << std::endl;
             for (int k = 0; k < mendianeSize; k++) {
                 window.draw(_map[i][j].content.mendianeSprites[k]);
+                // std::cout << "Drawing mendiane sprite" << std::endl;
             }
 
             int phirasSize = _map[i][j].content.quantity.phiras;
+            // std::cout << "Phiras size: " << phirasSize << std::endl;
             for (int k = 0; k < phirasSize; k++) {
                 window.draw(_map[i][j].content.phirasSprites[k]);
+                // std::cout << "Drawing phiras sprite" << std::endl;
             }
 
             int thystameSize = _map[i][j].content.quantity.thystame;
+            // std::cout << "Thystame size: " << thystameSize << std::endl;
             for (int k = 0; k < thystameSize; k++) {
                 window.draw(_map[i][j].content.thystameSprites[k]);
+                // std::cout << "Drawing thystame sprite" << std::endl;
             }
         }
     }
@@ -106,14 +121,15 @@ void zappy::InGame::drawRessources(sf::RenderWindow& window)
 
 void zappy::InGame::drawScene(sf::RenderWindow& window)
 {
+    std::cout << "draw scene" << std::endl;
     window.draw(_backgroundSprite);
-
+    std::cout << "draw background complete" << std::endl;
     for (int i = 0; i < _mapWidth; i++) {
         for (int j = 0; j < _mapHeight; j++) {
             window.draw(_map[i][j].gridSprite);
         }
     };
-
+    std::cout << "draw grid complete" << std::endl;
     if (_selectedTile.x >= 0 && _selectedTile.y >= 0 && _selectedTile.x < _mapWidth && _selectedTile.y < _mapHeight) {
         const sf::Sprite& gridSprite = _map[_selectedTile.x][_selectedTile.y].gridSprite;
         sf::FloatRect bounds = gridSprite.getGlobalBounds();
@@ -133,7 +149,10 @@ void zappy::InGame::drawScene(sf::RenderWindow& window)
         // Draw the received information on the selected tile
         // ...
     }
-
+    std::cout << "draw selected tile complete" << std::endl;
     drawRessources(window);
+    std::cout << "draw resources complete" << std::endl;
     drawPnjs(window);
+    std::cout << "draw pnjs complete" << std::endl;
 }
+

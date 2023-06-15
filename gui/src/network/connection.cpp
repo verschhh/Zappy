@@ -5,7 +5,7 @@
 ** connection.cpp
 */
 
-#include "../../includes/connection.hpp"
+#include "../../includes/network.hpp"
 #include <iostream>
 #include <cstring>
 #include <unistd.h>

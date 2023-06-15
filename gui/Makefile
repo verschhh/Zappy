@@ -14,6 +14,7 @@ SRC = 	src/gui.cpp \
 		src/inGame/create.cpp \
 		src/inGame/handleEvents.cpp \
 		src/network/connection.cpp \
+		src/network/messageHandler.cpp	\
 
 OBJ = $(SRC:.cpp=.o)
 

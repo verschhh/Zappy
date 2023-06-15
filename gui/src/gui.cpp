@@ -62,11 +62,10 @@ void zappy::Gui::run() {
     while (window.isOpen()) {
         _scenes[_indexScene]->handleEvents(window);
         setIndexScene(_scenes[_indexScene]->getIndexScene());
-
         window.clear();
-
         _scenes[_indexScene]->drawScene(window);
-
+        // std::cout << "after draw" << std::endl;
         window.display();
+        // std::cout << "After display" << std::endl;
     }
 }

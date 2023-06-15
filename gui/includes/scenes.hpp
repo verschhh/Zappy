@@ -10,7 +10,7 @@
 #include <SFML/Graphics.hpp>
 #include <cmath>
 #include <random>
-#include "connection.hpp"
+#include "network.hpp"
 
 static const int WINDOW_WIDTH = 1920;
 static const int WINDOW_HEIGHT = 1080;
