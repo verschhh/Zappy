@@ -65,7 +65,7 @@ int receive_client_msg(int sockfd, fd_set *readfds, serv_t *serv)
             if (next > 0) {
                 fill_client_struct(sockfd, serv, buffer);
                 send_x_y_ai(sockfd, serv, next);
-                send_connection_msg(serv->clients);
+                send_msg_connection(serv->clients, serv);
             } else
                 write(sockfd, "suc\n", 4);
             return 0;
