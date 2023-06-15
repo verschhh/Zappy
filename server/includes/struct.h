@@ -24,7 +24,7 @@
 
 
 enum nb_command {
-    NB_CMD = 9
+    NB_CMD = 12
 };
 
 enum enum_slot {
@@ -76,6 +76,7 @@ typedef struct client_s {
     struct sockaddr_in addr;
     socklen_t addrlen;
     int slot;
+    int timelimit;
     struct player_s *player;
     struct client_s *next;
 } client_t;

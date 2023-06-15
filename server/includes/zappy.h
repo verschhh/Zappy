@@ -49,6 +49,8 @@ void usage(void);
 char** split_string_at_spaces(const char* input, int* count);
 char *get_orientation(enum orientation orientation);
 client_t *get_correct_client(serv_t *serv, int sockfd);
+void update_time_limit(serv_t *serv);
+int check_time_limit(serv_t *serv, int sockfd);
 
 //* Commands
 int map_size(int sockfd, serv_t *serv, char *buffer);
@@ -72,5 +74,10 @@ int unknown_command(int sockfd, serv_t *serv, char *buffer);
 
 //* Player Commands
 int inventory(int sockfd, serv_t *serv, char *buffer);
+
+//* AI Commands
+int forward(int sockfd, serv_t *serv, char *buffer);
+int right(int sockfd, serv_t *serv, char *buffer);
+int left(int sockfd, serv_t *serv, char *buffer);
 
 #endif
