@@ -41,7 +41,7 @@ int forward(int sockfd, serv_t *serv, char *buffer)
     if (can_move != 0)
         return 84;
     move_to_orientation(serv, cpy);
-    write(sockfd, "ok", 3);
+    write(sockfd, "ok\n", 4);
     return 0;
 }
 
@@ -56,7 +56,7 @@ int left(int sockfd, serv_t *serv, char *buffer)
     cpy->player->orientation -= 1;
     if (cpy->player->orientation < NORTH)
         cpy->player->orientation = WEST;
-    write(sockfd, "ok", 3);
+    write(sockfd, "ok\n", 4);
     return 0;
 }
 
@@ -71,6 +71,6 @@ int right(int sockfd, serv_t *serv, char *buffer)
     cpy->player->orientation += 1;
     if (cpy->player->orientation > WEST)
         cpy->player->orientation = NORTH;
-    write(sockfd, "ok", 3);
+    write(sockfd, "ok\n", 4);
     return 0;
 }
