@@ -12,6 +12,7 @@ SRC = 	src/gui.cpp \
 		src/inGame/tools.cpp \
 		src/inGame/draw.cpp \
 		src/inGame/create.cpp \
+		src/inGame/update.cpp \
 		src/inGame/handleEvents.cpp \
 		src/network/connection.cpp \
 		src/network/messageHandler.cpp	\
