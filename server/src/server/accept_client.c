@@ -9,12 +9,12 @@
 
 void send_msg_connection(client_t *client, serv_t *serv)
 {
-    char *msg;
-    int len = snprintf(msg, 0, "pnw #%d %d %d", client->player->x, client->player->y);
+    char *msg = NULL;
+    int len = snprintf(msg, 0, "pnw #%d %d %d", client->player->id, client->player->x, client->player->y);
 
     msg = malloc(sizeof(char) * (len + 1));
     msg[len] = '\0';
-    sprintf(msg, "pnw #%d %d %d", client->player->x, client->player->y);
+    sprintf(msg, "pnw #%d %d %d",client->player->id, client->player->x, client->player->y);
     write(serv->sockfd, msg, len);
 }
 

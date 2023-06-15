@@ -9,6 +9,7 @@
 
 int send_serv_msg(int sockfd, serv_t *serv, char *buffer)
 {
+    (void) serv;
     write(sockfd, buffer, strlen(buffer));
     return 0;
 }

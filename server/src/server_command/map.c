@@ -88,4 +88,5 @@ int map_content(int sockfd, serv_t *serv, char *buffer)
         serv->max_x, serv->max_y, array[0], array[1], array[2],
             array[3], array[4], array[5], array[6]);
     write(sockfd, msg, len);
+    return 0;
 }

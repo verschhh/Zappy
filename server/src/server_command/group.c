@@ -11,6 +11,7 @@ int get_all_names_group(int sockfd, serv_t *serv, char *buffer)
 {
     slot_t *copy = serv->slots;
     int len = 0;
+    (void) buffer;
 
     while (copy->next != NULL) {
         len = strlen(copy->team_name);

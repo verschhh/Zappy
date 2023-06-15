@@ -55,4 +55,5 @@ client_t *get_correct_client(serv_t *serv, int sockfd)
             return copy;
         copy = copy->next;
     }
+    return copy;
 }
