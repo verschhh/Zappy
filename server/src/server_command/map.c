@@ -7,13 +7,13 @@
 
 #include "../../includes/zappy.h"
 
-static const int FOOD_DENSITY = 0.5;
-static const int LINEMATE_DENSITY = 0.3;
-static const int DERAUMERE_DENSITY = 0.15;
-static const int SIBUR_DENSITY = 0.1;
-static const int MENDIANE_DENSITY = 0.1;
-static const int PHIRAS_DENSITY = 0.08;
-static const int THYSTAME_DENSITY = 0.05;
+static const double FOOD_DENSITY = 0.5;
+static const double LINEMATE_DENSITY = 0.3;
+static const double DERAUMERE_DENSITY = 0.15;
+static const double SIBUR_DENSITY = 0.1;
+static const double MENDIANE_DENSITY = 0.1;
+static const double PHIRAS_DENSITY = 0.08;
+static const double THYSTAME_DENSITY = 0.05;
 
 int map_size(int sockfd, serv_t *serv, char *buffer)
 {
@@ -85,16 +85,23 @@ int map_content(int sockfd, serv_t *serv, char *buffer)
 void spawn_ressources(serv_t *serv)
 {
     srand(time(NULL)); // Seed the random number generator
-
     map_t *current = serv->map;
     while (current != NULL) {
-        current->food = (rand() < (RAND_MAX * FOOD_DENSITY)) ? 1 : 0;
-        current->linemate = (rand() < (RAND_MAX * LINEMATE_DENSITY)) ? 1 : 0;
-        current->deraumere = (rand() < (RAND_MAX * DERAUMERE_DENSITY)) ? 1 : 0;
-        current->sibur = (rand() < (RAND_MAX * SIBUR_DENSITY)) ? 1 : 0;
-        current->mendiane = (rand() < (RAND_MAX * MENDIANE_DENSITY)) ? 1 : 0;
-        current->phiras = (rand() < (RAND_MAX * PHIRAS_DENSITY)) ? 1 : 0;
-        current->thystame = (rand() < (RAND_MAX * THYSTAME_DENSITY)) ? 1 : 0;
+        int foo = rand();
+        if (foo < (RAND_MAX * FOOD_DENSITY))
+            current->food += 1;
+        if (foo < (RAND_MAX * LINEMATE_DENSITY))
+            current->linemate += 1;
+        if (foo < (RAND_MAX * DERAUMERE_DENSITY))
+            current->deraumere += 1;
+        if (foo < (RAND_MAX * SIBUR_DENSITY))
+            current->sibur += 1;
+        if (foo < (RAND_MAX * MENDIANE_DENSITY))
+            current->mendiane += 1;
+        if (foo < (RAND_MAX * PHIRAS_DENSITY))
+            current->phiras += 1;
+        if (foo < (RAND_MAX * THYSTAME_DENSITY))
+            current->thystame += 1;
         current = current->next;
     }
 }

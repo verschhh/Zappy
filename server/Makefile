@@ -19,7 +19,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	gcc -o $(NAME) $(OBJ) $(CFLAGS) $(CPPFLAGS)
-	# mv $(NAME) ../
+	cp $(NAME) ../
 
 clean:
 	rm -f $(OBJ)

@@ -50,6 +50,8 @@ serv_t *serv_ctor(args_t *arg)
     serv->max_x = arg->width;
     serv->max_y = arg->height;
     serv->map = create_map(arg);
+    spawn_ressources(serv);
+    printf("Cock %d\n", serv->map->next->food);
     serv->freq = arg->freq;
     serv = serv_ctor2(serv, arg);
     return serv;
