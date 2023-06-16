@@ -87,20 +87,19 @@ void spawn_ressources(serv_t *serv)
     srand(time(NULL)); // Seed the random number generator
     map_t *current = serv->map;
     while (current != NULL) {
-        int foo = rand();
-        if (foo < (RAND_MAX * FOOD_DENSITY))
+        if (rand()< (RAND_MAX * FOOD_DENSITY))
             current->food += 1;
-        if (foo < (RAND_MAX * LINEMATE_DENSITY))
+        if (rand()< (RAND_MAX * LINEMATE_DENSITY))
             current->linemate += 1;
-        if (foo < (RAND_MAX * DERAUMERE_DENSITY))
+        if (rand()< (RAND_MAX * DERAUMERE_DENSITY))
             current->deraumere += 1;
-        if (foo < (RAND_MAX * SIBUR_DENSITY))
+        if (rand()< (RAND_MAX * SIBUR_DENSITY))
             current->sibur += 1;
-        if (foo < (RAND_MAX * MENDIANE_DENSITY))
+        if (rand()< (RAND_MAX * MENDIANE_DENSITY))
             current->mendiane += 1;
-        if (foo < (RAND_MAX * PHIRAS_DENSITY))
+        if (rand()< (RAND_MAX * PHIRAS_DENSITY))
             current->phiras += 1;
-        if (foo < (RAND_MAX * THYSTAME_DENSITY))
+        if (rand()< (RAND_MAX * THYSTAME_DENSITY))
             current->thystame += 1;
         current = current->next;
     }
