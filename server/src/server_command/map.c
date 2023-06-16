@@ -68,7 +68,7 @@ int tile_content(int sockfd, serv_t *serv, char *buffer)
 int map_content(int sockfd, serv_t *serv, char *buffer)
 {
     (void) buffer;
-    char msg[5000] = "";
+    char msg[25000] = "";
     map_t *map = serv->map;
 
     while (map != NULL) {
