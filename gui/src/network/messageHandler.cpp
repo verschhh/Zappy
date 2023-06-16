@@ -5,8 +5,6 @@
 ** messageHandler.cpp
 */
 
-// #include "../../includes/messangeHandle.hpp"
-#include <iostream> //! TEMP
 #include <sstream>
 #include <string>
 #include "../../includes/scenes.hpp"
@@ -18,9 +16,6 @@ void zappy::MessageHandler::handleBctMessage(const std::string& message, std::ve
     zappy::InGame::tile_content_t content;
     parseBctMessage(message, tileX, tileY, content);
 
-    std::cout << "Received BCT message for tile (" << tileX << ", " << tileY << ")" << std::endl;
-
-    // Update the tile information in the map based on the parsed data
     zappy::InGame::tile_t& tile = map[tileX][tileY];
     tile.content.quantity = content.quantity;
 }
@@ -37,15 +32,4 @@ void zappy::MessageHandler::parseBctMessage(const std::string& message, int& til
     iss >> content.quantity.mendiane;
     iss >> content.quantity.phiras;
     iss >> content.quantity.thystame;
-
-    std::cout << "Parsed BCT message: Tile (" << tileX << ", " << tileY << ")" << std::endl;
-    std::cout << "Food: " << content.quantity.food << std::endl;
-    std::cout << "Linemate: " << content.quantity.linemate << std::endl;
-    std::cout << "Deraumere: " << content.quantity.deraumere << std::endl;
-    std::cout << "Sibur: " << content.quantity.sibur << std::endl;
-    std::cout << "Mendiane: " << content.quantity.mendiane << std::endl;
-    std::cout << "Phiras: " << content.quantity.phiras << std::endl;
-    std::cout << "Thystame: " << content.quantity.thystame << std::endl;
-
-    std::cout << "Parsing done" << std::endl;
 }
