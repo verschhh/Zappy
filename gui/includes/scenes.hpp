@@ -114,6 +114,7 @@ namespace zappy {
 
             //* Tools
             int randomNumber(int min, int max);
+            std::vector<std::string> splitString(std::string str, char delimiter);
 
             //* Structures
             typedef struct pnjTextures_s {
