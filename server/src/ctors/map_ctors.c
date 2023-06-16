@@ -13,13 +13,6 @@ void fill_new_node_map(map_t *new_node, args_t *arg)
 
     new_node->x = save_x;
     new_node->y = save_y;
-    new_node->food = 12;
-    new_node->linemate = 1;
-    new_node->deraumere = 7;
-    new_node->sibur = 2;
-    new_node->mendiane = 0;
-    new_node->phiras = 4;
-    new_node->thystame = 2;
     new_node->next = NULL;
     save_y++;
     if (save_y >= arg->height) {
