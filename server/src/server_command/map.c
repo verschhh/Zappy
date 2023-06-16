@@ -6,13 +6,14 @@
 */
 
 #include "../../includes/zappy.h"
-#define FOOD_DENSITY 0.5
-#define LINEMATE_DENSITY 0.3
-#define DERAUMERE_DENSITY 0.15
-#define SIBUR_DENSITY 0.1
-#define MENDIANE_DENSITY 0.1
-#define PHIRAS_DENSITY 0.08
-#define THYSTAME_DENSITY 0.05
+
+static const int FOOD_DENSITY = 0.5;
+static const int LINEMATE_DENSITY = 0.3;
+static const int DERAUMERE_DENSITY = 0.15;
+static const int SIBUR_DENSITY = 0.1;
+static const int MENDIANE_DENSITY = 0.1;
+static const int PHIRAS_DENSITY = 0.08;
+static const int THYSTAME_DENSITY = 0.05;
 
 int map_size(int sockfd, serv_t *serv, char *buffer)
 {
