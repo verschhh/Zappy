@@ -27,7 +27,7 @@ serv_t *serv_ctor2(serv_t *serv, args_t *arg)
 {
     serv->nb_client = 0;
     serv->clients = NULL;
-    serv->clock = clock();
+    serv->new_tick = true;
     serv->slots = slot_ctor(arg);
     for (int i = 1; arg->names[i] != NULL; i++)
         new_slot(serv->slots, arg->names[i]);
