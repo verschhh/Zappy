@@ -22,14 +22,14 @@ void zappy::InGame::updateScene(void)
 
     int mctBufferSize = _mapHeight * _mapWidth * MAX_BCT_SIZE;
     std::string response = _connection.receive(mctBufferSize);
-    std::cout << "response: " << response << std::endl;
 
-    // std::vector<std::string> lines = splitString(response, '\n');
+    std::vector<std::string> lines = splitString(response, '\n');
 
-    // MessageHandler handler;
-    // for (int i = 0; i < _mapWidth; i++) {
-    //     for (int j = 0; j < _mapHeight; j++) {
-    //         handler.handleBctMessage(lines[i * _mapWidth + j], _map);
-    //     }
-    // }
+    MessageHandler handler;
+    for (int i = 0; i < _mapWidth; i++) {
+        for (int j = 0; j < _mapHeight; j++) {
+
+            handler.handleBctMessage(lines[i * _mapWidth + j], _map);
+        }
+    }
 }

@@ -22,21 +22,7 @@ void zappy::MessageHandler::handleBctMessage(const std::string& message, std::ve
 
     // Update the tile information in the map based on the parsed data
     zappy::InGame::tile_t& tile = map[tileX][tileY];
-    tile.content = content;
-
-    // Update the sprites for the tile based on the new information
-    // ...
-
-    // Example: Print the updated tile content
-    std::cout << "Tile content - Food: " << tile.content.quantity.food << std::endl;
-    std::cout << "Tile content - Linemate: " << tile.content.quantity.linemate << std::endl;
-    std::cout << "Tile content - Deraumere: " << tile.content.quantity.deraumere << std::endl;
-    std::cout << "Tile content - Sibur: " << tile.content.quantity.sibur << std::endl;
-    std::cout << "Tile content - Mendiane: " << tile.content.quantity.mendiane << std::endl;
-    std::cout << "Tile content - Phiras: " << tile.content.quantity.phiras << std::endl;
-    std::cout << "Tile content - Thystame: " << tile.content.quantity.thystame << std::endl;
-
-    std::cout << "Done handling BCT message" << std::endl;
+    tile.content.quantity = content.quantity;
 }
 
 void zappy::MessageHandler::parseBctMessage(const std::string& message, int& tileX, int& tileY, zappy::InGame::tile_content_t& content)

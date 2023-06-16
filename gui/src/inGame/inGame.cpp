@@ -152,7 +152,7 @@ void zappy::InGame::setRessourcesInMap(void)
             _map[i][j].content.thystameSprite = thystameSprite;
 
             //! Temp values
-            // _map[i][j].content.quantity = {2, 3, 4, 5, 6, 7, 8};
+            // _map[i][j].content.quantity = {randomNumber(0, 5), randomNumber(0, 5), randomNumber(0, 5), randomNumber(0, 5), randomNumber(0, 5), randomNumber(0, 5), randomNumber(0, 5)};
         }
     }
 }
