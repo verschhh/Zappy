@@ -113,6 +113,9 @@ namespace zappy {
             void handleEvents(sf::RenderWindow& window);
             void drawScene(sf::RenderWindow& window);
 
+            //* Events
+            void clickTile(sf::RenderWindow& window);
+
             //* Tools
             int randomNumber(int min, int max);
             std::vector<std::string> splitString(std::string str, char delimiter);

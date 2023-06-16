@@ -151,7 +151,8 @@ void zappy::InGame::setRessourcesInMap(void)
             thystameSprite.setPosition(thystamePosition.x + randomOffsetX, thystamePosition.y + randomOffsetY);
             _map[i][j].content.thystameSprite = thystameSprite;
 
-            _map[i][j].content.quantity = {2, 3, 4, 5, 6, 7, 8};
+            //! Temp values
+            // _map[i][j].content.quantity = {2, 3, 4, 5, 6, 7, 8};
         }
     }
 }
