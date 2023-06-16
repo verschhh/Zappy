@@ -107,6 +107,7 @@ namespace zappy {
 
             void createMap();
             void loadTextures();
+            void setRessourcesInMap(void);
 
             //* Abstract functions
             void handleEvents(sf::RenderWindow& window);
@@ -152,13 +153,13 @@ namespace zappy {
 
             typedef struct tile_content_s {
                 ressources_t quantity;
-                std::vector<sf::Sprite> foodSprites;
-                std::vector<sf::Sprite> linemateSprites;
-                std::vector<sf::Sprite> deraumereSprites;
-                std::vector<sf::Sprite> siburSprites;
-                std::vector<sf::Sprite> mendianeSprites;
-                std::vector<sf::Sprite> phirasSprites;
-                std::vector<sf::Sprite> thystameSprites;
+                sf::Sprite foodSprite;
+                sf::Sprite linemateSprite;
+                sf::Sprite deraumereSprite;
+                sf::Sprite siburSprite;
+                sf::Sprite mendianeSprite;
+                sf::Sprite phirasSprite;
+                sf::Sprite thystameSprite;
             } tile_content_t;
 
             typedef struct tile_s {
@@ -168,7 +169,6 @@ namespace zappy {
 
             //* Class methods
             void createPnj(int x, int y, pnjOrientation orientation);
-            void createRessources(int x, int y, ressources_t ressources);
 
             void drawPnjs(sf::RenderWindow& window);
             void drawRessources(sf::RenderWindow& window);
