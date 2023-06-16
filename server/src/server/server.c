@@ -28,18 +28,32 @@ struct termios init_signal(void)
     return old_termios;
 }
 
+void check_seconds_passed(clock_t clock_start) {
+    double elapsed_seconds;
+    clock_t current_time;
+
+    current_time = clock();  // Get the current time
+    elapsed_seconds = (double)(current_time - clock_start) / CLOCKS_PER_SEC;
+
+    if (elapsed_seconds >= 1.0) {
+        printf("EUREKA\n");
+    }
+}
+
 int server(fd_set *readfds, serv_t *serv)
 {
     fd_set tmpfds;
 
     FD_ZERO(&tmpfds);
     tmpfds = *readfds;
+    check_seconds_passed(serv->clock);
     if (select(serv->max_sd + 1, &tmpfds, NULL, NULL, NULL) < 0)
         print_and_exit("ERROR on select");
     for (int i = 0; i <= serv->max_sd; i++) {
         if (!FD_ISSET(i, &tmpfds)) { // Valgrind HERE
             continue;
         }
+    printf("serv = %d %d\n", serv->max_x, serv->max_y);
         if (i == serv->sockfd) {
             accept_new_client(readfds, serv);
         } else {
@@ -53,6 +67,7 @@ int start_server(args_t *args)
 {
     struct termios old_termios = init_signal();
     serv_t *serv = serv_ctor(args);
+    printf("serv = %d %d\n", serv->max_x, serv->max_y);
     fd_set readfds;
     if (serv == NULL) {
         free(args);

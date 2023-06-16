@@ -45,6 +45,7 @@ int parse_command(char *buffer)
 
 int lauch_cmd(int cmd, int sockfd, serv_t *serv, char *buffer)
 {
+    printf("%f\n", (double)clock() / CLOCKS_PER_SEC);
     if (cmd_list[cmd].pointer(sockfd, serv, buffer) == 84)
         return 84;
     return 0;
@@ -56,6 +57,7 @@ int receive_client_msg(int sockfd, fd_set *readfds, serv_t *serv)
     int cmd = 0;
     int bytes_read = recv(sockfd, buffer, sizeof(buffer), 0);
     int next = 0;
+    printf("%f\n", (double)clock() / CLOCKS_PER_SEC);
     if (bytes_read <= 0) {
         close(sockfd);
         FD_CLR(sockfd, readfds);
