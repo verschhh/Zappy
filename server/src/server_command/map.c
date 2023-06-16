@@ -6,6 +6,13 @@
 */
 
 #include "../../includes/zappy.h"
+#define FOOD_DENSITY 0.5
+#define LINEMATE_DENSITY 0.3
+#define DERAUMERE_DENSITY 0.15
+#define SIBUR_DENSITY 0.1
+#define MENDIANE_DENSITY 0.1
+#define PHIRAS_DENSITY 0.08
+#define THYSTAME_DENSITY 0.05
 
 int map_size(int sockfd, serv_t *serv, char *buffer)
 {
@@ -71,4 +78,22 @@ int map_content(int sockfd, serv_t *serv, char *buffer)
     }
     write(sockfd, msg, strlen(msg));
     return 0;
+}
+
+// TODO: change to a set number of ressources distributed randomly
+void spawn_ressources(serv_t *serv)
+{
+    srand(time(NULL)); // Seed the random number generator
+
+    map_t *current = serv->map;
+    while (current != NULL) {
+        current->food = (rand() < (RAND_MAX * FOOD_DENSITY)) ? 1 : 0;
+        current->linemate = (rand() < (RAND_MAX * LINEMATE_DENSITY)) ? 1 : 0;
+        current->deraumere = (rand() < (RAND_MAX * DERAUMERE_DENSITY)) ? 1 : 0;
+        current->sibur = (rand() < (RAND_MAX * SIBUR_DENSITY)) ? 1 : 0;
+        current->mendiane = (rand() < (RAND_MAX * MENDIANE_DENSITY)) ? 1 : 0;
+        current->phiras = (rand() < (RAND_MAX * PHIRAS_DENSITY)) ? 1 : 0;
+        current->thystame = (rand() < (RAND_MAX * THYSTAME_DENSITY)) ? 1 : 0;
+        current = current->next;
+    }
 }

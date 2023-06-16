@@ -56,6 +56,7 @@ int check_time_limit(serv_t *serv, int sockfd);
 int map_size(int sockfd, serv_t *serv, char *buffer);
 int tile_content(int sockef, serv_t *serv, char *buffer);
 int map_content(int sockf, serv_t *serv, char *buffer);
+void spawn_ressources(serv_t *serv);
 int get_all_names_group(int sockfd, serv_t *serv, char *buffer);
 int send_unit_time(int sockfd, serv_t *serv, char *buffer);
 int send_player_position(int sockfd, serv_t *serv, char *buffer);
