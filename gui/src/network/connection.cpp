@@ -81,39 +81,3 @@ std::string zappy::Connection::receive(int bufferSize)
         return std::string(buffer);
     }
 }
-
-// std::string zappy::Connection::receive()
-// {
-//     if (_sockfd == -1) {
-//         throw std::runtime_error("Error: Not connected to the server");
-//     }
-
-//     const int bufferSize = 1024;  // Adjust the buffer size as needed
-//     char buffer[bufferSize];
-//     int bytesRead;
-
-//     struct timeval timeout;
-//     timeout.tv_sec = 0;
-//     timeout.tv_usec = 1000;
-//     setsockopt(_sockfd, SOL_SOCKET, SO_RCVTIMEO, (const char*)&timeout, sizeof(timeout));
-
-//     bytesRead = ::recv(_sockfd, buffer, bufferSize - 1, 0);
-
-//     if (bytesRead == -1) {
-//         // Check if the error is due to timeout
-//         if (errno == EAGAIN || errno == EWOULDBLOCK) {
-//             // Timeout occurred, return an empty string
-//             return "";
-//         } else {
-//             // Error occurred while receiving
-//             throw std::runtime_error("Error: Failed to receive data from the server");
-//         }
-//     } else if (bytesRead == 0) {
-//         // Connection closed by the server
-//         return "";  // Return an empty string when no message is received
-//     } else {
-//         // Data received successfully
-//         buffer[bytesRead] = '\0';  // Null-terminate the received data
-//         return std::string(buffer);
-//     }
-// }

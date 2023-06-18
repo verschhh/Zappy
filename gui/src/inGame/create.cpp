@@ -6,7 +6,6 @@
 */
 
 #include "../../includes/scenes.hpp"
-#include <iostream> //! TEMP
 
 void zappy::InGame::createMap()
 {

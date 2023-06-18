@@ -21,7 +21,6 @@ void zappy::InGame::updateScene(void)
     MessageHandler handler;
     for (int i = 0; i < _mapWidth; i++) {
         for (int j = 0; j < _mapHeight; j++) {
-
             handler.handleBctMessage(lines[i * _mapWidth + j], _map);
         }
     }

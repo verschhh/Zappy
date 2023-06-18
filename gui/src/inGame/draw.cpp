@@ -36,7 +36,6 @@ void zappy::InGame::drawPnjs(sf::RenderWindow& window)
             _pnjMoveClocks[i].restart();
         }
 
-
         window.draw(_pnjs[i].sprite);
     }
 }
