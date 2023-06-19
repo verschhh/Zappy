@@ -179,6 +179,8 @@ namespace zappy {
             void drawLevelsBar(sf::RenderWindow& window);
 
             void updateScene(void);
+            void updateMap(void);
+            void parseQueue(void);
 
             sf::Text setText(std::string content, sf::Vector2f pos, int charSize, sf::Color color);
 

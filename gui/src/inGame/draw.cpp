@@ -195,10 +195,11 @@ void zappy::InGame::drawLevelsBar(sf::RenderWindow& window)
 
 void zappy::InGame::drawScene(sf::RenderWindow& window)
 {
+    // Update scene
     updateScene();
-    std::cout << "draw scene" << std::endl;
+
+    // Draw scene (map, pnjs, ressources, etc.)
     window.draw(_backgroundSprite);
-    std::cout << "draw background complete" << std::endl;
     for (int i = 0; i < _mapWidth; i++) {
         for (int j = 0; j < _mapHeight; j++) {
             window.draw(_map[i][j].gridSprite);
@@ -206,14 +207,10 @@ void zappy::InGame::drawScene(sf::RenderWindow& window)
     };
 
     drawLevelsBar(window);
-
     if (_selectedTile.x >= 0 && _selectedTile.y >= 0 && _selectedTile.x < _mapWidth && _selectedTile.y < _mapHeight) {
         drawRessourceBar(window);
     }
-    std::cout << "draw selected tile complete" << std::endl;
     drawRessources(window);
-    std::cout << "draw resources complete" << std::endl;
     drawPnjs(window);
-    std::cout << "draw pnjs complete" << std::endl;
 }
 
