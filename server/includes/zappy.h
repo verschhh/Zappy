@@ -52,7 +52,7 @@ client_t *get_correct_client(serv_t *serv, int sockfd);
 void update_time_limit(serv_t *serv);
 int check_time_limit(serv_t *serv, int sockfd);
 
-//* Commands
+//* Commands Gui
 int map_size(int sockfd, serv_t *serv, char *buffer);
 int tile_content(int sockef, serv_t *serv, char *buffer);
 int map_content(int sockf, serv_t *serv, char *buffer);
@@ -63,6 +63,7 @@ int send_player_position(int sockfd, serv_t *serv, char *buffer);
 int send_player_level(int sockfd, serv_t *serv, char *buffer);
 int send_player_inventory(int sockfd, serv_t *serv, char *buffer);
 int modify_unit_time(int sockfd, serv_t *serv, char *buffer);
+int send_queue(int sockfd, serv_t *serv, char *buffer);
 
 //* Server Commands
 void send_connection_msg(client_t *client, serv_t *serv);
@@ -73,10 +74,8 @@ int send_serv_msg(int sockfd, serv_t *serv, char *buffer);
 void update_teams(serv_t *serv);
 int unknown_command(int sockfd, serv_t *serv, char *buffer);
 
-//* Player Commands
-int inventory(int sockfd, serv_t *serv, char *buffer);
-
 //* AI Commands
+int inventory(int sockfd, serv_t *serv, char *buffer);
 int forward(int sockfd, serv_t *serv, char *buffer);
 int right(int sockfd, serv_t *serv, char *buffer);
 int left(int sockfd, serv_t *serv, char *buffer);

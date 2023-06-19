@@ -56,8 +56,8 @@ int left(int sockfd, serv_t *serv, char *buffer)
     int can_move = check_time_limit(serv, sockfd);
     client_t *cpy = get_correct_client(serv, sockfd);
 
-    if (can_move != 0)
-        return 84;
+    // if (can_move != 0)
+    //     return 84;
     cpy->player->orientation -= 1;
     if (cpy->player->orientation < NORTH)
         cpy->player->orientation = WEST;

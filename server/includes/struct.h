@@ -25,7 +25,7 @@
 
 
 enum nb_command {
-    NB_CMD = 14
+    NB_CMD = 15
 };
 
 enum enum_slot {
@@ -114,6 +114,7 @@ typedef struct serv_s {
     bool new_tick;
     struct sockaddr_in addr;
     clock_t start;
+    char queue[5000];
     client_t *clients;
     map_t *map;
     slot_t *slots;
