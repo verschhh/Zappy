@@ -317,7 +317,8 @@ class Player:
                     self.forward()
                     self.left()
                     self.forward()
-                    self.left()
+                    if randint(0, 1) == 0:
+                        self.right()
                     print("Front Left")
 
                 case 3:
@@ -330,6 +331,8 @@ class Player:
                     self.forward()
                     self.left()
                     self.forward()
+                    if randint(0, 1) == 0:
+                        self.right()
                     print("Back Left")
 
                 case 5:
@@ -343,6 +346,8 @@ class Player:
                     self.forward()
                     self.right()
                     self.forward()
+                    if randint(0, 1) == 0:
+                        self.left()
                     print("Back Right")
 
                 case 7:
@@ -353,8 +358,10 @@ class Player:
                 case 8:
                     self.right()
                     self.forward()
-                    self.right()
+                    self.left()
                     self.forward()
+                    if randint(0, 1) == 0:
+                        self.right()
                     print("Front Right")
 
         self.drop_all_ressources()

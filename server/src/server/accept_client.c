@@ -7,17 +7,6 @@
 
 #include "../includes/zappy.h"
 
-void send_msg_connection(client_t *client, serv_t *serv)
-{
-    char *msg;
-    int len = snprintf(msg, 0, "pnw #%d %d %d", client->player->x, client->player->y);
-
-    msg = malloc(sizeof(char) * (len + 1));
-    msg[len] = '\0';
-    sprintf(msg, "pnw #%d %d %d", client->player->x, client->player->y);
-    write(serv->sockfd, msg, len);
-}
-
 client_t *accept_new_client(fd_set *readfds, serv_t *serv)
 {
     struct sockaddr_in addr;

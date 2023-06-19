@@ -36,6 +36,8 @@ void fill_client_struct(int sockfd, serv_t *serv, char *buffer)
     new_node->team_name = strdup(buffer);
     new_node->sockfd = sockfd;
     new_node->player = player_ctor(serv);
+    new_node->tickleft = 0;
+    new_node->cpy_buffer = NULL;
     new_node->slot -= 1;
     new_node->next = NULL;
 
