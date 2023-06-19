@@ -10,26 +10,83 @@ from .game import Game
 import re
 from random import randint
 
+class Incantation:
+    LVL_1 = {"linemate": 1, "deraumere": 0, "sibur": 0, "mendiane": 0, "phiras": 0, "thystame": 0}
+    LVL_2 = {"linemate": 1, "deraumere": 1, "sibur": 1, "mendiane": 0, "phiras": 0, "thystame": 0}
+    LVL_3 = {"linemate": 2, "deraumere": 0, "sibur": 1, "mendiane": 0, "phiras": 2, "thystame": 0}
+    LVL_4 = {"linemate": 1, "deraumere": 1, "sibur": 2, "mendiane": 0, "phiras": 1, "thystame": 0}
+    LVL_5 = {"linemate": 1, "deraumere": 2, "sibur": 1, "mendiane": 3, "phiras": 0, "thystame": 0}
+    LVL_6 = {"linemate": 1, "deraumere": 2, "sibur": 3, "mendiane": 0, "phiras": 1, "thystame": 0}
+    LVL_7 = {"linemate": 2, "deraumere": 2, "sibur": 2, "mendiane": 2, "phiras": 2, "thystame": 1}
 
 class AI(Player, Game, Priority, Orientation):
-    def __init__(self, socket, game):
-        super().__init__(socket, game)
+    def __init__(self, socket, game, x, y):
+        Player.__init__(self, socket, game)
+        Game.__init__(self, x, y)
 
     # * AI Strategy
-    def pick_move(self, map):
+    def pick_move(self):
         # print(map)
-        foo = randint(0,6)
-        if foo == 6:
-            return "Look"
-        move = ""
+        self.update_map(self.look())
+        match self.level:
+            case 1:
+                self.level_1()
+            case 2:
+                self.take_useless_ressources(Incantation.LVL_2)
+                exit(2)
+
+    def random_move(self):
+        foo = randint(0,1)
+        if foo == 0:
+            self.right()
+        elif foo == 1:
+            self.left()
+        self.forward()
+
+    def level_1(self):
+        pos_limenate = self.nb_ressources_tile(1, "linemate")
+        pos_food = self.nb_ressources_tile(2, "food")
         self.update_inventory()
-        self.update_priority()
-        match self.priority:
-            case Priority.EXPLORE:
-                move = self.explore()
-            case Priority.FOOD:
-                move = self.fetch_food(map)
-        return move
+        if pos_limenate != (-1, -1) and self._inventory["food"] > 20:
+            self.get_next_move(pos_limenate)
+            self.update_map(self.look())
+            self.take_useless_ressources(Incantation.LVL_1)
+            self.update_map(self.look())
+            print(self.map[self.y][self.x])
+            if self.map[self.y][self.x]["player"] > 1:
+                self.random_move()
+            elif self.incantation() == 84:
+                self.random_move()
+            
+        elif pos_food != (-1, -1):
+            nb_loop = 0
+            self.get_next_move(pos_food)
+            self.take("food")
+            while self.socket.buffer == "ok\n" and nb_loop < 50:
+                self.take("food")
+                nb_loop += 1
+            self.update_inventory()
+        else:
+            self.random_move()
+
+    def take_useless_ressources(self, good_ressources):
+        print("take useless ressources")
+        for ressource in self.map[self.y][self.x]:
+            if ressource != "player" and ressource != "food" and good_ressources[ressource] != self.map[self.y][self.x][ressource]:
+                self.take(ressource)
+                self.map[self.y][self.x][ressource] -= 1
+                while good_ressources[ressource] < self.map[self.y][self.x][ressource]:
+                    self.take(ressource)
+                    self.map[self.y][self.x][ressource] -= 1
+
+
+
+    def nb_ressources_tile(self, nb, ressource):
+        for y, i in enumerate(self.map):
+            for x, _ in enumerate(i):
+                if self.map[y][x][ressource] >= nb:
+                    return (x, y)
+        return (-1, -1)
 
     def update_inventory(self):
         self.socket.send("Inventory")
@@ -41,12 +98,6 @@ class AI(Player, Game, Priority, Orientation):
             if item in self._inventory:
                 self._inventory[item] = int(quantity)
 
-    def update_priority(self):
-        if (self._inventory["food"] < 12):
-            self.priority = Priority.FOOD
-            return
-        if self.priority != Priority.EXPLORE:
-            return
 
     def find_nearest_resource(self, resource_type, map):
 
@@ -89,15 +140,21 @@ class AI(Player, Game, Priority, Orientation):
             return dx < (self.max_x + 1) // 2
 
     def get_next_move(self, target_coords):
-        x, y = target_coords
-        orientation_diff = (self.orientation - self.get_target_orientation(x, y)) % 4
 
-        if orientation_diff == 0:
-            return "Forward"
-        elif orientation_diff == 1 or orientation_diff == -3:
-            return "Right"
-        else:
-            return "Left"
+
+        while (self.x, self.y) != target_coords:
+            print(f"X:{self.x} Y:{self.y}, Target X:{target_coords[0]} Target Y:{target_coords[1]}")
+            x, y = target_coords
+            orientation_diff = (self.orientation - self.get_target_orientation(x, y)) % 4
+            print(f"Orientation diff: {orientation_diff}")
+            if orientation_diff == 0:
+                self.forward()
+            elif orientation_diff == 1 or orientation_diff == -3:
+                self.right()
+                self.forward()
+            else:
+                self.left()
+                self.forward()
 
     def get_target_orientation(self, target_x, target_y):
         dx = (target_x - self.x + (self.max_x + 1)) % (self.max_x + 1)
@@ -122,8 +179,6 @@ class AI(Player, Game, Priority, Orientation):
             map[self.y][self.x]["food"] -= 1
             print("I JUST ATE")
             return "Take food"
-        # find food
-        # return self.explore() # TODO: remove this line to use the code below
         x, y = self.find_nearest_resource("food", map)
         if x > -1:
             print(f"I'm going to X:{x}, Y:{y}")
