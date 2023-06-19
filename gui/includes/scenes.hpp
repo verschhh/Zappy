@@ -185,6 +185,7 @@ namespace zappy {
             void pnwHandler(std::vector<std::string>& arguments);
             void command2Handler(std::vector<std::string>& arguments);
             void command3Handler(std::vector<std::string>& arguments);
+            void updatePnj(void);
 
             sf::Text setText(std::string content, sf::Vector2f pos, int charSize, sf::Color color);
 
