@@ -38,15 +38,19 @@ int forward(int sockfd, serv_t *serv, char *buffer)
     int can_move = check_time_limit(serv, sockfd);
     client_t *cpy = get_correct_client(serv, sockfd);
 
-    if (cpy->tickleft > 0) {
+    if ((7 / serv->freq) > 0 && cpy->tickleft <= 0 && !cpy->is_ticking) {
+        cpy->tickleft = 7 / serv->freq;
         cpy->cpy_buffer = strdup(buffer);
+        cpy->is_ticking = true;
         return 0;
     }
     if (can_move != 0)
         return 84;
-    cpy->tickleft = 7;
-    move_to_orientation(serv, cpy);
-    write(sockfd, "ok\n", 4);
+    if (cpy->is_ticking) {
+        move_to_orientation(serv, cpy);
+        write(sockfd, "ok\n", 4);
+        cpy->is_ticking = false;
+    }
     return 0;
 }
 
@@ -56,13 +60,21 @@ int left(int sockfd, serv_t *serv, char *buffer)
     int can_move = check_time_limit(serv, sockfd);
     client_t *cpy = get_correct_client(serv, sockfd);
 
-    // if (can_move != 0)
-    //     return 84;
-    cpy->player->orientation -= 1;
-    if (cpy->player->orientation < NORTH)
-        cpy->player->orientation = WEST;
-    cpy->tickleft = 7;
-    write(sockfd, "ok\n", 4);
+    if ((7 / serv->freq) > 0 && cpy->tickleft <= 0 && !cpy->is_ticking) {
+        cpy->tickleft = 7 / serv->freq;
+        cpy->cpy_buffer = strdup(buffer);
+        cpy->is_ticking = true;
+        return 0;
+    }
+    if (can_move != 0)
+        return 84;
+    if (cpy->is_ticking) {
+        cpy->player->orientation -= 1;
+        if (cpy->player->orientation < NORTH)
+            cpy->player->orientation = WEST;
+        write(sockfd, "ok\n", 4);
+        cpy->is_ticking = false;
+    }
     return 0;
 }
 
@@ -72,13 +84,21 @@ int right(int sockfd, serv_t *serv, char *buffer)
     int can_move = check_time_limit(serv, sockfd);
     client_t *cpy = get_correct_client(serv, sockfd);
 
+    if ((7 / serv->freq) > 0 && cpy->tickleft <= 0 && !cpy->is_ticking) {
+        cpy->tickleft = 7 / serv->freq;
+        cpy->cpy_buffer = strdup(buffer);
+        cpy->is_ticking = true;
+        return 0;
+    }
     if (can_move != 0)
         return 84;
-    cpy->player->orientation += 1;
-    if (cpy->player->orientation > WEST)
-        cpy->player->orientation = NORTH;
-    cpy->tickleft = 7;
-    write(sockfd, "ok\n", 4);
+    if (cpy->is_ticking) {
+        cpy->player->orientation += 1;
+        if (cpy->player->orientation > WEST)
+            cpy->player->orientation = NORTH;
+        write(sockfd, "ok\n", 4);
+        cpy->is_ticking = false;
+    }
     return 0;
 }
 

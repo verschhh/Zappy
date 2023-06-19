@@ -25,7 +25,7 @@
 
 
 enum nb_command {
-    NB_CMD = 15
+    NB_CMD = 16
 };
 
 enum enum_slot {
@@ -79,6 +79,7 @@ typedef struct client_s {
     int slot;
     unsigned int tickleft;
     char *cpy_buffer;
+    bool is_ticking;
     struct player_s *player;
     struct client_s *next;
 } client_t;

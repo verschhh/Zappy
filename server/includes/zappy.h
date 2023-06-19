@@ -30,7 +30,6 @@ client_t *pop_client(client_t **client);
 inv_t *inv_ctor(void);
 slot_t *slot_ctor(args_t *arg);
 player_t *player_ctor(serv_t *server);
-slot_t *new_slot(slot_t *slot, char *name);
 void fill_client_struct(int sockfd, serv_t *serv, char *buffer);
 
 //* Server
@@ -81,5 +80,6 @@ int right(int sockfd, serv_t *serv, char *buffer);
 int left(int sockfd, serv_t *serv, char *buffer);
 int unused_slot(int sockfd, serv_t *serv, char *buffer);
 int look(int sockfd, serv_t *serv, char *buffer);
+int take_object(int sockfd, serv_t *serv, char *buffer);
 
 #endif
