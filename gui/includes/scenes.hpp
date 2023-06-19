@@ -144,6 +144,7 @@ namespace zappy {
             };
 
             typedef struct pnj_s {
+                int number;
                 int type;
                 sf::IntRect rect = sf::IntRect(0, 0, 32, 32);
                 sf::Sprite sprite;
@@ -171,7 +172,7 @@ namespace zappy {
             } tile_t;
 
             //* Class methods
-            void createPnj(int x, int y, pnjOrientation orientation);
+            void createPnj(int number, int x, int y, pnjOrientation orientation);
 
             void drawPnjs(sf::RenderWindow& window);
             void drawRessources(sf::RenderWindow& window);

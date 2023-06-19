@@ -11,10 +11,14 @@
 
 void zappy::InGame::pnwHandler(std::vector<std::string>& arguments)
 {
-    std::cout << "pnw handler" << std::endl;
-    for (const std::string& arg : arguments) {
-        std::cout << arg << std::endl;
-    }
+    if (arguments.size() != 7)
+        throw AScene::SceneException("Error: pnw command has wrong number of arguments");
+
+    int number = std::stoi(arguments[1].substr(1));
+    int x = std::stoi(arguments[2]);
+    int y = std::stoi(arguments[3]);
+    pnjOrientation orientation = static_cast<pnjOrientation>(std::stoi(arguments[4]));
+    createPnj(number, x, y, orientation);
 }
 
 void zappy::InGame::command2Handler(std::vector<std::string>& arguments)
