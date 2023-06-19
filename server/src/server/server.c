@@ -73,6 +73,7 @@ int start_server(args_t *args)
     serv_t *serv = serv_ctor(args);
     printf("serv = %d %d\n", serv->max_x, serv->max_y);
     fd_set readfds;
+    FD_ZERO(&readfds);
     if (serv == NULL) {
         free(args);
         return 84;

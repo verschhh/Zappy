@@ -41,5 +41,6 @@ char *tile_to_string(map_t *tile) {
 
 int look(int sockfd, serv_t *serv, char *buffer)
 {
-    return 0;
+    client_t *cli = get_correct_client(serv, sockfd);
+    printf("player is at X%d Y%d\n", cli->player->x, cli->player->y);
 }
