@@ -21,7 +21,8 @@ const cmd_t cmd_list[NB_CMD] = {
     {"Left", &left},
     {"Right", &right},
     {"Connect_nbr", &unused_slot},
-    {"Look", &look}
+    {"Look", &look},
+    {"queue", &send_queue}
     // {"Eject", &send_expulsion}
 };
 
@@ -50,6 +51,20 @@ int lauch_cmd(int cmd, int sockfd, serv_t *serv, char *buffer)
     return 0;
 }
 
+void decrement_tick(serv_t *serv)
+{
+    for (client_t *tmp = serv->clients; tmp != NULL; tmp = tmp->next) {
+        if (tmp->tickleft > 0)
+            tmp->tickleft--;
+        if (tmp->tickleft <= 0 && tmp->cpy_buffer != NULL) {
+            lauch_cmd(parse_command(tmp->cpy_buffer), tmp->sockfd, serv,
+            tmp->cpy_buffer);
+            tmp->cpy_buffer = NULL;
+        }
+    }
+    return;
+}
+
 int receive_client_msg(int sockfd, fd_set *readfds, serv_t *serv)
 {
     char buffer[1024] = {0};
@@ -71,6 +86,7 @@ int receive_client_msg(int sockfd, fd_set *readfds, serv_t *serv)
                 write(sockfd, "suc\n", 4);
             return 0;
         }
+        decrement_tick(serv);
         lauch_cmd(cmd, sockfd, serv, buffer);
     }
     return 0;

@@ -21,10 +21,11 @@
     #include <signal.h>
     #include <termios.h>
     #include <time.h>
+    #include <stdbool.h>
 
 
 enum nb_command {
-    NB_CMD = 14
+    NB_CMD = 15
 };
 
 enum enum_slot {
@@ -76,7 +77,8 @@ typedef struct client_s {
     struct sockaddr_in addr;
     socklen_t addrlen;
     int slot;
-    int timelimit;
+    unsigned int tickleft;
+    char *cpy_buffer;
     struct player_s *player;
     struct client_s *next;
 } client_t;
@@ -108,10 +110,11 @@ typedef struct serv_s {
     int max_sd;
     int freq;
     int nb_client;
-    clock_t clock;
-    clock_t clock2;
+    struct timeval tv;
+    bool new_tick;
     struct sockaddr_in addr;
     clock_t start;
+    char queue[5000];
     client_t *clients;
     map_t *map;
     slot_t *slots;
