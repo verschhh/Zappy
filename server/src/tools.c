@@ -51,6 +51,7 @@ client_t *get_correct_client(serv_t *serv, int sockfd)
     client_t *copy = serv->clients;
 
     while (copy != NULL) {
+        printf("copy->sockfd = %d\n", copy->sockfd);
         if (copy->sockfd == sockfd)
             return copy;
         copy = copy->next;
