@@ -38,3 +38,8 @@ char *tile_to_string(map_t *tile) {
 
     return str;
 }
+
+int look(int sockfd, serv_t *serv, char *buffer)
+{
+    return 0;
+}
