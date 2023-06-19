@@ -7,9 +7,20 @@
 
 #include "../../includes/scenes.hpp"
 #include "../../includes/messageHandler.hpp"
+#include <iostream>
 
 void zappy::InGame::updateScene(void)
 {
+    std::cout << "Update scene" << std::endl;
+
+    updateMap();
+    parseQueue();
+}
+
+void zappy::InGame::updateMap(void)
+{
+    std::cout << "Update map" << std::endl;
+
     std::string command = "mct\n";
     _connection.send(command);
 
@@ -24,4 +35,17 @@ void zappy::InGame::updateScene(void)
             handler.handleBctMessage(lines[i * _mapWidth + j], _map);
         }
     }
+}
+
+void zappy::InGame::parseQueue(void)
+{
+    std::cout << "Parse queue" << std::endl;
+
+    std::string command = "queue\n";
+    _connection.send(command);
+
+    int maxBufferSize = 1000;
+
+    std::string response = _connection.receive(maxBufferSize);
+    std::cout << "Response: " << response << std::endl;
 }
