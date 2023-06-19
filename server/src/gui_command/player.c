@@ -143,7 +143,6 @@ int check_level(slot_t *tmp)
 
 int check_end_game(serv_t *serv)
 {
-    int count = 0;
     slot_t *slot = serv->slots;
     while (slot->next != NULL) {
         if (check_level(slot) == 1)
@@ -171,9 +170,10 @@ int end_of_game(int sockfd, serv_t *serv, char *buffer)
 int unknown_command(int sockfd, serv_t *serv, char *buffer)
 {
     (void)buffer;
-    char msg[4];
+    (void) sockfd;
+    char msg[5];
 
     sprintf(msg, "suc\n");
-    write(serv->sockfd, msg, 4);
+    write(serv->sockfd, msg, 5);
     return 0;
 }

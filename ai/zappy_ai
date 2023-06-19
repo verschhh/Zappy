@@ -86,6 +86,8 @@ def main(av, ac):
         # print_map(game, player)
         # message = player.pick_move(game.map)
         # message = input("> ")
+        # message = "Look"
+        # print("-> Look")
         message = ""
         while True:
             ai.pick_move()

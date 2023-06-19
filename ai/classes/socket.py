@@ -29,6 +29,7 @@ class Socket:
 
     def receive(self):
         buff = self._sock.recv(4096)
+        print(buff)
         if not buff:
             print("Server disconnected")
             sys.exit(10)

@@ -10,6 +10,8 @@
 int send_unit_time(int sockfd, serv_t *serv, char *buffer)
 {
     char msg[6];
+    (void) serv;
+    (void) buffer;
 
     sprintf(msg, "%s %d", "sgt", serv->freq);
     write(sockfd, msg, 6);
