@@ -49,7 +49,7 @@ void zappy::InGame::createMap()
     }
 }
 
-void zappy::InGame::createPnj(int number, int x, int y, pnjOrientation orientation)
+void zappy::InGame::createPnj(int number, int x, int y, pnjOrientation orientation, int level)
 {
     if (x < 0 || x >= _mapWidth || y < 0 || y >= _mapHeight)
         throw AScene::SceneException("Error: cannot create pnj outside of the map");
@@ -60,6 +60,8 @@ void zappy::InGame::createPnj(int number, int x, int y, pnjOrientation orientati
 
     int rnd = randomNumber(1, 3);
     pnj.type = rnd;
+
+    pnj.level = level;
 
     pnj.sprite.setTexture(_pnjTextures[rnd - 1].left);
 

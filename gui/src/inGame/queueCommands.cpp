@@ -18,7 +18,9 @@ void zappy::InGame::pnwHandler(std::vector<std::string>& arguments)
     int x = std::stoi(arguments[2]);
     int y = std::stoi(arguments[3]);
     pnjOrientation orientation = static_cast<pnjOrientation>(std::stoi(arguments[4]));
-    createPnj(number, x, y, orientation);
+    int level = std::stoi(arguments[5]);
+
+    createPnj(number, x, y, orientation, level);
 }
 
 void zappy::InGame::command2Handler(std::vector<std::string>& arguments)

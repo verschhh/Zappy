@@ -172,7 +172,7 @@ namespace zappy {
             } tile_t;
 
             //* Class methods
-            void createPnj(int number, int x, int y, pnjOrientation orientation);
+            void createPnj(int number, int x, int y, pnjOrientation orientation, int level);
 
             void drawPnjs(sf::RenderWindow& window);
             void drawRessources(sf::RenderWindow& window);
