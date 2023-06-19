@@ -213,4 +213,3 @@ void zappy::InGame::drawScene(sf::RenderWindow& window)
     drawRessources(window);
     drawPnjs(window);
 }
-
