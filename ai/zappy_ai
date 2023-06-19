@@ -92,31 +92,31 @@ def main(av, ac):
         # print("-> Look")
         message = ""
         while True:
-            ai.pick_move()
-            # print(message)
-            # if message == "Look":
-            #     game.update_map(player.look())
-            #     # print_map(game, player)
-            # elif message == "Forward":
-            #     player.forward()
-            # elif message == "Right":
-            #     player.right()
-            # elif message == "Left":
-            #     player.left()
-            # elif message == "Inventory":
-            #     player.inventory()
-            # elif message.split(" ")[0] == "Take":
-            #     print(message.split(" ")[1])
-            #     player.take(message.split(" ")[1])
-            # elif message.split(" ")[0] == "Broadcast":
-            #     player.broadcast(message.split(" ")[1])
-            # elif message == "Incantation":
-            #     player.incantation()
-            # else:
-            #     print("Unknown command")
-            # message = input("-> ")
-            # print(sock.buffer)
-            # print(message)
+            # ai.pick_move()
+            print(message)
+            if message == "Look":
+                game.update_map(player.look())
+                # print_map(game, player)
+            elif message == "Forward":
+                player.forward()
+            elif message == "Right":
+                player.right()
+            elif message == "Left":
+                player.left()
+            elif message == "Inventory":
+                player.inventory()
+            elif message.split(" ")[0] == "Take":
+                print(message.split(" ")[1])
+                player.take(message.split(" ")[1])
+            elif message.split(" ")[0] == "Broadcast":
+                player.broadcast(message.split(" ")[1])
+            elif message == "Incantation":
+                player.incantation()
+            else:
+                print("Unknown command")
+            message = input("-> ")
+            print(sock.buffer)
+            print(message)
             # print(f"X:{player.x} Y:{player.y}")
         sock.close()
 
