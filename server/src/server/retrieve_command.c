@@ -53,14 +53,17 @@ int lauch_cmd(int cmd, int sockfd, serv_t *serv, char *buffer)
 
 void decrement_tick(serv_t *serv)
 {
-    for (client_t *tmp = serv->clients; tmp != NULL; tmp = tmp->next) {
-        if (tmp->tickleft > 0)
-            tmp->tickleft--;
-        if (tmp->tickleft <= 0 && tmp->cpy_buffer != NULL) {
-            lauch_cmd(parse_command(tmp->cpy_buffer), tmp->sockfd, serv,
-            tmp->cpy_buffer);
-            tmp->cpy_buffer = NULL;
+    client_t *copy = serv->clients;
+
+    while (copy != NULL) {
+        if (copy->tickleft > 0)
+            copy->tickleft--;
+        if (copy->tickleft <= 0 && copy->cpy_buffer != NULL) {
+            lauch_cmd(parse_command(copy->cpy_buffer), copy->sockfd, serv,
+            copy->cpy_buffer);
+            copy->cpy_buffer = NULL;
         }
+        copy = copy->next;
     }
     return;
 }
@@ -78,12 +81,13 @@ int receive_client_msg(int sockfd, fd_set *readfds, serv_t *serv)
         cmd = parse_command(buffer);
         if (cmd == -1) {
             next = check_name_team(serv, buffer);
-            if (next > 0) {
+            if (next >= 0) {
                 fill_client_struct(sockfd, serv, buffer);
                 send_x_y_ai(sockfd, serv, next);
                 send_connection_msg(serv->clients, serv);
-            } else
+            } else {
                 write(sockfd, "suc\n", 4);
+            }
             return 0;
         }
         decrement_tick(serv);

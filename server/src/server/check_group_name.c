@@ -8,9 +8,9 @@
 #include "../../includes/zappy.h"
 
 
-int check_slot_team(slot_t *slot)
+int check_slot_team(int slot)
 {
-    if (slot->nb == 0)
+    if (slot == 0)
         return FULL;
     return NOT_FULL;
 }
@@ -18,11 +18,12 @@ int check_slot_team(slot_t *slot)
 int compare_team_name_buffer(slot_t *slot, char *copy)
 {
     if (strcmp(slot->team_name, copy) == 0) {
-        if (!check_slot_team(slot))
+        if (check_slot_team(slot->nb) == FULL)
             return -1;
+        slot->nb -= 1;
         return slot->nb;
     }
-    return -1;
+    return 84;
 }
 
 int check_name_team(serv_t *serv, char *buffer)
@@ -35,11 +36,11 @@ int check_name_team(serv_t *serv, char *buffer)
     copy[strlen(buffer) - 1] = 0;
     while (temp->next != NULL) {
         slot = compare_team_name_buffer(temp, copy);
-        if (slot != -1)
+        if (slot != 84)
             return slot;
         temp = temp->next;
     }
-    return 0;
+    return -1;
 }
 
 void send_x_y_ai(int sockfd, serv_t *serv, int slot)

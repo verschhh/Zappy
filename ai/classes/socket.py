@@ -32,10 +32,10 @@ class Socket:
         print(buff)
         if not buff:
             print("Server disconnected")
-            sys.exit(0)
+            sys.exit(10)
         elif buff.decode() == "dead\n":
             print("You died")
-            sys.exit(0)
+            sys.exit(1)
         elif buff.decode().split(' ')[0] == "message":
             print("Message from %s: %s" % (buff.decode().split(' ')[1], buff.decode().split(' ')[2]))
             self.buffer = ""
@@ -47,5 +47,5 @@ class Socket:
 
     def close(self):
         self._sock.close()
-        sys.exit(0)
+        sys.exit(99)
 

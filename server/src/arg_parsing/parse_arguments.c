@@ -17,7 +17,7 @@ args_t *args_constructor(void)
     args->height = 10;
     args->width = 10;
     args->clientsnb = 6;
-    args->freq = 100;
+    args->freq = 2;
 
     return args;
 }
