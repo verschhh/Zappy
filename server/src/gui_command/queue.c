@@ -14,8 +14,12 @@ int send_queue(int sockfd, serv_t *serv, char *buffer)
     int len = snprintf(msg, 0, "%s", serv->queue);
     char send[len];
 
-    sprintf(send, "%s", serv->queue);
-    write(sockfd, send, len);
-    strcpy(serv->queue, "");
+    if (len > 0) {
+        sprintf(send, "%s", serv->queue);
+        write(sockfd, send, len);
+        strcpy(serv->queue, "");
+    } else {
+        write(sockfd, "\n", 2);
+    }
     return 0;
 }
