@@ -42,10 +42,38 @@ void zappy::InGame::parseQueue(void)
     std::cout << "Parse queue" << std::endl;
 
     std::string command = "queue\n";
-    _connection.send(command);
+    // _connection.send(command);
 
-    int maxBufferSize = 1000;
+    // int maxBufferSize = 1000;
 
-    std::string response = _connection.receive(maxBufferSize);
+    // std::string response = _connection.receive(maxBufferSize);
+    std::string response = "command1 X\ncommand2\npenis A B\ncommand3 Y Z\n";
+    std::cout << "___________________________" << std::endl;
     std::cout << "Response: " << response << std::endl;
+    std::cout << "___________________________" << std::endl;
+
+    std::vector<std::string> lines = splitString(response, '\n');
+
+    std::string cmd;
+    std::cout << "before selection" << std::endl;
+    for (const std::string& line : lines) {
+    std::vector<std::string> arguments = splitString(line, ' ');
+
+        if (!arguments.empty()) {
+            std::string cmd = arguments[0];
+            std::cout << "line: " << line << std::endl;
+            if (cmd == "command1") {
+                std::cout << "Command 1" << std::endl;
+                command1Handler(arguments);
+            } else if (cmd == "command2") {
+                std::cout << "Command 2" << std::endl;
+                command2Handler(arguments);
+            } else if (cmd == "command3") {
+                std::cout << "Command 3" << std::endl;
+                command3Handler(arguments);
+            } else {
+                std::cout << "Unknown command" << std::endl;
+            }
+        }
+    }
 }
