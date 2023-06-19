@@ -20,10 +20,10 @@ const cmd_t cmd_list[NB_CMD] = {
     {"Forward", &forward},
     {"Left", &left},
     {"Right", &right},
-    {"Connect_nbr", &unused_slot},
+    {"Take", &take_object},
     {"Look", &look},
+    {"Connect_nbr", &unused_slot},
     {"queue", &send_queue}
-    // {"Eject", &send_expulsion}
 };
 
 int parse_command(char *buffer)
