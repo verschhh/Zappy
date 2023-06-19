@@ -42,12 +42,11 @@ void zappy::InGame::parseQueue(void)
     std::cout << "Parse queue" << std::endl;
 
     std::string command = "queue\n";
-    // _connection.send(command);
+    _connection.send(command);
 
-    // int maxBufferSize = 1000;
+    int maxBufferSize = 1000;
 
-    // std::string response = _connection.receive(maxBufferSize);
-    std::string response = "command1 X\ncommand2\npenis A B\ncommand3 Y Z\n";
+    std::string response = _connection.receive(maxBufferSize);
     std::cout << "___________________________" << std::endl;
     std::cout << "Response: " << response << std::endl;
     std::cout << "___________________________" << std::endl;
@@ -62,9 +61,9 @@ void zappy::InGame::parseQueue(void)
         if (!arguments.empty()) {
             std::string cmd = arguments[0];
             std::cout << "line: " << line << std::endl;
-            if (cmd == "command1") {
-                std::cout << "Command 1" << std::endl;
-                command1Handler(arguments);
+            if (cmd == "pnw") {
+                std::cout << "pnw command" << std::endl;
+                pnwHandler(arguments);
             } else if (cmd == "command2") {
                 std::cout << "Command 2" << std::endl;
                 command2Handler(arguments);

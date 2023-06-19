@@ -9,9 +9,9 @@
 #include "../../includes/messageHandler.hpp"
 #include <iostream>
 
-void zappy::InGame::command1Handler(std::vector<std::string>& arguments)
+void zappy::InGame::pnwHandler(std::vector<std::string>& arguments)
 {
-    std::cout << "Command 1 handler" << std::endl;
+    std::cout << "pnw handler" << std::endl;
     for (const std::string& arg : arguments) {
         std::cout << arg << std::endl;
     }

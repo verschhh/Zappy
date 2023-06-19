@@ -181,7 +181,7 @@ namespace zappy {
             void updateScene(void);
             void updateMap(void);
             void parseQueue(void);
-            void command1Handler(std::vector<std::string>& arguments);
+            void pnwHandler(std::vector<std::string>& arguments);
             void command2Handler(std::vector<std::string>& arguments);
             void command3Handler(std::vector<std::string>& arguments);
 
