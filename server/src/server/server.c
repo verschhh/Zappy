@@ -19,7 +19,6 @@ void reset_timeval(serv_t *serv)
     double freq = serv->freq;
     double res = min / freq;
 
-    printf("First tick\n");
     serv->new_tick = true;
     serv->tv.tv_sec = res;
     serv->tv.tv_usec = res * 1000000;
