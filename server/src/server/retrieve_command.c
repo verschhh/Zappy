@@ -55,7 +55,7 @@ void decrement_tick(serv_t *serv)
 {
     client_t *copy = serv->clients;
 
-    while (copy != NULL) {
+    while (copy->next != NULL) {
         if (copy->tickleft > 0)
             copy->tickleft--;
         if (copy->tickleft <= 0 && copy->cpy_buffer != NULL) {
