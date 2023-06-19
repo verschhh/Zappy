@@ -19,14 +19,14 @@ int map_size(int sockfd, serv_t *serv, char *buffer)
 {
     char get_len[0];
     (void)buffer;
-    int len = snprintf(get_len, 0, "msz %d %d\n", serv->max_x, serv->max_y);
+    int len = snprintf(get_len, 0, "%smsz %d %d\n", serv->queue, serv->max_x, serv->max_y);
     char msg[len + 1];
 
-    // pop_client(&serv->clients);
-    serv->start = clock();
-    sprintf(msg, "%s %d %d\n", "msz", serv->max_x, serv->max_y);
+    sprintf(msg, "%smsz %d %d\n", serv->queue, serv->max_x, serv->max_y);
+
     if (write(sockfd, msg, len) == -1)
         return 84;
+    strcpy(serv->queue, "");
     return 0;
 }
 
