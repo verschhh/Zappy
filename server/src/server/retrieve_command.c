@@ -24,7 +24,8 @@ const cmd_t cmd_list[NB_CMD] = {
     {"Look", &look},
     {"Connect_nbr", &unused_slot},
     {"queue", &send_queue},
-    {"Broadcast", &broadcast}
+    {"Broadcast", &broadcast},
+    {"Set", &set_object}
 };
 
 int parse_command(char *buffer)

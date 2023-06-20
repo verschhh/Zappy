@@ -83,5 +83,6 @@ int unused_slot(int sockfd, serv_t *serv, char *buffer);
 int look(int sockfd, serv_t *serv, char *buffer);
 int take_object(int sockfd, serv_t *serv, char *buffer);
 int broadcast(int sockfd, serv_t *serv, char *buffer);
+int set_object(int sockfd, serv_t *serv, char *buffer);
 
 #endif
