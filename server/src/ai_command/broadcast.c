@@ -69,18 +69,17 @@ int broadcast(int sockfd, serv_t *serv, char *buffer)
     client_t *client = serv->clients;
     client_t *actual_client = get_correct_client(serv, sockfd);
 
-    if ((7 / serv->freq) > 0 && actual_client->tickleft <= 0 && !actual_client->is_ticking) {
-        actual_client->tickleft = 7 / serv->freq;
-        actual_client->cpy_buffer = strdup(buffer);
-        actual_client->is_ticking = true;
+    if (!client->clocking) {
+        update_time_limit(serv, client, 7, buffer);
         return 0;
     }
-
-    if (actual_client->is_ticking) {
+    if (client->clocking) {
+        printf(buffer);
         char msg[0];
         buffer += 9;
         int len = snprintf(msg,0,"message %d,%s", sound(client->player, client->player), buffer);
         char send[len];
+
         for (int i = 0; client != NULL; i++) {
             if (client->sockfd != sockfd) {
                 printf("rentre une fois ou pas");
@@ -92,7 +91,7 @@ int broadcast(int sockfd, serv_t *serv, char *buffer)
             client = client->next;
             printf("%d",i);
         }
-        actual_client->is_ticking = false;
+        actual_client->clocking = false;
         write(sockfd, "ok\n", 3);
     }
     return (0);
