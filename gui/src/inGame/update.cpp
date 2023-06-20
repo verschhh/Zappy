@@ -80,6 +80,7 @@ void zappy::InGame::parseQueue(void)
             }
             else if (cmd == "seg") { // End of game
                 std::cout << "seg command" << std::endl;
+                setIndexScene(2);
             }
             else { // Unknown command
                 std::cout << "Unknown command" << std::endl;

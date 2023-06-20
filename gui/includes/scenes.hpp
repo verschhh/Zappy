@@ -66,9 +66,9 @@ namespace zappy {
         public:
             //* Constructor / Destructor
             Menu(Connection& connection);
-            ~Menu();
+            ~Menu(void);
 
-            void loadTextures();
+            void loadTextures(void);
 
             //* Abstract functions
             void handleEvents(sf::RenderWindow& window);
@@ -103,10 +103,10 @@ namespace zappy {
         public:
             //* Constructor / Destructor
             InGame(Connection& _connection, int mapWidth, int mapHeight);
-            ~InGame();
+            ~InGame(void);
 
-            void createMap();
-            void loadTextures();
+            void createMap(void);
+            void loadTextures(void);
             void setRessourcesInMap(void);
 
             //* Abstract functions
@@ -224,5 +224,21 @@ namespace zappy {
             //* Levels Bar
             sf::Texture _levelBarTexture;
             sf::Sprite _levelBarSprite;
+    };
+
+    class EndGame : public AScene {
+        public:
+            //* Constructor / Destructor
+            EndGame(Connection &connection);
+            ~EndGame(void);
+
+            //* Abstract functions
+            void loadTextures(void);
+            void handleEvents(sf::RenderWindow& window);
+            void drawScene(sf::RenderWindow& window);
+        private:
+            //* Background
+            sf::Texture _backgroundTexture;
+            sf::Sprite _backgroundSprite;
     };
 }
