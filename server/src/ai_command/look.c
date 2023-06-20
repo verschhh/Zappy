@@ -73,6 +73,23 @@ coord_t *get_visible_tile_coords(serv_t *server, player_t *player) {
     return visible_coords;
 }
 
+char *build_look_response(serv_t *server, player_t *player) {
+    printf("Swag");
+    int n = player->level + 1;
+    int vision_size = (n * (2 * 1 + (n - 1) * 2)) / 2;  // Calculate number of tiles visible
+    coord_t *visible_coords = get_visible_tile_coords(server, player);
+    char *response = malloc(256 * sizeof(char));
+    response[0] = '\0';  // initialize the string to be empty
+
+    for (int i = 0; i < vision_size; i++) {
+        map_t *tile = find_tile(server, visible_coords[i].x, visible_coords[i].y);
+        char *tile_str = tile_to_string(tile);
+        strcat(response, tile_str);
+        free(tile_str);
+    }
+    printf("response = %s\n", response);
+    return response;
+}
 
 int look(int sockfd, serv_t *serv, char *buffer)
 {
@@ -82,11 +99,6 @@ int look(int sockfd, serv_t *serv, char *buffer)
     int vision_size = (n * (2 * 1 + (n - 1) * 2)) / 2;
     coord_t *visible_coords = get_visible_tile_coords(serv, player);
 
-    // printf("player is at X%d Y%d and is facing %d\n", cli->player->x, cli->player->y, player->orientation);
-    // printf("vision_size = %d\n", vision_size);
-    // printf("level = %d\n", player->level);
-    // for (int i = 0; i < vision_size; i++) {
-    //     printf("visible_coords[%d] = X%d Y%d\n", i, visible_coords[i].x, visible_coords[i].y);
-    // }
+    char *response = build_look_response(serv, player);
     return 0;
 }
