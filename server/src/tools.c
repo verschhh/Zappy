@@ -59,8 +59,8 @@ client_t *get_correct_client(serv_t *serv, int sockfd)
     return NULL;
 }
 
-void update_time_limit(serv_t *serv)
-{
+// void update_time_limit(serv_t *serv)
+// {
     // client_t *cpy = serv->clients;
 
     // while (cpy->next != NULL) {
@@ -68,7 +68,7 @@ void update_time_limit(serv_t *serv)
     //         cpy->timelimit--;
     //     cpy = cpy->next;
     // }
-}
+// }
 
 int check_time_limit(serv_t *serv, int sockfd)
 {

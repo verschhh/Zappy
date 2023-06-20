@@ -13,8 +13,8 @@ player_t *player_ctor(serv_t *server)
 
     if (player == NULL)
         perror("Memory allocation failed");
-    player->x = (rand() % (server->max_x - 0 + 1) + 0);
-    player->y = (rand() % (server->max_y - 0 + 1) + 0);
+    player->x = (rand() % ((server->max_x - 1) - 0 + 1) + 0);
+    player->y = (rand() % ((server->max_y - 1) - 0 + 1) + 0);
     printf("Player spawned at X%d Y%d\n", player->x, player->y);
     player->id = server->nb_client;
     server->nb_client++;

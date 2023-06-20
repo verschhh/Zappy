@@ -9,6 +9,7 @@
 
 int incantation(int sockfd, serv_t *serv, char *buffer)
 {
+    (void)buffer;
     client_t *client = get_correct_client(serv, sockfd);
     char msg[19];
 
@@ -19,4 +20,5 @@ int incantation(int sockfd, serv_t *serv, char *buffer)
         sprintf(msg, "Current level: %d\n", client->player->level);
         write(sockfd, msg, 19);
     }
+    return 0;
 }

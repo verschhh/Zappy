@@ -125,13 +125,3 @@ typedef struct cmd_s {
     char *command;
     int(*pointer)(int, serv_t *, char *);
 } cmd_t;
-
-#define FOOD(map) (map->food)
-#define LINEMATE(map) (map->linemate)
-#define DERAUMERE(map) (map->deraumere)
-#define SIBUR(map) (map->sibur)
-#define MENDIANE(map) (map->mendiane)
-#define PHIRAS(map) (map->phiras)
-#define THYSTAME(map) (map->thystame)
-
-typedef int (*MapFieldFunc)(map_t* map);
