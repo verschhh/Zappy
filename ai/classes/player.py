@@ -107,6 +107,7 @@ class Player:
         return wrapped_dx + wrapped_dy
 
     def forward(self):
+        print("Forward")
         self.socket.send("Forward")
         self.socket.receive(self)
         if self.orientation == Orientation.NORTH:
@@ -127,6 +128,7 @@ class Player:
             self.y = 0
 
     def right(self):
+        print("Right")
         self.socket.send("Right")
         self.socket.receive(self)
         self.orientation += 1
@@ -134,6 +136,7 @@ class Player:
             self.orientation = Orientation.NORTH
 
     def left(self):
+        print("Left")
         self.socket.send("Left")
         self.socket.receive(self)
         self.orientation -= 1
@@ -141,6 +144,7 @@ class Player:
             self.orientation = Orientation.WEST
 
     def look(self):
+        print("Look")
         self.socket.send("Look")
         self.socket.receive(self)
         # print(self.socket.buffer)
@@ -257,11 +261,13 @@ class Player:
             self.socket.receive(self)
 
     def inventory(self):
+        print("Inventory")
         self.socket.send("Inventory")
         self.socket.receive(self)
         return self._inventory
 
     def take(self, item):
+        print(f"Take {item}")
         self.socket.send(f"Take {item}")
         self.socket.receive(self)
         if self.socket.buffer == "ok\n":
@@ -270,6 +276,7 @@ class Player:
         return FAIL
 
     def set(self, item):
+        print(f"Set {item}")
         self.socket.send(f"Set {item}")
         self.socket.receive(self)
         if self.socket.buffer == "ok\n":
@@ -278,6 +285,7 @@ class Player:
         return FAIL
 
     def incantation(self):
+        print("Incantation")
         self.socket.send("Incantation")
         self.socket.receive(self)
         buff = self.socket.buffer
