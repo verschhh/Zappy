@@ -7,7 +7,8 @@
 
 #include "../../includes/zappy.h"
 
-char *tile_to_string(map_t *tile) {
+char *tile_to_string(map_t *tile)
+{
     char *str = malloc(256 * sizeof(char));
     str[0] = '\0';  // initialize the string to be empty
 
@@ -36,13 +37,19 @@ char *tile_to_string(map_t *tile) {
         strcat(str, "thystame ");
     }
 
+    // remove the trailing space
+    if (strlen(str) > 0) {
+        str[strlen(str) - 1] = '\0';
+    }
+
     return str;
 }
 
-coord_t *get_visible_tile_coords(serv_t *server, player_t *player) {
+coord_t *get_visible_tile_coords(serv_t *server, player_t *player)
+{
     int n = player->level + 1;
-    int vision_size = (n * (2 * 1 + (n - 1) * 2)) / 2;  // Calculate number of tiles visible
-    coord_t *visible_coords = calloc(vision_size, sizeof(coord_t));  // Initialize visible_coords with NULLs
+    int vision_size = (n * (2 * 1 + (n - 1) * 2)) / 2;
+    coord_t *visible_coords = calloc(vision_size, sizeof(coord_t));
 
     int k = 0;
     for (int i = 0; i < n; i++) {
@@ -73,20 +80,29 @@ coord_t *get_visible_tile_coords(serv_t *server, player_t *player) {
     return visible_coords;
 }
 
-char *build_look_response(serv_t *server, player_t *player) {
+char *build_look_response(serv_t *server, player_t *player)
+{
     printf("Swag");
     int n = player->level + 1;
-    int vision_size = (n * (2 * 1 + (n - 1) * 2)) / 2;  // Calculate number of tiles visible
+    int vision_size = (n * (2 * 1 + (n - 1) * 2)) / 2;
     coord_t *visible_coords = get_visible_tile_coords(server, player);
     char *response = malloc(256 * sizeof(char));
-    response[0] = '\0';  // initialize the string to be empty
+    response[0] = '\0';
+    strcat(response, "[");
 
     for (int i = 0; i < vision_size; i++) {
+        if (i != 0) {
+            strcat(response, ",");
+        }
         map_t *tile = find_tile(server, visible_coords[i].x, visible_coords[i].y);
         char *tile_str = tile_to_string(tile);
+        if (strlen(tile_str) > 1 && i > 0) {
+            strcat(response, " ");
+        } 
         strcat(response, tile_str);
         free(tile_str);
     }
+    strcat(response, "]\0\n");
     printf("response = %s\n", response);
     return response;
 }
@@ -97,6 +113,7 @@ int look(int sockfd, serv_t *serv, char *buffer)
     player_t *player = cli->player;
     int n = player->level + 1;
     int vision_size = (n * (2 * 1 + (n - 1) * 2)) / 2;
+    coord_t *visible_coords = get_visible_tile_coords(serv, player);
 
     if (!cli->clocking) {
         update_time_limit(serv, cli, 7, buffer);
@@ -105,5 +122,6 @@ int look(int sockfd, serv_t *serv, char *buffer)
     cli->clocking = false;
     coord_t *visible_coords = get_visible_tile_coords(serv, player);
     char *response = build_look_response(serv, player);
+    write(sockfd, response, strlen(response));
     return 0;
 }
