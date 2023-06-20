@@ -85,9 +85,8 @@ int receive_client_msg(int sockfd, fd_set *readfds, serv_t *serv)
                 fill_client_struct(sockfd, serv, buffer);
                 send_x_y_ai(sockfd, serv, next);
                 send_connection_msg(serv->clients, serv);
-            } else {
+            } else
                 write(sockfd, "suc\n", 4);
-            }
             return 0;
         }
         decrement_tick(serv);
