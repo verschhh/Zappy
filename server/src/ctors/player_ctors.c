@@ -19,7 +19,7 @@ player_t *player_ctor(serv_t *server)
     player->id = server->nb_client;
     server->nb_client++;
     player->level = 1;
-    player->orientation = NORTH;
+    player->orientation = (rand() % (4 - 1 + 1) + 1);
     player->inventory = inv_ctor();
     return player;
 }
