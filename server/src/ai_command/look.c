@@ -7,12 +7,18 @@
 
 #include "../../includes/zappy.h"
 
-char *tile_to_string(map_t *tile)
+char *tile_to_string(map_t *tile, client_t *client)
 {
     char *str = malloc(256 * sizeof(char));
     str[0] = '\0';  // initialize the string to be empty
 
-    // TODO: add the player(s) on the tile
+    // append the player(s) on the tile
+    while (client != NULL) {
+        if (client->player->x == tile->x && client->player->y == tile->y) {
+            strcat(str, "player ");
+        }
+        client = client->next;
+    }
 
     // append each resource multiple times
     for (int i = 0; i < tile->food; i++) {
@@ -94,8 +100,9 @@ char *build_look_response(serv_t *server, player_t *player)
         if (i != 0) {
             strcat(response, ",");
         }
+        client_t *copy = server->clients;
         map_t *tile = find_tile(server, visible_coords[i].x, visible_coords[i].y);
-        char *tile_str = tile_to_string(tile);
+        char *tile_str = tile_to_string(tile, copy);
         if (strlen(tile_str) > 1 && i > 0) {
             strcat(response, " ");
         } 
@@ -111,8 +118,8 @@ int look(int sockfd, serv_t *serv, char *buffer)
 {
     client_t *cli = get_correct_client(serv, sockfd);
     player_t *player = cli->player;
-    coord_t *visible_coords = get_visible_tile_coords(serv, player);
 
+    coord_t *visible_coords = get_visible_tile_coords(serv, player);
     char *response = build_look_response(serv, player);
     write(sockfd, response, strlen(response));
     return 0;
