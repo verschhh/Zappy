@@ -31,6 +31,8 @@ int map_size(int sockfd, serv_t *serv, char *buffer)
 int send_tile_content(map_t *map, int sockfd)
 {
     char get_len[0];
+    printf("bct %d %d %d\n",
+        map->x, map->y, map->food);
     int len = snprintf(get_len, 0, "bct %d %d %d %d %d %d %d %d %d\n",
         map->x, map->y, map->food, map->linemate, map->deraumere,
             map->sibur, map->mendiane, map->phiras, map->thystame);

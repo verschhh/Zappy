@@ -8,4 +8,5 @@ zappy_ai
 vgcore*
 *.log
 *.pyc
+*.tmp
 log

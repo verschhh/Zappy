@@ -51,7 +51,6 @@ client_t *get_correct_client(serv_t *serv, int sockfd)
     client_t *copy = serv->clients;
 
     while (copy != NULL) {
-        printf("copy->sockfd = %d\n", copy->sockfd);
         if (copy->sockfd == sockfd)
             return copy;
         copy = copy->next;
@@ -59,8 +58,8 @@ client_t *get_correct_client(serv_t *serv, int sockfd)
     return NULL;
 }
 
-void update_time_limit(serv_t *serv)
-{
+// void update_time_limit(serv_t *serv)
+// {
     // client_t *cpy = serv->clients;
 
     // while (cpy->next != NULL) {
@@ -68,7 +67,7 @@ void update_time_limit(serv_t *serv)
     //         cpy->timelimit--;
     //     cpy = cpy->next;
     // }
-}
+// }
 
 int check_time_limit(serv_t *serv, int sockfd)
 {

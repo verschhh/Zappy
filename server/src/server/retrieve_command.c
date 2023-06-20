@@ -24,7 +24,8 @@ const cmd_t cmd_list[NB_CMD] = {
     {"Look", &look},
     {"Connect_nbr", &unused_slot},
     {"queue", &send_queue},
-    {"Broadcast", &broadcast}
+    {"Broadcast", &broadcast},
+    {"Set", &set_object}
 };
 
 int parse_command(char *buffer)
@@ -57,8 +58,6 @@ void decrement_tick(serv_t *serv)
     client_t *copy = serv->clients;
 
     while (copy != NULL) {
-        printf("copy->tickleft = %d\n", copy->tickleft);
-        printf("team name and number = %s %d\n", copy->team_name, copy->slot);
         if (copy->tickleft > 0)
             copy->tickleft--;
         if (copy->tickleft <= 0 && copy->cpy_buffer != NULL) {

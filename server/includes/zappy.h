@@ -50,6 +50,7 @@ char *get_orientation(enum orientation orientation);
 client_t *get_correct_client(serv_t *serv, int sockfd);
 void update_time_limit(serv_t *serv);
 int check_time_limit(serv_t *serv, int sockfd);
+map_t *find_tile(serv_t *server, int x, int y);
 
 //* Commands Gui
 int map_size(int sockfd, serv_t *serv, char *buffer);
@@ -82,5 +83,6 @@ int unused_slot(int sockfd, serv_t *serv, char *buffer);
 int look(int sockfd, serv_t *serv, char *buffer);
 int take_object(int sockfd, serv_t *serv, char *buffer);
 int broadcast(int sockfd, serv_t *serv, char *buffer);
+int set_object(int sockfd, serv_t *serv, char *buffer);
 
 #endif

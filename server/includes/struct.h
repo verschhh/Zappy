@@ -25,7 +25,7 @@
 
 
 enum nb_command {
-    NB_CMD = 17
+    NB_CMD = 18
 };
 
 enum enum_slot {
@@ -41,6 +41,10 @@ enum orientation {
     WEST = 4
 };
 
+typedef struct coord_s{
+    int x;
+    int y;
+} coord_t;
 
 typedef struct args_s {
     int port;
@@ -125,13 +129,3 @@ typedef struct cmd_s {
     char *command;
     int(*pointer)(int, serv_t *, char *);
 } cmd_t;
-
-#define FOOD(map) (map->food)
-#define LINEMATE(map) (map->linemate)
-#define DERAUMERE(map) (map->deraumere)
-#define SIBUR(map) (map->sibur)
-#define MENDIANE(map) (map->mendiane)
-#define PHIRAS(map) (map->phiras)
-#define THYSTAME(map) (map->thystame)
-
-typedef int (*MapFieldFunc)(map_t* map);
