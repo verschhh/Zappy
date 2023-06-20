@@ -79,7 +79,7 @@ int broadcast(int sockfd, serv_t *serv, char *buffer)
         buffer += 9;
         int len = snprintf(msg,0,"message %d,%s", sound(client->player, client->player), buffer);
         char send[len];
-        for (int i = 0; client != NULL; i++) {
+        for (int i = 0; client->next != NULL; i++) {
             if (client->sockfd != sockfd) {
                 printf("rentre une fois ou pas");
                 sprintf(send,"message %d,%s", sound(actual_client->player, client->player), buffer);

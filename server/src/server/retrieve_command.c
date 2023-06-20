@@ -39,7 +39,7 @@ int parse_command(char *buffer)
         index++;
     }
     cmd[index] = '\0';
-    for (int i = 0; i < NB_CMD; i++) {
+    for (int i = 0; i != NB_CMD; i++) {
         if (strstr(cmd, cmd_list[i].command) != NULL)
             return i;
     }
