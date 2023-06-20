@@ -81,9 +81,10 @@ typedef struct client_s {
     struct sockaddr_in addr;
     socklen_t addrlen;
     int slot;
-    unsigned int tickleft;
+    double clock;
+    double limit;
     char *cpy_buffer;
-    bool is_ticking;
+    bool clocking;
     struct player_s *player;
     struct client_s *next;
 } client_t;
@@ -117,8 +118,8 @@ typedef struct serv_s {
     int nb_client;
     struct timeval tv;
     bool new_tick;
+    double clock_start;
     struct sockaddr_in addr;
-    clock_t start;
     char queue[5000];
     client_t *clients;
     map_t *map;

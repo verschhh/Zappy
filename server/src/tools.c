@@ -59,24 +59,18 @@ client_t *get_correct_client(serv_t *serv, int sockfd)
     return NULL;
 }
 
-// void update_time_limit(serv_t *serv)
-// {
-    // client_t *cpy = serv->clients;
-
-    // while (cpy->next != NULL) {
-    //     if (cpy->timelimit > 0)
-    //         cpy->timelimit--;
-    //     cpy = cpy->next;
-    // }
-// }
-
-int check_time_limit(serv_t *serv, int sockfd)
+uint64_t micro_time(void)
 {
-    client_t *cpy = get_correct_client(serv, sockfd);
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    return tv.tv_sec * (uint64_t)1000000 + tv.tv_usec;
+}
 
-    if (cpy == NULL)
-        return -1;
-    if (cpy->tickleft == 0)
-        return 0;
-    return -1;
+void update_time_limit(serv_t *serv, client_t *client, int time_limit, char *s)
+{
+    client->limit = time_limit / serv->freq;
+    client->cpy_buffer = strdup(s);
+    client->clock = micro_time();
+    client->clocking = true;
+    return;
 }

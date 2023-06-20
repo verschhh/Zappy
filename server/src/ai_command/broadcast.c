@@ -21,14 +21,9 @@ int broadcast(int sockfd, serv_t *serv, char *buffer)
     buffer += 9;
     int len = snprintf(msg,0,"message %d,%s", sound(client->player, client->player), buffer);
     char send[len];
-    printf(buffer);
-    if ((7 / serv->freq) > 0 && client->tickleft <= 0 && !client->is_ticking) {
-        client->tickleft = 7 / serv->freq;
-        client->cpy_buffer = strdup(buffer);
-        client->is_ticking = true;
-        return 0;
-    }
-    if (client->is_ticking) {
+    if (!client->clocking)
+        update_time_limit(serv, client, 7, buffer);
+    if (client->clocking) {
         for (int i = 0; client->next != NULL; i++) {
             if (client->sockfd != sockfd) {
                 sprintf(send,"message %d,%s", sound(client->player, client->player), buffer);
@@ -38,5 +33,5 @@ int broadcast(int sockfd, serv_t *serv, char *buffer)
             client = client->next;
         }
     }
-    
+    return 0;
 }
