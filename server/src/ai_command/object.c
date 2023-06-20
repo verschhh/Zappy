@@ -16,7 +16,11 @@ int check_element_tile(map_t *map, MapFieldFunc getFieldFunc)
 
 void get_correct_tile(map_t *map, client_t *client)
 {
-
+    while (map != NULL) {
+        if (client->player->x == map->x && client->player->y == map->y)
+            return;
+        map = map->next;
+    }
 }
 
 int take_object(int sockfd, serv_t *serv, char *buffer)
@@ -30,6 +34,7 @@ int take_object(int sockfd, serv_t *serv, char *buffer)
         SIBUR(serv->map), MENDIANE(serv->map), PHIRAS(serv->map), THYSTAME(serv->map)};
 
     get_correct_client(map_cpy, get_correct_client(serv, sockfd));
+    printf("Position = %d %d", map_cpy->x, map_cpy->y);
     for (int i = 0; i != 7; i++) {
         if (strstr(array[1], food[i]) != NULL) {
             check_element_tile(map_cpy, fieldFuncs[i]);
