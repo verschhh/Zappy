@@ -11,7 +11,7 @@
 #include <getopt.h>
 #include <SFML/Graphics.hpp>
 #include "scenes.hpp"
-#include "connection.hpp"
+#include "network.hpp"
 
 namespace zappy {
     class Gui {

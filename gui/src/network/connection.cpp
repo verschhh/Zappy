@@ -5,11 +5,12 @@
 ** connection.cpp
 */
 
-#include "../../includes/connection.hpp"
+#include "../../includes/network.hpp"
 #include <iostream>
 #include <cstring>
 #include <unistd.h>
 #include <arpa/inet.h>
+#include <fcntl.h>
 
 zappy::Connection::Connection(int port, std::string machine) : _sockfd(-1), _port(port), _machine(machine)
 {
@@ -58,13 +59,13 @@ void zappy::Connection::send(const std::string& message)
     }
 }
 
-std::string zappy::Connection::receive()
+//! Old receive function (keep for reference)
+std::string zappy::Connection::receive(int bufferSize)
 {
     if (_sockfd == -1) {
         throw std::runtime_error("Error: Not connected to the server");
     }
 
-    const int bufferSize = 1024;  // Adjust the buffer size as needed
     char buffer[bufferSize];
     int bytesRead = ::recv(_sockfd, buffer, bufferSize - 1, 0);
 
