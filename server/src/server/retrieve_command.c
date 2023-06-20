@@ -31,15 +31,12 @@ int parse_command(char *buffer)
     char *cmd = malloc(sizeof(char) * strlen(buffer) + 1);
     int index = 0;
 
-    if (buffer == NULL)
-        printf("Buffer is NULL\n");
-
     while (buffer[index] != ' ' && buffer[index] != '\0') {
         cmd[index] = buffer[index];
         index++;
     }
     cmd[index] = '\0';
-    for (int i = 0; i != NB_CMD; i++) {
+    for (int i = 0; i < NB_CMD; i++) {
         if (strstr(cmd, cmd_list[i].command) != NULL)
             return i;
     }
