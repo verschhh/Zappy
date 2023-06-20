@@ -235,6 +235,7 @@ class AI(Player, Game, Priority, Orientation):
     def update_inventory(self):
         self.socket.send("Inventory")
         self.socket.receive(self)
+        print(self._inventory)
         inventory_regex = r"(\w+)\s+(\d+)"
         matches = re.findall(inventory_regex, self.socket.buffer)
         for item, quantity in matches:

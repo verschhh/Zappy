@@ -21,6 +21,10 @@ const cmd_t cmd_list[NB_CMD] = {
     {"Left", &left},
     {"Right", &right},
     {"Take", &take_object},
+    {"Set", &set_object},
+    {"Inventory", &inventory},
+    {"Broadcast", &broadcast},
+    {"Incantation", &incantation},
     {"Look", &look},
     {"Connect_nbr", &unused_slot},
     {"queue", &send_queue}

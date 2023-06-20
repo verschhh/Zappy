@@ -82,19 +82,20 @@ void switch_case_take(int i, map_t *map_cpy, client_t *client_cpy, int sockfd)
 
 int take_object(int sockfd, serv_t *serv, char *buffer)
 {
+    client_t *client_cpy = get_correct_client(serv, sockfd);
+
+    if (!client_cpy->clocking) {
+        update_time_limit(serv, client_cpy, 7, buffer);
+        return 0;
+    }
     map_t *map_cpy = serv->map;
     int count = 0;
     char **array = split_string_at_spaces(buffer, &count);
-    client_t *client_cpy = get_correct_client(serv, sockfd);
     char *food[7] = {"food", "linemate", "deraumere",
         "sibur", "mendiane", "phiras", "thystame"};
     map_cpy = get_correct_tile(map_cpy, get_correct_client(serv, sockfd));
 
     printf("Position = %d %d\n", map_cpy->x, map_cpy->y);
-    if (!client_cpy->clocking) {
-        update_time_limit(serv, client_cpy, 7, buffer);
-        return 0;
-    }
     for (int i = 0; i < 7; i++) {
         if (strstr(array[1], food[i]) != NULL) {
             switch_case_take(i, map_cpy, client_cpy, sockfd);

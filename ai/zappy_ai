@@ -97,10 +97,13 @@ def main(av, ac):
             elif message == "Left":
                 ai.left()
             elif message == "Inventory":
-                ai.inventory()
+                ai.update_inventory()
             elif message.split(" ")[0] == "Take":
                 print(message.split(" ")[1])
                 ai.take(message.split(" ")[1])
+            elif message.split(" ")[0] == "Set":
+                print(message.split(" ")[1])
+                ai.set(message.split(" ")[1])
             elif message == "Broadcast":
                 ai.broadcast(ai.send_inventory())
             elif message == "Incantation":

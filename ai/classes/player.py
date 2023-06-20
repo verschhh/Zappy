@@ -76,10 +76,12 @@ class Player:
                 tmp += 1
 
     def update_inventory_other_player(self, message):
+        print("bizzare")
         print(message)
         message = message.split(' ')
         print(message[-1].split('\n'))
         message[-1] = message[-1].split('\n')[0]
+        print(f"??? {message}")
         if self.player_is_in_inventory(message[0]) == False:
             self.inv_other_player.append({"id": int(message[0]), "inventory": {"food": 0, "linemate": 0, "deraumere": 0, "sibur": 0, "mendiane": 0, "phiras": 0, "thystame": 0}})
 
@@ -147,7 +149,7 @@ class Player:
         print("Look")
         self.socket.send("Look")
         self.socket.receive(self)
-        # print(self.socket.buffer)
+        print(self.socket.buffer)
         while self.socket.buffer == "ko\n" or self.socket.buffer[-1] != "\n":
             self.socket.send("Look")
             self.socket.receive(self)

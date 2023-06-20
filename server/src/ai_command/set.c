@@ -71,19 +71,20 @@ void switch_case_set(int i, map_t *map_cpy, client_t *client_cpy, int sockfd)
 
 int set_object(int sockfd, serv_t *serv, char *buffer)
 {
-    map_t *map_cpy = serv->map;
-    int count = 0;
-    char **array = split_string_at_spaces(buffer, &count);
     client_t *client_cpy = get_correct_client(serv, sockfd);
+    int count = 0;
+
+    if (!client_cpy->clocking) {
+        update_time_limit(serv, client_cpy, 7, buffer);
+        return 0;
+    }
+    map_t *map_cpy = serv->map;
+    char **array = split_string_at_spaces(buffer, &count);
     char *food[7] = {"food", "linemate", "deraumere",
         "sibur", "mendiane", "phiras", "thystame"};
     map_cpy = get_correct_tile(map_cpy, get_correct_client(serv, sockfd));
 
     printf("Position = %d %d\n", map_cpy->x, map_cpy->y);
-    if (!client_cpy->clocking) {
-        update_time_limit(serv, client_cpy, 7, buffer);
-        return 0;
-    }
     client_cpy->clocking = false;
     for (int i = 0; i < 7; i++) {
         if (strstr(array[1], food[i]) != NULL) {
