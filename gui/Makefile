@@ -12,8 +12,14 @@ SRC = 	src/gui.cpp \
 		src/inGame/tools.cpp \
 		src/inGame/draw.cpp \
 		src/inGame/create.cpp \
+		src/inGame/update.cpp \
 		src/inGame/handleEvents.cpp \
+		src/inGame/queueCommands.cpp \
 		src/network/connection.cpp \
+		src/network/messageHandler.cpp	\
+		src/endGame/endGame.cpp \
+		src/endGame/draw.cpp \
+		src/endGame/handleEvents.cpp \
 
 OBJ = $(SRC:.cpp=.o)
 

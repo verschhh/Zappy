@@ -20,10 +20,10 @@ const cmd_t cmd_list[NB_CMD] = {
     {"Forward", &forward},
     {"Left", &left},
     {"Right", &right},
-    {"Connect_nbr", &unused_slot},
+    {"Take", &take_object},
     {"Look", &look},
+    {"Connect_nbr", &unused_slot},
     {"queue", &send_queue}
-    // {"Eject", &send_expulsion}
 };
 
 int parse_command(char *buffer)
@@ -31,12 +31,14 @@ int parse_command(char *buffer)
     char *cmd = malloc(sizeof(char) * strlen(buffer) + 1);
     int index = 0;
 
+    if (buffer == NULL)
+        printf("Buffer is NULL\n");
+
     while (buffer[index] != ' ' && buffer[index] != '\0') {
         cmd[index] = buffer[index];
         index++;
     }
     cmd[index] = '\0';
-    printf("cmd = %s\n", cmd);
     for (int i = 0; i != NB_CMD; i++) {
         if (strstr(cmd, cmd_list[i].command) != NULL)
             return i;
@@ -53,14 +55,17 @@ int lauch_cmd(int cmd, int sockfd, serv_t *serv, char *buffer)
 
 void decrement_tick(serv_t *serv)
 {
-    for (client_t *tmp = serv->clients; tmp != NULL; tmp = tmp->next) {
-        if (tmp->tickleft > 0)
-            tmp->tickleft--;
-        if (tmp->tickleft <= 0 && tmp->cpy_buffer != NULL) {
-            lauch_cmd(parse_command(tmp->cpy_buffer), tmp->sockfd, serv,
-            tmp->cpy_buffer);
-            tmp->cpy_buffer = NULL;
-        }
+    client_t *copy = serv->clients;
+    double elapsed = 0;
+
+    while (copy != NULL) {
+            elapsed = ((double) micro_time() - copy->clock ) / 1000000.0;
+            if (copy->clocking && elapsed >= copy->limit) {
+                lauch_cmd(parse_command(copy->cpy_buffer), copy->sockfd, serv,
+                copy->cpy_buffer);
+                copy->cpy_buffer = NULL;
+            }
+        copy = copy->next;
     }
     return;
 }
@@ -78,7 +83,7 @@ int receive_client_msg(int sockfd, fd_set *readfds, serv_t *serv)
         cmd = parse_command(buffer);
         if (cmd == -1) {
             next = check_name_team(serv, buffer);
-            if (next > 0) {
+            if (next >= 0) {
                 fill_client_struct(sockfd, serv, buffer);
                 send_x_y_ai(sockfd, serv, next);
                 send_connection_msg(serv->clients, serv);

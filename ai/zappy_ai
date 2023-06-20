@@ -85,31 +85,31 @@ def main(av, ac):
         # print("-> Look")
         message = ""
         while True:
-            ai.pick_move()
-            # # print(message)
-            # if message == "Look":
-            #     ai.update_map(ai.look())
-            #     # print_map(game, player)
-            # elif message == "Forward":
-            #     ai.forward()
-            # elif message == "Right":
-            #     ai.right()
-            # elif message == "Left":
-            #     ai.left()
-            # elif message == "Inventory":
-            #     ai.inventory()
-            # elif message.split(" ")[0] == "Take":
-            #     print(message.split(" ")[1])
-            #     ai.take(message.split(" ")[1])
-            # elif message == "Broadcast":
-            #     ai.broadcast(ai.send_inventory())
-            # elif message == "Incantation":
-            #     ai.incantation()
-            # else:
-            #     print("Unknown command")
-            # print(ai.socket.buffer)
-            # print(ai.inv_other_player)
-            # message = input("-> ")
+            # ai.pick_move()
+            print(message)
+            if message == "Look":
+                ai.update_map(ai.look())
+                # print_map(game, player)
+            elif message == "Forward":
+                ai.forward()
+            elif message == "Right":
+                ai.right()
+            elif message == "Left":
+                ai.left()
+            elif message == "Inventory":
+                ai.inventory()
+            elif message.split(" ")[0] == "Take":
+                print(message.split(" ")[1])
+                ai.take(message.split(" ")[1])
+            elif message == "Broadcast":
+                ai.broadcast(ai.send_inventory())
+            elif message == "Incantation":
+                ai.incantation()
+            else:
+                print("Unknown command")
+            print(ai.socket.buffer)
+            print(ai.inv_other_player)
+            message = input("-> ")
             # print(sock.buffer)
             # print(message)
             # print(f"X:{player.x} Y:{player.y}")

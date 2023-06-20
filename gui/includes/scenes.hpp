@@ -10,8 +10,8 @@
 #include <SFML/Graphics.hpp>
 #include <cmath>
 #include <random>
+#include "network.hpp"
 #include <array>
-#include "connection.hpp"
 
 static const int WINDOW_WIDTH = 1920;
 static const int WINDOW_HEIGHT = 1080;
@@ -66,9 +66,9 @@ namespace zappy {
         public:
             //* Constructor / Destructor
             Menu(Connection& connection);
-            ~Menu();
+            ~Menu(void);
 
-            void loadTextures();
+            void loadTextures(void);
 
             //* Abstract functions
             void handleEvents(sf::RenderWindow& window);
@@ -103,17 +103,22 @@ namespace zappy {
         public:
             //* Constructor / Destructor
             InGame(Connection& _connection, int mapWidth, int mapHeight);
-            ~InGame();
+            ~InGame(void);
 
-            void createMap();
-            void loadTextures();
+            void createMap(void);
+            void loadTextures(void);
+            void setRessourcesInMap(void);
 
             //* Abstract functions
             void handleEvents(sf::RenderWindow& window);
             void drawScene(sf::RenderWindow& window);
 
+            //* Events
+            void clickTile(sf::RenderWindow& window);
+
             //* Tools
             int randomNumber(int min, int max);
+            std::vector<std::string> splitString(std::string str, char delimiter);
 
             //* Structures
             typedef struct pnjTextures_s {
@@ -139,6 +144,7 @@ namespace zappy {
             };
 
             typedef struct pnj_s {
+                int number;
                 int type;
                 sf::IntRect rect = sf::IntRect(0, 0, 32, 32);
                 sf::Sprite sprite;
@@ -151,13 +157,13 @@ namespace zappy {
 
             typedef struct tile_content_s {
                 ressources_t quantity;
-                std::vector<sf::Sprite> foodSprites;
-                std::vector<sf::Sprite> linemateSprites;
-                std::vector<sf::Sprite> deraumereSprites;
-                std::vector<sf::Sprite> siburSprites;
-                std::vector<sf::Sprite> mendianeSprites;
-                std::vector<sf::Sprite> phirasSprites;
-                std::vector<sf::Sprite> thystameSprites;
+                sf::Sprite foodSprite;
+                sf::Sprite linemateSprite;
+                sf::Sprite deraumereSprite;
+                sf::Sprite siburSprite;
+                sf::Sprite mendianeSprite;
+                sf::Sprite phirasSprite;
+                sf::Sprite thystameSprite;
             } tile_content_t;
 
             typedef struct tile_s {
@@ -166,12 +172,20 @@ namespace zappy {
             } tile_t;
 
             //* Class methods
-            void createPnj(int x, int y, pnjOrientation orientation);
+            void createPnj(int number, int x, int y, pnjOrientation orientation, int level);
+
             void drawPnjs(sf::RenderWindow& window);
-            void createRessources(int x, int y, ressources_t ressources);
             void drawRessources(sf::RenderWindow& window);
             void drawRessourceBar(sf::RenderWindow& window);
             void drawLevelsBar(sf::RenderWindow& window);
+
+            void updateScene(void);
+            void updateMap(void);
+            void parseQueue(void);
+            void pnwHandler(std::vector<std::string>& arguments);
+            void command2Handler(std::vector<std::string>& arguments);
+            void command3Handler(std::vector<std::string>& arguments);
+            void updatePnj(void);
 
             sf::Text setText(std::string content, sf::Vector2f pos, int charSize, sf::Color color);
 
@@ -180,7 +194,7 @@ namespace zappy {
             sf::Texture _backgroundTexture;
             sf::Sprite _backgroundSprite;
 
-            //* connection
+            //* Connection
             Connection& _connection;
 
             //* Map
@@ -210,5 +224,25 @@ namespace zappy {
             //* Levels Bar
             sf::Texture _levelBarTexture;
             sf::Sprite _levelBarSprite;
+    };
+
+    class EndGame : public AScene {
+        public:
+            //* Constructor / Destructor
+            EndGame(Connection &connection);
+            ~EndGame(void);
+
+            //* Abstract functions
+            void loadTextures(void);
+            void handleEvents(sf::RenderWindow& window);
+            void drawScene(sf::RenderWindow& window);
+        private:
+            //* Background
+            sf::Texture _backgroundTexture;
+            sf::Sprite _backgroundSprite;
+
+            sf::Texture _quitButtonTexture;
+            sf::Texture _quitButtonHoveredTexture;
+            sf::Sprite _quitButtonSprite;
     };
 }

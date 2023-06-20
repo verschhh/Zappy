@@ -27,10 +27,13 @@ void send_connection_msg(client_t *client, serv_t *serv)
 {
     client_t *cpy = client;
 
-    while (cpy->next != NULL)
+    while (cpy != NULL && cpy->next != NULL) {
         cpy = cpy->next;
-    sprintf(serv->queue + strlen(serv->queue), "pnw #%d %d %d %d %d %s",
-        cpy->player->id, cpy->player->x,
-            cpy->player->y, cpy->player->orientation,
-                cpy->player->level, cpy->team_name);
+    }
+    if (cpy != NULL) {
+        sprintf(serv->queue + strlen(serv->queue), "pnw #%d %d %d %d %d %s",
+            cpy->player->id, cpy->player->x,
+                cpy->player->y, cpy->player->orientation,
+                    cpy->player->level, cpy->team_name);
+    }
 }

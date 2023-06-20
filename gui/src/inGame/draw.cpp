@@ -6,6 +6,7 @@
 */
 
 #include "../../includes/scenes.hpp"
+#include <iostream>
 
 //! Kentin's version
 void zappy::InGame::drawPnjs(sf::RenderWindow& window)
@@ -35,7 +36,6 @@ void zappy::InGame::drawPnjs(sf::RenderWindow& window)
             _pnjMoveClocks[i].restart();
         }
 
-
         window.draw(_pnjs[i].sprite);
     }
 }
@@ -59,39 +59,26 @@ void zappy::InGame::drawRessources(sf::RenderWindow& window)
 {
     for (int i = 0; i < _mapWidth; i++) {
         for (int j = 0; j < _mapHeight; j++) {
-            int foodSize = _map[i][j].content.quantity.food;
-            for (int k = 0; k < foodSize; k++) {
-                window.draw(_map[i][j].content.foodSprites[k]);
+            if (_map[i][j].content.quantity.food > 0) {
+                window.draw(_map[i][j].content.foodSprite);
             }
-
-            int linemateSize = _map[i][j].content.quantity.linemate;
-            for (int k = 0; k < linemateSize; k++) {
-                window.draw(_map[i][j].content.linemateSprites[k]);
+            if (_map[i][j].content.quantity.linemate > 0) {
+                window.draw(_map[i][j].content.linemateSprite);
             }
-
-            int deraumereSize = _map[i][j].content.quantity.deraumere;
-            for (int k = 0; k < deraumereSize; k++) {
-                window.draw(_map[i][j].content.deraumereSprites[k]);
+            if (_map[i][j].content.quantity.deraumere > 0) {
+                window.draw(_map[i][j].content.deraumereSprite);
             }
-
-            int siburSize = _map[i][j].content.quantity.sibur;
-            for (int k = 0; k < siburSize; k++) {
-                window.draw(_map[i][j].content.siburSprites[k]);
+            if (_map[i][j].content.quantity.sibur > 0) {
+                window.draw(_map[i][j].content.siburSprite);
             }
-
-            int mendianeSize = _map[i][j].content.quantity.mendiane;
-            for (int k = 0; k < mendianeSize; k++) {
-                window.draw(_map[i][j].content.mendianeSprites[k]);
+            if (_map[i][j].content.quantity.mendiane > 0) {
+                window.draw(_map[i][j].content.mendianeSprite);
             }
-
-            int phirasSize = _map[i][j].content.quantity.phiras;
-            for (int k = 0; k < phirasSize; k++) {
-                window.draw(_map[i][j].content.phirasSprites[k]);
+            if (_map[i][j].content.quantity.phiras > 0) {
+                window.draw(_map[i][j].content.phirasSprite);
             }
-
-            int thystameSize = _map[i][j].content.quantity.thystame;
-            for (int k = 0; k < thystameSize; k++) {
-                window.draw(_map[i][j].content.thystameSprites[k]);
+            if (_map[i][j].content.quantity.thystame > 0) {
+                window.draw(_map[i][j].content.thystameSprite);
             }
         }
     }
@@ -208,8 +195,11 @@ void zappy::InGame::drawLevelsBar(sf::RenderWindow& window)
 
 void zappy::InGame::drawScene(sf::RenderWindow& window)
 {
-    window.draw(_backgroundSprite);
+    // Update scene
+    updateScene();
 
+    // Draw scene (map, pnjs, ressources, etc.)
+    window.draw(_backgroundSprite);
     for (int i = 0; i < _mapWidth; i++) {
         for (int j = 0; j < _mapHeight; j++) {
             window.draw(_map[i][j].gridSprite);
@@ -217,11 +207,9 @@ void zappy::InGame::drawScene(sf::RenderWindow& window)
     };
 
     drawLevelsBar(window);
-
     if (_selectedTile.x >= 0 && _selectedTile.y >= 0 && _selectedTile.x < _mapWidth && _selectedTile.y < _mapHeight) {
         drawRessourceBar(window);
     }
-
     drawRessources(window);
     drawPnjs(window);
 }

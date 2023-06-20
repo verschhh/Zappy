@@ -13,6 +13,7 @@ zappy::InGame::InGame(Connection& connection, int mapWidth, int mapHeight)
     setIndexScene(1);
     createMap();
     loadTextures();
+    setRessourcesInMap();
 }
 
 zappy::InGame::~InGame() {}
@@ -59,19 +60,99 @@ void zappy::InGame::loadTextures()
         throw AScene::SceneException("Error: cannot load apple.png");
 
     // ! TEMP
-    createPnj(10, 4, NORTH);
-    createPnj(5, 8, WEST);
-    createPnj(5, 8, EAST);
-    createPnj(10, 2, SOUTH);
-    createPnj(10, 3, SOUTH);
+    // createPnj(10, 4, NORTH);
+    // createPnj(5, 8, WEST);
+    // createPnj(5, 8, EAST);
+    // createPnj(10, 2, SOUTH);
+    // createPnj(10, 3, SOUTH);
 
-    createRessources(10, 6, {1, 1, 1, 1, 1, 1, 1});
-    createRessources(2, 1, {1, 0, 0, 0, 0, 0, 0});
-    createRessources(2, 2, {0, 1, 0, 0, 0, 0, 0});
-    createRessources(2, 3, {0, 0, 1, 0, 0, 0, 0});
-    createRessources(2, 4, {0, 0, 0, 1, 0, 0, 0});
-    createRessources(2, 5, {0, 0, 0, 0, 1, 0, 0});
-    createRessources(2, 6, {0, 0, 0, 0, 0, 1, 0});
-    createRessources(2, 7, {0, 0, 0, 0, 0, 0, 1});
-    createRessources(5, 8, {1, 1, 1, 1, 1, 1, 1});
+    // createRessources(10, 6, {1, 1, 1, 1, 1, 1, 1});
+    // createRessources(2, 1, {1, 0, 0, 0, 0, 0, 0});
+    // createRessources(2, 2, {0, 1, 0, 0, 0, 0, 0});
+    // createRessources(2, 3, {0, 0, 1, 0, 0, 0, 0});
+    // createRessources(2, 4, {0, 0, 0, 1, 0, 0, 0});
+    // createRessources(2, 5, {0, 0, 0, 0, 1, 0, 0});
+    // createRessources(2, 6, {0, 0, 0, 0, 0, 1, 0});
+    // createRessources(2, 7, {0, 0, 0, 0, 0, 0, 1});
+    // createRessources(5, 8, {1, 1, 1, 1, 1, 1, 1});
+}
+
+void zappy::InGame::setRessourcesInMap(void)
+{
+    for (int i = 0; i < _mapWidth; i++) {
+        for (int j = 0; j < _mapHeight; j++) {
+            sf::Sprite foodSprite;
+            foodSprite.setTexture(_foodTexture);
+            foodSprite.setScale(sf::Vector2f(_scaleFactor, _scaleFactor));
+            foodSprite.setOrigin(20 / 2, 20 / 2);
+            sf::Vector2f foodPosition = _map[i][j].gridSprite.getPosition();
+            int randomOffsetX = randomNumber(-25, 25);
+            int randomOffsetY = randomNumber(-25, 25);
+            foodSprite.setPosition(foodPosition.x + randomOffsetX, foodPosition.y + randomOffsetY);
+            _map[i][j].content.foodSprite = foodSprite;
+
+            sf::Sprite linemateSprite;
+            linemateSprite.setTexture(_ressourcesTextures[0]);
+            linemateSprite.setScale(sf::Vector2f(_scaleFactor, _scaleFactor));
+            linemateSprite.setOrigin(20 / 2, 20 / 2);
+            sf::Vector2f linematePosition = _map[i][j].gridSprite.getPosition();
+            randomOffsetX = randomNumber(-25, 25);
+            randomOffsetY = randomNumber(-25, 25);
+            linemateSprite.setPosition(linematePosition.x + randomOffsetX, linematePosition.y + randomOffsetY);
+            _map[i][j].content.linemateSprite = linemateSprite;
+
+            sf::Sprite deraumereSprite;
+            deraumereSprite.setTexture(_ressourcesTextures[1]);
+            deraumereSprite.setScale(sf::Vector2f(_scaleFactor, _scaleFactor));
+            deraumereSprite.setOrigin(20 / 2, 20 / 2);
+            sf::Vector2f deraumerePosition = _map[i][j].gridSprite.getPosition();
+            randomOffsetX = randomNumber(-25, 25);
+            randomOffsetY = randomNumber(-25, 25);
+            deraumereSprite.setPosition(deraumerePosition.x + randomOffsetX, deraumerePosition.y + randomOffsetY);
+            _map[i][j].content.deraumereSprite = deraumereSprite;
+
+            sf::Sprite siburSprite;
+            siburSprite.setTexture(_ressourcesTextures[2]);
+            siburSprite.setScale(sf::Vector2f(_scaleFactor, _scaleFactor));
+            siburSprite.setOrigin(20 / 2, 20 / 2);
+            sf::Vector2f siburPosition = _map[i][j].gridSprite.getPosition();
+            randomOffsetX = randomNumber(-25, 25);
+            randomOffsetY = randomNumber(-25, 25);
+            siburSprite.setPosition(siburPosition.x + randomOffsetX, siburPosition.y + randomOffsetY);
+            _map[i][j].content.siburSprite = siburSprite;
+
+            sf::Sprite mendianeSprite;
+            mendianeSprite.setTexture(_ressourcesTextures[3]);
+            mendianeSprite.setScale(sf::Vector2f(_scaleFactor, _scaleFactor));
+            mendianeSprite.setOrigin(20 / 2, 20 / 2);
+            sf::Vector2f mendianePosition = _map[i][j].gridSprite.getPosition();
+            randomOffsetX = randomNumber(-25, 25);
+            randomOffsetY = randomNumber(-25, 25);
+            mendianeSprite.setPosition(mendianePosition.x + randomOffsetX, mendianePosition.y + randomOffsetY);
+            _map[i][j].content.mendianeSprite = mendianeSprite;
+
+            sf::Sprite phirasSprite;
+            phirasSprite.setTexture(_ressourcesTextures[4]);
+            phirasSprite.setScale(sf::Vector2f(_scaleFactor, _scaleFactor));
+            phirasSprite.setOrigin(20 / 2, 20 / 2);
+            sf::Vector2f phirasPosition = _map[i][j].gridSprite.getPosition();
+            randomOffsetX = randomNumber(-25, 25);
+            randomOffsetY = randomNumber(-25, 25);
+            phirasSprite.setPosition(phirasPosition.x + randomOffsetX, phirasPosition.y + randomOffsetY);
+            _map[i][j].content.phirasSprite = phirasSprite;
+
+            sf::Sprite thystameSprite;
+            thystameSprite.setTexture(_ressourcesTextures[5]);
+            thystameSprite.setScale(sf::Vector2f(_scaleFactor, _scaleFactor));
+            thystameSprite.setOrigin(20 / 2, 20 / 2);
+            sf::Vector2f thystamePosition = _map[i][j].gridSprite.getPosition();
+            randomOffsetX = randomNumber(-25, 25);
+            randomOffsetY = randomNumber(-25, 25);
+            thystameSprite.setPosition(thystamePosition.x + randomOffsetX, thystamePosition.y + randomOffsetY);
+            _map[i][j].content.thystameSprite = thystameSprite;
+
+            //! Temp values
+            // _map[i][j].content.quantity = {randomNumber(0, 5), randomNumber(0, 5), randomNumber(0, 5), randomNumber(0, 5), randomNumber(0, 5), randomNumber(0, 5), randomNumber(0, 5)};
+        }
+    }
 }

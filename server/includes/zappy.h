@@ -30,7 +30,6 @@ client_t *pop_client(client_t **client);
 inv_t *inv_ctor(void);
 slot_t *slot_ctor(args_t *arg);
 player_t *player_ctor(serv_t *server);
-slot_t *new_slot(slot_t *slot, char *name);
 void fill_client_struct(int sockfd, serv_t *serv, char *buffer);
 
 //* Server
@@ -49,8 +48,10 @@ void usage(void);
 char** split_string_at_spaces(const char* input, int* count);
 char *get_orientation(enum orientation orientation);
 client_t *get_correct_client(serv_t *serv, int sockfd);
-void update_time_limit(serv_t *serv);
 int check_time_limit(serv_t *serv, int sockfd);
+map_t *find_tile(serv_t *server, int x, int y);
+void update_time_limit(serv_t *serv, client_t *client, int time_limit, char *s);
+uint64_t micro_time(void);
 
 //* Commands Gui
 int map_size(int sockfd, serv_t *serv, char *buffer);
@@ -81,5 +82,8 @@ int right(int sockfd, serv_t *serv, char *buffer);
 int left(int sockfd, serv_t *serv, char *buffer);
 int unused_slot(int sockfd, serv_t *serv, char *buffer);
 int look(int sockfd, serv_t *serv, char *buffer);
+int take_object(int sockfd, serv_t *serv, char *buffer);
+int broadcast(int sockfd, serv_t *serv, char *buffer);
+int set_object(int sockfd, serv_t *serv, char *buffer);
 
 #endif

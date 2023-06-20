@@ -7,91 +7,127 @@
 
 #include "../../includes/zappy.h"
 
-int check_if_unboud(int value, int max)
+char *tile_to_string(map_t *tile, client_t *client)
 {
-    if (value >= max)
-        value -= max;
-    if (value < 0)
-        value = max + value;
-    return value;
+    char *str = malloc(256 * sizeof(char));
+    str[0] = '\0';  // initialize the string to be empty
+
+    // append the player(s) on the tile
+    while (client != NULL) {
+        if (client->player->x == tile->x && client->player->y == tile->y) {
+            strcat(str, "player ");
+        }
+        client = client->next;
+    }
+
+    // append each resource multiple times
+    for (int i = 0; i < tile->food; i++) {
+        strcat(str, "food ");
+    }
+    for (int i = 0; i < tile->linemate; i++) {
+        strcat(str, "linemate ");
+    }
+    for (int i = 0; i < tile->deraumere; i++) {
+        strcat(str, "deraumere ");
+    }
+    for (int i = 0; i < tile->sibur; i++) {
+        strcat(str, "sibur ");
+    }
+    for (int i = 0; i < tile->mendiane; i++) {
+        strcat(str, "mendiane ");
+    }
+    for (int i = 0; i < tile->phiras; i++) {
+        strcat(str, "phiras ");
+    }
+    for (int i = 0; i < tile->thystame; i++) {
+        strcat(str, "thystame ");
+    }
+
+    // remove the trailing space
+    if (strlen(str) > 0) {
+        str[strlen(str) - 1] = '\0';
+    }
+
+    return str;
 }
 
-char *assign_new_size(serv_t *serv, char *response, map_t *map)
+coord_t *get_visible_tile_coords(serv_t *server, player_t *player)
 {
-    int array[7] = {map->food, map->linemate, map->deraumere, map->sibur,
-        map->mendiane, map->phiras, map->thystame};
-    for (int i = 0; i != 7; i++)
-        printf("%d\n", array[i]);
-}
+    int n = player->level + 1;
+    int vision_size = (n * (2 * 1 + (n - 1) * 2)) / 2;
+    coord_t *visible_coords = calloc(vision_size, sizeof(coord_t));
 
-map_t *get_position_map(serv_t *serv, client_t *client, int len, int index)
-{
-    map_t *map = serv->map;
-    int check_div_zero = len - 1;
-    int get_y = 0;
-    int get_x = 0;
-    int mean = 0;
-
-    if (check_div_zero <= 0) {
-        get_y = client->player->y;
-        get_x = client->player->x;
-    } else {
-        get_y = client->player->y + check_div_zero / 2;
-        mean = (len - 1) / 2;
-        for (int i = -mean; i != mean; i++) {
-            if (mean + i == index)
-                get_x = client->player->x + i;
+    int k = 0;
+    for (int i = 0; i < n; i++) {
+        int row_width = 2 * i + 1;
+        for (int j = 0; j < row_width; j++) {
+            switch (player->orientation) {
+                case 1:  // North
+                    visible_coords[k].y = (player->y - i + server->max_y) % server->max_y;
+                    visible_coords[k].x = (player->x + j - i + server->max_x) % server->max_x;
+                    break;
+                case 2:  // East
+                    visible_coords[k].x = (player->x + i + server->max_x) % server->max_x;
+                    visible_coords[k].y = (player->y + j - i + server->max_y) % server->max_y;
+                    break;
+                case 3:  // South
+                    visible_coords[k].y = (player->y + i + server->max_y) % server->max_y;
+                    visible_coords[k].x = (player->x - j + i + server->max_x) % server->max_x;
+                    break;
+                case 4:  // West
+                    visible_coords[k].x = (player->x - i + server->max_x) % server->max_x;
+                    visible_coords[k].y = (player->y - j + i + server->max_y) % server->max_y;
+                    break;
+            }
+            k++;
         }
     }
-    get_x = check_if_unboud(get_x, serv->max_x);
-    get_y = check_if_unboud(get_y, serv->max_y);
-    printf("x = %d and y = %d\n", get_x, get_y);
-    while (map->next != NULL) {
-        if (map->y == get_y && map->x == get_x)
-            return map;
-        map = map->next;
-    }
-    printf("HHERE\n");
-    return NULL;
+
+    return visible_coords;
 }
 
-void look_north(serv_t *serv, client_t *client, int socket)
+char *build_look_response(serv_t *server, player_t *player)
 {
-    printf("IN\n");
-    int index = client->player->level;
-    printf("lvl = %d\n", index);
-    char *response = malloc(sizeof(char) * strlen("[player,") + 1);
-    int len = 1;
+    printf("Swag");
+    int n = player->level + 1;
+    int vision_size = (n * (2 * 1 + (n - 1) * 2)) / 2;
+    coord_t *visible_coords = get_visible_tile_coords(server, player);
+    char *response = malloc(256 * sizeof(char));
+    response[0] = '\0';
+    strcat(response, "[");
 
-    while (index >= 0) {
-        printf("LOOP\n");
-        for (int i = 0; i != len; i++) {
-            response = assign_new_size(serv, response, get_position_map(serv, client, len, i));
+    for (int i = 0; i < vision_size; i++) {
+        if (i != 0) {
+            strcat(response, ",");
         }
-        if (len + 2 > serv->max_x)
-            len -= 2;
-        index--;
+        client_t *copy = server->clients;
+        map_t *tile = find_tile(server, visible_coords[i].x, visible_coords[i].y);
+        char *tile_str = tile_to_string(tile, copy);
+        if (strlen(tile_str) > 1 && i > 0) {
+            strcat(response, " ");
+        } 
+        strcat(response, tile_str);
+        free(tile_str);
     }
-    printf("END\n");
+    strcat(response, "]\0\n");
+    printf("response = %s\n", response);
+    return response;
 }
 
 int look(int sockfd, serv_t *serv, char *buffer)
 {
-    (void)buffer;
-    printf("Bye\n");
-    serv_t *cpy_serv = serv;
-    client_t *cpy_clt = get_correct_client(serv, sockfd);
-    printf("Hello\n");
+    client_t *cli = get_correct_client(serv, sockfd);
+    player_t *player = cli->player;
+    int n = player->level + 1;
+    int vision_size = (n * (2 * 1 + (n - 1) * 2)) / 2;
 
-    if (cpy_clt == NULL)
-        return 84;
-    printf("orientation = %d\n", cpy_clt->player->orientation);
-    if (cpy_clt->player->orientation == NORTH)
-        look_north(serv, cpy_clt, socket);
-    if (cpy_clt->player->orientation == EAST)
-        return;
-    if (cpy_clt->player->orientation == SOUTH)
-        return;
-    if (cpy_clt->player->orientation == WEST)
-        return;
+    if (!cli->clocking) {
+        update_time_limit(serv, cli, 7, buffer);
+        return 0;
+    }
+    cli->clocking = false;
+    coord_t *visible_coords = get_visible_tile_coords(serv, player);
+    char *response = build_look_response(serv, player);
+    write(sockfd, response, strlen(response));
+    return 0;
 }

@@ -25,7 +25,7 @@
 
 
 enum nb_command {
-    NB_CMD = 15
+    NB_CMD = 16
 };
 
 enum enum_slot {
@@ -41,6 +41,10 @@ enum orientation {
     WEST = 4
 };
 
+typedef struct coord_s{
+    int x;
+    int y;
+} coord_t;
 
 typedef struct args_s {
     int port;
@@ -77,8 +81,10 @@ typedef struct client_s {
     struct sockaddr_in addr;
     socklen_t addrlen;
     int slot;
-    unsigned int tickleft;
+    double clock;
+    double limit;
     char *cpy_buffer;
+    bool clocking;
     struct player_s *player;
     struct client_s *next;
 } client_t;
@@ -112,8 +118,8 @@ typedef struct serv_s {
     int nb_client;
     struct timeval tv;
     bool new_tick;
+    double clock_start;
     struct sockaddr_in addr;
-    clock_t start;
     char queue[5000];
     client_t *clients;
     map_t *map;
