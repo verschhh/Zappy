@@ -58,20 +58,22 @@ int send_player_level(int sockfd, serv_t *serv, char *buffer)
 
 int send_player_inventory(int sockfd, serv_t *serv, char *buffer)
 {
-    char msg[0];
-    player_t *tmp = serv->clients->player;
-    inv_t *inv = tmp->inventory;
-    int len = snprintf(msg, 0, "pin %d %d %d %d %d %d %d %d\n", tmp->id
-        , inv->food, inv->linemate, inv->deraumere, inv->sibur, inv->mendiane,
-        inv->phiras, inv->thystame);
-    char s[len + 1];
     (void)buffer;
+    char msg[0];
+    int count = 0;
+    char **array = split_string_at_spaces(buffer, &count);
+    erase_first_characters(array[1], 1);
+    player_t *player = parse_player(sockfd, serv, atoi(array[1]));
+    int len = snprintf(msg, 0, "pin %d %d %d %d %d %d %d %d\n", player->id
+        , player->inventory->food, player->inventory->linemate, player->inventory->deraumere, player->inventory->sibur, player->inventory->mendiane,
+        player->inventory->phiras, player->inventory->thystame);
+    char s[len];
 
-    if (tmp == NULL)
+    if (player == NULL)
         return unknown_command(sockfd, serv, buffer);
-    snprintf(s, len, "pin %d %d %d %d %d %d %d %d\n", tmp->id
-        , inv->food, inv->linemate, inv->deraumere, inv->sibur, inv->mendiane,
-        inv->phiras, inv->thystame);
+    snprintf(s, len, "pin %d %d %d %d %d %d %d %d\n", player->id
+        , player->inventory->food, player->inventory->linemate, player->inventory->deraumere, player->inventory->sibur, player->inventory->mendiane,
+        player->inventory->phiras, player->inventory->thystame);
     if (write(sockfd, s, len) == -1)
         return 84;
     return 0;
