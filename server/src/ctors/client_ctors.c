@@ -39,6 +39,7 @@ void fill_client_struct(int sockfd, serv_t *serv, char *buffer)
     new_node->tickleft = 0;
     new_node->cpy_buffer = NULL;
     new_node->next = NULL;
+    new_node->is_ticking = false;
 
     if (serv->clients == NULL) {
         serv->clients = new_node;
