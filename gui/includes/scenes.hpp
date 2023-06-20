@@ -240,5 +240,9 @@ namespace zappy {
             //* Background
             sf::Texture _backgroundTexture;
             sf::Sprite _backgroundSprite;
+
+            sf::Texture _quitButtonTexture;
+            sf::Texture _quitButtonHoveredTexture;
+            sf::Sprite _quitButtonSprite;
     };
 }
