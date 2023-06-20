@@ -48,9 +48,10 @@ void usage(void);
 char** split_string_at_spaces(const char* input, int* count);
 char *get_orientation(enum orientation orientation);
 client_t *get_correct_client(serv_t *serv, int sockfd);
-void update_time_limit(serv_t *serv);
 int check_time_limit(serv_t *serv, int sockfd);
 map_t *find_tile(serv_t *server, int x, int y);
+void update_time_limit(serv_t *serv, client_t *client, int time_limit, char *s);
+uint64_t micro_time(void);
 
 //* Commands Gui
 int map_size(int sockfd, serv_t *serv, char *buffer);

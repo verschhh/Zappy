@@ -118,7 +118,14 @@ int look(int sockfd, serv_t *serv, char *buffer)
 {
     client_t *cli = get_correct_client(serv, sockfd);
     player_t *player = cli->player;
+    int n = player->level + 1;
+    int vision_size = (n * (2 * 1 + (n - 1) * 2)) / 2;
 
+    if (!cli->clocking) {
+        update_time_limit(serv, cli, 7, buffer);
+        return 0;
+    }
+    cli->clocking = false;
     coord_t *visible_coords = get_visible_tile_coords(serv, player);
     char *response = build_look_response(serv, player);
     write(sockfd, response, strlen(response));

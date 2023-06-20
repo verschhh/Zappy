@@ -7,27 +7,12 @@
 
 #include "../includes/zappy.h"
 
-// char **get_tn_serv(char **names, char **arg_names)
-// {
-//     int len = 0;
-
-//     for (int i = 0; arg_names[i] != NULL; i++)
-//         len++;
-//     names = malloc(sizeof(char *) * (len + 1));
-//     for (int i = 0; i != len; i++) {
-//         names[i] = malloc(sizeof(char) * strlen(arg_names[i]) + 1);
-//         strcpy(names[i], arg_names[i]);
-//         names[i][strlen(arg_names[i])] = '\0';
-//     }
-//     names[len] = NULL;
-//     return names;
-// }
-
 serv_t *serv_ctor2(serv_t *serv, args_t *arg)
 {
     serv->nb_client = 0;
     serv->clients = NULL;
     serv->new_tick = true;
+    serv->clock_start = micro_time();
     strcpy(serv->queue, "");
     serv->slots = slot_ctor(arg);
     // for (int i = 1; arg->names[i] != NULL; i++)

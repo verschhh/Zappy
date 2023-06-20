@@ -23,9 +23,7 @@ const cmd_t cmd_list[NB_CMD] = {
     {"Take", &take_object},
     {"Look", &look},
     {"Connect_nbr", &unused_slot},
-    {"queue", &send_queue},
-    {"Broadcast", &broadcast},
-    {"Set", &set_object}
+    {"queue", &send_queue}
 };
 
 int parse_command(char *buffer)
@@ -33,12 +31,14 @@ int parse_command(char *buffer)
     char *cmd = malloc(sizeof(char) * strlen(buffer) + 1);
     int index = 0;
 
+    if (buffer == NULL)
+        printf("Buffer is NULL\n");
+
     while (buffer[index] != ' ' && buffer[index] != '\0') {
         cmd[index] = buffer[index];
         index++;
     }
     cmd[index] = '\0';
-    printf("cmd = %s\n", cmd);
     for (int i = 0; i != NB_CMD; i++) {
         if (strstr(cmd, cmd_list[i].command) != NULL)
             return i;
@@ -56,15 +56,15 @@ int lauch_cmd(int cmd, int sockfd, serv_t *serv, char *buffer)
 void decrement_tick(serv_t *serv)
 {
     client_t *copy = serv->clients;
+    double elapsed = 0;
 
     while (copy != NULL) {
-        if (copy->tickleft > 0)
-            copy->tickleft--;
-        if (copy->tickleft <= 0 && copy->cpy_buffer != NULL) {
-            lauch_cmd(parse_command(copy->cpy_buffer), copy->sockfd, serv,
-            copy->cpy_buffer);
-            copy->cpy_buffer = NULL;
-        }
+            elapsed = ((double) micro_time() - copy->clock ) / 1000000.0;
+            if (copy->clocking && elapsed >= copy->limit) {
+                lauch_cmd(parse_command(copy->cpy_buffer), copy->sockfd, serv,
+                copy->cpy_buffer);
+                copy->cpy_buffer = NULL;
+            }
         copy = copy->next;
     }
     return;

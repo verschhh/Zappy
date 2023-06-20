@@ -35,21 +35,16 @@ void move_to_orientation(serv_t *serv, client_t *client)
 int forward(int sockfd, serv_t *serv, char *buffer)
 {
     (void)buffer;
-    int can_move = check_time_limit(serv, sockfd);
     client_t *cpy = get_correct_client(serv, sockfd);
 
-    if ((7 / serv->freq) > 0 && cpy->tickleft <= 0 && !cpy->is_ticking) {
-        cpy->tickleft = 7 / serv->freq;
-        cpy->cpy_buffer = strdup(buffer);
-        cpy->is_ticking = true;
+    if (!cpy->clocking) {
+        update_time_limit(serv, cpy, 7, buffer);
         return 0;
     }
-    if (can_move != 0)
-        return 84;
-    if (cpy->is_ticking) {
+    if (cpy->clocking) {
         move_to_orientation(serv, cpy);
         write(sockfd, "ok\n", 4);
-        cpy->is_ticking = false;
+        cpy->clocking = false;
     }
     return 0;
 }
@@ -57,47 +52,37 @@ int forward(int sockfd, serv_t *serv, char *buffer)
 int left(int sockfd, serv_t *serv, char *buffer)
 {
     (void)buffer;
-    int can_move = check_time_limit(serv, sockfd);
     client_t *cpy = get_correct_client(serv, sockfd);
 
-    // if ((7 / serv->freq) > 0 && cpy->tickleft <= 0 && !cpy->is_ticking) {
-    //     cpy->tickleft = 7 / serv->freq;
-    //     cpy->cpy_buffer = strdup(buffer);
-    //     cpy->is_ticking = true;
-    //     return 0;
-    // }
-    // if (can_move != 0)
-    //     return 84;
-    // if (cpy->is_ticking) {
+    if (!cpy->clocking) {
+        update_time_limit(serv, cpy, 7, buffer);
+        return 0;
+    }
+    if (cpy->clocking) {
         cpy->player->orientation -= 1;
         if (cpy->player->orientation < NORTH)
             cpy->player->orientation = WEST;
         write(sockfd, "ok\n", 4);
-        cpy->is_ticking = false;
-    // }
+        cpy->clocking = false;
+    }
     return 0;
 }
 
 int right(int sockfd, serv_t *serv, char *buffer)
 {
     (void)buffer;
-    int can_move = check_time_limit(serv, sockfd);
     client_t *cpy = get_correct_client(serv, sockfd);
 
-    if ((7 / serv->freq) > 0 && cpy->tickleft <= 0 && !cpy->is_ticking) {
-        cpy->tickleft = 7 / serv->freq;
-        cpy->cpy_buffer = strdup(buffer);
-        cpy->is_ticking = true;
+    if (!cpy->clocking) {
+        update_time_limit(serv, cpy, 7, buffer);
         return 0;
     }
-    if (can_move != 0)
-        return 84;
-    if (cpy->is_ticking) {
+    if (cpy->clocking) {
         cpy->player->orientation += 1;
         if (cpy->player->orientation > WEST)
             cpy->player->orientation = NORTH;
         write(sockfd, "ok\n", 4);
-        cpy->is_ticking = false;
+        cpy->clocking = false;
     }
     return 0;
 }
@@ -126,9 +111,14 @@ int inventory(int sockfd, serv_t *serv, char *buffer)
     inv_t *tmp = cpy->player->inventory;
     char *msg = get_inv(tmp);
     int len = strlen(msg);
-
-    cpy->tickleft = 1;
-    if (write(sockfd, msg, len) == -1)
-        return 84;
+    if (!cpy->clocking) {
+        update_time_limit(serv, cpy, 1, buffer);
+        return 0;
+    }
+    if (cpy->clocking) {
+        if (write(sockfd, msg, len) == -1)
+            return 84;
+    }
+    cpy->clocking = false;
     return 0;
 }
