@@ -69,19 +69,12 @@ def main(av, ac):
         port, team_name, host = set_args(av, ac)
         sock = Socket(port, team_name, host)
         sock.connect()
-        sock.receive()
-        print(sock.buffer)
+        sock.buffer = sock._sock.recv(4096).decode()
         sock.send(team_name)
-        sock.receive()
+        sock.buffer = sock._sock.recv(4096).decode()
 
         buff = sock.buffer.split("\n")
-        print(f"client number: {buff[0]}")
-        x = int(buff[1].split()[0])
-        y = int(buff[1].split()[1])
-        print(f"  map size:\nx:{x}\ty:{y}\n")
-        game = Game(x, y)
-        player = Player(sock, game)
-        ai = AI(sock, game, x, y)
+        ai = AI(sock, int(buff[1].split()[0]), int(buff[1].split()[1]))
         ai.set_map()
         # game.update_map(player.look())
         # print(f"Max X: {player.max_x} Max Y: {player.max_y}")
@@ -90,31 +83,33 @@ def main(av, ac):
         # message = input("> ")
         # message = "Look"
         # print("-> Look")
-        # message = ""
+        message = ""
         while True:
-            ai.pick_move()
-            # print(message)
-            # if message == "Look":
-                # game.update_map(player.look())
-            #     # print_map(game, player)
-            # elif message == "Forward":
-            #     player.forward()
-            # elif message == "Right":
-            #     player.right()
-            # elif message == "Left":
-            #     player.left()
-            # elif message == "Inventory":
-            #     player.inventory()
-            # elif message.split(" ")[0] == "Take":
-            #     print(message.split(" ")[1])
-            #     player.take(message.split(" ")[1])
-            # elif message.split(" ")[0] == "Broadcast":
-            #     player.broadcast("coucou ")
-            # elif message == "Incantation":
-            #     player.incantation()
-            # else:
-            #     print("Unknown command")
-            # message = input("-> ")
+            # ai.pick_move()
+            print(message)
+            if message == "Look":
+                ai.update_map(ai.look())
+                # print_map(game, player)
+            elif message == "Forward":
+                ai.forward()
+            elif message == "Right":
+                ai.right()
+            elif message == "Left":
+                ai.left()
+            elif message == "Inventory":
+                ai.inventory()
+            elif message.split(" ")[0] == "Take":
+                print(message.split(" ")[1])
+                ai.take(message.split(" ")[1])
+            elif message == "Broadcast":
+                ai.broadcast(ai.send_inventory())
+            elif message == "Incantation":
+                ai.incantation()
+            else:
+                print("Unknown command")
+            print(ai.socket.buffer)
+            print(ai.inv_other_player)
+            message = input("-> ")
             # print(sock.buffer)
             # print(message)
             # print(f"X:{player.x} Y:{player.y}")

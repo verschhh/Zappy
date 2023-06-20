@@ -105,7 +105,7 @@ char *build_look_response(serv_t *server, player_t *player)
         char *tile_str = tile_to_string(tile, copy);
         if (strlen(tile_str) > 1 && i > 0) {
             strcat(response, " ");
-        } 
+        }
         strcat(response, tile_str);
         free(tile_str);
     }
@@ -125,9 +125,13 @@ int look(int sockfd, serv_t *serv, char *buffer)
         update_time_limit(serv, cli, 7, buffer);
         return 0;
     }
-    cli->clocking = false;
-    coord_t *visible_coords = get_visible_tile_coords(serv, player);
-    char *response = build_look_response(serv, player);
-    write(sockfd, response, strlen(response));
+    if (cli->clocking) {
+        coord_t *visible_coords = get_visible_tile_coords(serv, player);
+        char *response = build_look_response(serv, player);
+        printf("response = %s\n", response);
+        write(sockfd, response, strlen(response));
+        cli->clocking = false;
+    }
+    
     return 0;
 }
