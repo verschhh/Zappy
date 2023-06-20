@@ -109,7 +109,7 @@ def main(av, ac):
                 print(message.split(" ")[1])
                 player.take(message.split(" ")[1])
             elif message.split(" ")[0] == "Broadcast":
-                player.broadcast(message.split(" ")[1])
+                player.broadcast("coucou ")
             elif message == "Incantation":
                 player.incantation()
             else:
