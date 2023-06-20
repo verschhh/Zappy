@@ -32,8 +32,9 @@ class AI(Player, Game, Priority, Orientation):
             case 1:
                 self.level_1()
             case 2:
-                self.take_useless_ressources(Incantation.LVL_2)
                 exit(2)
+                self.take_useless_ressources(Incantation.LVL_2)
+                
 
     def random_move(self):
         foo = randint(0,1)
