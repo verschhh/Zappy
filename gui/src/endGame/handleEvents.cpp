@@ -16,6 +16,20 @@ void zappy::EndGame::handleEvents(sf::RenderWindow& window)
             window.close();
         }
 
+        sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
+
+        if (event.type == sf::Event::MouseButtonPressed) {
+            if (_quitButtonSprite.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
+                window.close();
+            }
+        }
+
+        if (_quitButtonSprite.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
+            _quitButtonSprite.setTexture(_quitButtonHoveredTexture);
+        } else {
+            _quitButtonSprite.setTexture(_quitButtonTexture);
+        }
+
         //! TEMP: display mouse click position
         // if (event.type == sf::Event::MouseButtonPressed) {
         //     sf::Vector2i mousePosition = sf::Mouse::getPosition(window);

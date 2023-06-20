@@ -10,4 +10,5 @@
 void zappy::EndGame::drawScene(sf::RenderWindow& window)
 {
     window.draw(_backgroundSprite);
+    window.draw(_quitButtonSprite);
 }
