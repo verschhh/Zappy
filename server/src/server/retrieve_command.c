@@ -56,8 +56,8 @@ void decrement_tick(serv_t *serv)
     double elapsed = 0;
 
     while (copy != NULL) {
-            elapsed = (copy->clock - serv->clock_start) / 1000000.0;
-            if (elapsed >= copy->limit) {
+            elapsed = ((double) micro_time() - copy->clock ) / 1000000.0;
+            if (copy->clocking && elapsed >= copy->limit) {
                 lauch_cmd(parse_command(copy->cpy_buffer), copy->sockfd, serv,
                 copy->cpy_buffer);
                 copy->cpy_buffer = NULL;

@@ -91,6 +91,10 @@ int take_object(int sockfd, serv_t *serv, char *buffer)
     map_cpy = get_correct_tile(map_cpy, get_correct_client(serv, sockfd));
 
     printf("Position = %d %d\n", map_cpy->x, map_cpy->y);
+    if (!client_cpy->clocking) {
+        update_time_limit(serv, client_cpy, 7, buffer);
+        return 0;
+    }
     for (int i = 0; i < 7; i++) {
         if (strstr(array[1], food[i]) != NULL) {
             switch_case_take(i, map_cpy, client_cpy, sockfd);

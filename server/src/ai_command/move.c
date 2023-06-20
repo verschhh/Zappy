@@ -37,8 +37,10 @@ int forward(int sockfd, serv_t *serv, char *buffer)
     (void)buffer;
     client_t *cpy = get_correct_client(serv, sockfd);
 
-    if (!cpy->clocking)
+    if (!cpy->clocking) {
         update_time_limit(serv, cpy, 7, buffer);
+        return 0;
+    }
     if (cpy->clocking) {
         move_to_orientation(serv, cpy);
         write(sockfd, "ok\n", 4);
@@ -52,8 +54,10 @@ int left(int sockfd, serv_t *serv, char *buffer)
     (void)buffer;
     client_t *cpy = get_correct_client(serv, sockfd);
 
-    if (!cpy->clocking)
+    if (!cpy->clocking) {
         update_time_limit(serv, cpy, 7, buffer);
+        return 0;
+    }
     if (cpy->clocking) {
         cpy->player->orientation -= 1;
         if (cpy->player->orientation < NORTH)
@@ -69,8 +73,10 @@ int right(int sockfd, serv_t *serv, char *buffer)
     (void)buffer;
     client_t *cpy = get_correct_client(serv, sockfd);
 
-    if (!cpy->clocking)
+    if (!cpy->clocking) {
         update_time_limit(serv, cpy, 7, buffer);
+        return 0;
+    }
     if (cpy->clocking) {
         cpy->player->orientation += 1;
         if (cpy->player->orientation > WEST)
@@ -105,11 +111,14 @@ int inventory(int sockfd, serv_t *serv, char *buffer)
     inv_t *tmp = cpy->player->inventory;
     char *msg = get_inv(tmp);
     int len = strlen(msg);
-    if (!cpy->clocking)
-        update_time_limit(serv, cpy, 7, buffer);
+    if (!cpy->clocking) {
+        update_time_limit(serv, cpy, 1, buffer);
+        return 0;
+    }
     if (cpy->clocking) {
         if (write(sockfd, msg, len) == -1)
             return 84;
     }
+    cpy->clocking = false;
     return 0;
 }

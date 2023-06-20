@@ -21,8 +21,10 @@ int broadcast(int sockfd, serv_t *serv, char *buffer)
     buffer += 9;
     int len = snprintf(msg,0,"message %d,%s", sound(client->player, client->player), buffer);
     char send[len];
-    if (!client->clocking)
+    if (!client->clocking) {
         update_time_limit(serv, client, 7, buffer);
+        return 0;
+    }
     if (client->clocking) {
         for (int i = 0; client->next != NULL; i++) {
             if (client->sockfd != sockfd) {

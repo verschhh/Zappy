@@ -15,7 +15,7 @@ int incantation(int sockfd, serv_t *serv, char *buffer)
 
     write(sockfd, "Elevation underway\n", 20);
     if (!client->clocking)
-        update_time_limit(serv, client, 7, buffer);
+        update_time_limit(serv, client, 300, buffer);
     if (client->clocking) {
         client->player->level += 1;
         sprintf(msg, "Current level: %d\n", client->player->level);
