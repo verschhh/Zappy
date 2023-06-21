@@ -16,6 +16,7 @@
     #include <sys/select.h>
     #include <arpa/inet.h>
     #include <netinet/in.h>
+    #include <sys/time.h>
     #include <error.h>
     #include <string.h>
     #include <signal.h>
