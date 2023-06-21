@@ -9,7 +9,6 @@
 
 #include <iostream>
 #include <getopt.h>
-#include <SFML/Graphics.hpp>
 #include "scenes.hpp"
 #include "network.hpp"
 
@@ -66,5 +65,8 @@ namespace zappy {
 
             int _indexScene;
             std::vector<IScene*> _scenes;
+
+            //* Music
+            sf::Music _backgroundMusic;
     };
 }
