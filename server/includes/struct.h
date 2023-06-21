@@ -23,6 +23,8 @@
     #include <termios.h>
     #include <time.h>
     #include <stdbool.h>
+    #include <stdint.h>
+    #include <sys/time.h>
 
 
 enum nb_command {
