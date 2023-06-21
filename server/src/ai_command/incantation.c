@@ -18,6 +18,7 @@ int incantation(int sockfd, serv_t *serv, char *buffer)
         update_time_limit(serv, client, 300, buffer);
         return 0;
     }
+    client->clocking = false;
     if (client->clocking) {
         client->player->level += 1;
         sprintf(msg, "Current level: %d\n", client->player->level);
