@@ -118,7 +118,7 @@ int look(int sockfd, serv_t *serv, char *buffer)
 {
     client_t *cli = get_correct_client(serv, sockfd);
     player_t *player = cli->player;
-    int n = player->level + 1;
+    // int n = player->level + 1;
     // int vision_size = (n * (2 * 1 + (n - 1) * 2)) / 2; //unused for now
 
     if (!cli->clocking) {
