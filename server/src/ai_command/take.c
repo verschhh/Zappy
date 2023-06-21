@@ -34,27 +34,27 @@ void switch_case_take_two(int i, map_t *map_cpy, client_t *client_cpy, int sockf
 {
     switch (i) {
         case 3:
-            if (check_element_tile(map_cpy->sibur, sockfd) == 1) {// check if there is enough sibur / warning
+            if (check_element_tile(map_cpy->sibur, sockfd) == 1) {
                 map_cpy->sibur--;
-                client_cpy->player->inventory->sibur++; //warning
+                client_cpy->player->inventory->sibur++;
             }
             break;
         case 4:
-            if (check_element_tile(map_cpy->mendiane, sockfd) == 1) {// check if there is enough mendiane / warning
+            if (check_element_tile(map_cpy->mendiane, sockfd) == 1) {
                 map_cpy->mendiane--;
-                client_cpy->player->inventory->mendiane++; //warning
+                client_cpy->player->inventory->mendiane++;
             }
             break;
         case 5:
-            if (check_element_tile(map_cpy->phiras, sockfd) == 1) {// check if there is enough phiras / warning
+            if (check_element_tile(map_cpy->phiras, sockfd) == 1) {
                 map_cpy->phiras--;
-                client_cpy->player->inventory->phiras++; //warning
+                client_cpy->player->inventory->phiras++;
             }
             break;
         case 6:
-            if (check_element_tile(map_cpy->thystame, sockfd) == 1) {// check if there is enough thystame / warning
+            if (check_element_tile(map_cpy->thystame, sockfd) == 1) {
                 map_cpy->thystame--;
-                client_cpy->player->inventory->thystame++; //warning
+                client_cpy->player->inventory->thystame++;
             }
             break;
     }
@@ -101,7 +101,7 @@ int take_object(int sockfd, serv_t *serv, char *buffer)
     char **array = split_string_at_spaces(buffer, &count);
     char *food[7] = {"food", "linemate", "deraumere",
         "sibur", "mendiane", "phiras", "thystame"};
-    get_correct_tile(map_cpy, get_correct_client(serv, sockfd));
+    map_cpy = get_correct_tile(map_cpy, get_correct_client(serv, sockfd));
 
     printf("Position = %d %d\n", map_cpy->x, map_cpy->y);
     for (int i = 0; i < 7; i++) {
