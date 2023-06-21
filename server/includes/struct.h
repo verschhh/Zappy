@@ -16,12 +16,15 @@
     #include <sys/select.h>
     #include <arpa/inet.h>
     #include <netinet/in.h>
+    #include <sys/time.h>
     #include <error.h>
     #include <string.h>
     #include <signal.h>
     #include <termios.h>
     #include <time.h>
     #include <stdbool.h>
+    #include <stdint.h>
+    #include <sys/time.h>
 
 
 enum nb_command {

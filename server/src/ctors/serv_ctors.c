@@ -15,8 +15,8 @@ serv_t *serv_ctor2(serv_t *serv, args_t *arg)
     serv->clock_start = micro_time();
     strcpy(serv->queue, "");
     serv->slots = slot_ctor(arg);
-    // for (int i = 1; arg->names[i] != NULL; i++)
-    //     new_slot(serv->slots, arg->names[i]);
+    for (int i = 1; arg->names[i] != NULL; i++)
+        new_slot(serv->slots, arg->names[i]);
     return serv;
 }
 

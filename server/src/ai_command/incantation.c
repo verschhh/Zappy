@@ -11,8 +11,8 @@ int incantation(int sockfd, serv_t *serv, char *buffer)
 {
     (void)buffer;
     client_t *client = get_correct_client(serv, sockfd);
-    char msg[19];
-    
+    char msg[25];
+
     write(sockfd, "Elevation underway\n", 20);
     if (!client->clocking) {
         update_time_limit(serv, client, 300, buffer);
@@ -21,7 +21,9 @@ int incantation(int sockfd, serv_t *serv, char *buffer)
     if (client->clocking) {
         client->player->level += 1;
         sprintf(msg, "Current level: %d\n", client->player->level);
-        write(sockfd, msg, 19);
+        printf("Level = %d\n", client->player->level);
+        write(sockfd, msg, 25);
+        client->clocking = false;
     }
     return 0;
 }

@@ -31,6 +31,7 @@ inv_t *inv_ctor(void);
 slot_t *slot_ctor(args_t *arg);
 player_t *player_ctor(serv_t *server);
 void fill_client_struct(int sockfd, serv_t *serv, char *buffer);
+void new_slot(slot_t *slot, char *name);
 
 //* Server
 int start_server(args_t *args);
@@ -52,6 +53,8 @@ int check_time_limit(serv_t *serv, int sockfd);
 map_t *find_tile(serv_t *server, int x, int y);
 void update_time_limit(serv_t *serv, client_t *client, int time_limit, char *s);
 uint64_t micro_time(void);
+map_t *get_correct_tile(map_t *map, client_t *client);
+int check_element_tile(int materials, int sockfd);
 
 //* Commands Gui
 int map_size(int sockfd, serv_t *serv, char *buffer);
