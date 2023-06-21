@@ -88,6 +88,7 @@ int take_object(int sockfd, serv_t *serv, char *buffer)
         update_time_limit(serv, client_cpy, 7, buffer);
         return 0;
     }
+    client_cpy->clocking = false;
     map_t *map_cpy = serv->map;
     int count = 0;
     char **array = split_string_at_spaces(buffer, &count);
