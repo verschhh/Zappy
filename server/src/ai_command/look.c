@@ -126,7 +126,7 @@ int look(int sockfd, serv_t *serv, char *buffer)
         return 0;
     }
     if (cli->clocking) {
-        /*coord_t *visible_coords = */get_visible_tile_coords(serv, player); //warning here
+        /*coord_t *visible_coords = */get_visible_tile_coords(serv, player); //there was a warning here
         char *response = build_look_response(serv, player);
         printf("response = %s\n", response);
         write(sockfd, response, strlen(response));
