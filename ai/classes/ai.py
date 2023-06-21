@@ -233,9 +233,11 @@ class AI(Player, Game, Priority, Orientation):
         return shortest_pos
 
     def update_inventory(self):
+        print("Updating inventory")
         self.socket.send("Inventory")
         self.socket.receive(self)
         print(self._inventory)
+        print(self.socket.buffer)
         inventory_regex = r"(\w+)\s+(\d+)"
         matches = re.findall(inventory_regex, self.socket.buffer)
         for item, quantity in matches:

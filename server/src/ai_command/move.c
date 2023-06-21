@@ -93,7 +93,7 @@ char *get_inv(inv_t *inv)
     char tmp[1024];
     int len = 0;
     char *buf = NULL;
-    sprintf(tmp, "food %d, linemate %d, deraumere %d, ", inv->food,
+    sprintf(msg, "food %d, linemate %d, deraumere %d, ", inv->food,
         inv->linemate, inv->deraumere);
     sprintf(tmp, "sibur %d, mendiane %d, phiras %d, thystame %d\n",
         inv->sibur, inv->mendiane, inv->phiras, inv->thystame);
@@ -106,17 +106,18 @@ char *get_inv(inv_t *inv)
 
 int inventory(int sockfd, serv_t *serv, char *buffer)
 {
-    (void) buffer;
     client_t *cpy = get_correct_client(serv, sockfd);
-    inv_t *tmp = cpy->player->inventory;
-    char *msg = get_inv(tmp);
-    int len = strlen(msg);
+
     if (!cpy->clocking) {
         update_time_limit(serv, cpy, 1, buffer);
         return 0;
     }
+    inv_t *tmp = cpy->player->inventory;
+    char *msg = get_inv(tmp);
+    printf("%s", msg);
+    int len = strlen(msg);
     if (cpy->clocking) {
-        if (write(sockfd, msg, len) == -1)
+        if (write(sockfd, msg, len + 1) == -1)
             return 84;
     }
     cpy->clocking = false;

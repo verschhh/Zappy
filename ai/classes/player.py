@@ -149,12 +149,14 @@ class Player:
         print("Look")
         self.socket.send("Look")
         self.socket.receive(self)
-
+        print(self.socket.buffer)
         while self.socket.buffer == "ko\n":
             self.socket.send("Look")
             self.socket.receive(self)
 
-        buff = self.socket.buffer[2:-2]
+        buff = self.socket.buffer[1:-1]
+        print(buff)
+        buff += "\0"
         i = 0
         while buff[i] != '\0':
             if buff[i] == ',' and buff[i + 1] == ' ':
