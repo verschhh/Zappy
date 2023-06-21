@@ -25,6 +25,7 @@
     #include <stdbool.h>
     #include <stdint.h>
     #include <sys/time.h>
+    #include <math.h>
 
 
 enum nb_command {

@@ -61,7 +61,7 @@ void decrement_tick(serv_t *serv)
 {
     client_t *copy = serv->clients;
     double elapsed = 0;
-
+    double rss = 0;
     while (copy != NULL) {
         elapsed = ((double) micro_time() - copy->clock ) / 1000000.0;
         if (copy->clocking && elapsed >= copy->limit) {
@@ -71,6 +71,9 @@ void decrement_tick(serv_t *serv)
         }
         copy = copy->next;
     }
+    rss = ((double) micro_time() - serv->clock_start) / 1000000.0;
+    if (fmod(rss, (20 / serv->freq)) == 0)
+        spawn_ressources(serv);
     return;
 }
 
