@@ -85,6 +85,7 @@ int map_content(int sockfd, serv_t *serv, char *buffer)
 void spawn_ressources(serv_t *serv)
 {
     srand(time(NULL)); // Seed the random number generator
+    printf("Spawning ressources\n");
     map_t *current = serv->map;
     while (current != NULL) {
         if (rand()< (RAND_MAX * FOOD_DENSITY))

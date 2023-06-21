@@ -123,6 +123,7 @@ typedef struct serv_s {
     struct timeval tv;
     bool new_tick;
     double clock_start;
+    double rss_clock;
     struct sockaddr_in addr;
     char queue[5000];
     client_t *clients;

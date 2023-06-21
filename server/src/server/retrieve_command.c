@@ -71,9 +71,11 @@ void decrement_tick(serv_t *serv)
         }
         copy = copy->next;
     }
-    rss = ((double) micro_time() - serv->clock_start) / 1000000.0;
-    if (fmod(rss, (20 / serv->freq)) == 0)
+    rss = ((double) micro_time() - serv->rss_clock) / 1000000.0;
+    if (rss >= (20 / serv->freq)) {
         spawn_ressources(serv);
+        serv->rss_clock = micro_time();
+    }
     return;
 }
 

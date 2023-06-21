@@ -13,6 +13,7 @@ serv_t *serv_ctor2(serv_t *serv, args_t *arg)
     serv->clients = NULL;
     serv->new_tick = true;
     serv->clock_start = micro_time();
+    serv->rss_clock = micro_time();
     strcpy(serv->queue, "");
     serv->slots = slot_ctor(arg);
     for (int i = 1; arg->names[i] != NULL; i++)
