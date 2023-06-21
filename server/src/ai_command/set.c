@@ -91,7 +91,6 @@ int set_object(int sockfd, serv_t *serv, char *buffer)
         "sibur", "mendiane", "phiras", "thystame"};
     map_cpy = get_correct_tile(map_cpy, get_correct_client(serv, sockfd));
 
-    printf("Position = %d %d\n", map_cpy->x, map_cpy->y);
     client_cpy->clocking = false;
     for (int i = 0; i < 7; i++) {
         if (strstr(array[1], food[i]) != NULL) {

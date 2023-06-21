@@ -25,6 +25,7 @@
     #include <stdbool.h>
     #include <stdint.h>
     #include <sys/time.h>
+    #include <math.h>
 
 
 enum nb_command {
@@ -86,6 +87,7 @@ typedef struct client_s {
     int slot;
     double clock;
     double limit;
+    double dec_food_clock;
     char *cpy_buffer;
     bool clocking;
     struct player_s *player;
@@ -122,6 +124,7 @@ typedef struct serv_s {
     struct timeval tv;
     bool new_tick;
     double clock_start;
+    double rss_clock;
     struct sockaddr_in addr;
     char queue[5000];
     client_t *clients;

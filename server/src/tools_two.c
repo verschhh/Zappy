@@ -18,3 +18,10 @@ map_t *find_tile(serv_t *server, int x, int y)
     }
     return NULL;
 }
+
+int my_modulo(double nb, double div)
+{
+    int result = nb / div;
+    
+
+}

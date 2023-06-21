@@ -36,7 +36,8 @@ void zappy::InGame::handleEvents(sf::RenderWindow& window)
 
     while (window.pollEvent(event)) {
         if (event.type == sf::Event::Closed || (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)) {
-            window.close();
+            // window.close();
+            setIndexScene(2); // TODO: add sprites to option menu
         }
         if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
             clickTile(window);

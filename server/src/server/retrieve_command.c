@@ -57,23 +57,6 @@ int lauch_cmd(int cmd, int sockfd, serv_t *serv, char *buffer)
     return 0;
 }
 
-void decrement_tick(serv_t *serv)
-{
-    client_t *copy = serv->clients;
-    double elapsed = 0;
-
-    while (copy != NULL) {
-        elapsed = ((double) micro_time() - copy->clock ) / 1000000.0;
-        if (copy->clocking && elapsed >= copy->limit) {
-            lauch_cmd(parse_command(copy->cpy_buffer), copy->sockfd, serv,
-            copy->cpy_buffer);
-            copy->cpy_buffer = NULL;
-        }
-        copy = copy->next;
-    }
-    return;
-}
-
 int receive_client_msg(int sockfd, fd_set *readfds, serv_t *serv)
 {
     char buffer[1024] = {0};
@@ -95,7 +78,7 @@ int receive_client_msg(int sockfd, fd_set *readfds, serv_t *serv)
                 write(sockfd, "suc\n", 4);
             return 0;
         }
-        decrement_tick(serv);
+        clock_action(serv);
         lauch_cmd(cmd, sockfd, serv, buffer); //TODO: launch here and in decrement tick strange
     }
     return 0;

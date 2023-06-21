@@ -71,7 +71,6 @@ int start_server(args_t *args)
 {
     struct termios old_termios = init_signal();
     serv_t *serv = serv_ctor(args);
-    printf("serv = %d %d\n", serv->max_x, serv->max_y);
     fd_set readfds;
     FD_ZERO(&readfds);
     if (serv == NULL) {

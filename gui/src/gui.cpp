@@ -23,6 +23,9 @@ zappy::Gui::Gui(int port, std::string machine) : _connection(port, machine), _in
         return;
     }
 
+    if (!_backgroundMusic.openFromFile("gui/assets/sfx/Aphex-Twin-Flim-Extended-Version.ogg"))
+        throw GuiException("Gui error: cannot load background music");
+
     try {
         _scenes.push_back(new Menu(_connection));
 
@@ -58,6 +61,9 @@ void zappy::Gui::run() {
     setIcon(window);
 
     sf::Clock clock;
+
+    _backgroundMusic.setLoop(true);
+    _backgroundMusic.play();
 
     while (window.isOpen()) {
         _scenes[_indexScene]->handleEvents(window);
