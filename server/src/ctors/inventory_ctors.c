@@ -13,7 +13,7 @@ inv_t *inv_ctor(void)
 
     if (inv == NULL)
         perror("Memory allocation failed");
-    inv->food = 0;
+    inv->food = 10;
     inv->linemate = 0;
     inv->deraumere = 0;
     inv->sibur = 0;
