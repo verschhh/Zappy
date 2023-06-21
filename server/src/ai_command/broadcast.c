@@ -74,7 +74,6 @@ int broadcast(int sockfd, serv_t *serv, char *buffer)
         return 0;
     }
     if (client->clocking) {
-        printf(buffer);
         char msg[0];
         buffer += 9;
         int len = snprintf(msg,0,"message %d,%s", sound(client->player, client->player), buffer);
@@ -82,9 +81,7 @@ int broadcast(int sockfd, serv_t *serv, char *buffer)
 
         for (int i = 0; client != NULL; i++) {
             if (client->sockfd != sockfd) {
-                printf("rentre une fois ou pas");
                 sprintf(send,"message %d,%s\n", sound(actual_client->player, client->player), buffer);
-                printf(send);
                 write(client->sockfd, send, len - 1);
                 break;
             }

@@ -21,6 +21,7 @@ int incantation(int sockfd, serv_t *serv, char *buffer)
     if (client->clocking) {
         client->player->level += 1;
         sprintf(msg, "Current level: %d\n", client->player->level);
+        printf("Level = %d\n", client->player->level);
         write(sockfd, msg, 19);
     }
     return 0;

@@ -149,8 +149,8 @@ class Player:
         print("Look")
         self.socket.send("Look")
         self.socket.receive(self)
-        print(self.socket.buffer)
-        while self.socket.buffer == "ko\n" or self.socket.buffer[-1] != "\n":
+
+        while self.socket.buffer == "ko\n":
             self.socket.send("Look")
             self.socket.receive(self)
 
@@ -302,13 +302,12 @@ class Player:
         print("Elevation Started\n")
         self.socket.buffer = ""
         self.socket.receive(self)
+        print(f"Return:{self.socket.buffer}")
         if self.socket.buffer.split(' ')[0] == "Current":
-
             print("Elevation Finished")
             print("You are now level %d" % (self.level))
             return SUCESS
         print("Elevation Failed")
-        print(self.look()[0])
         return FAIL
 
     def go_to_direction(self):

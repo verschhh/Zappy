@@ -41,6 +41,7 @@ def set_args(av, ac):
     port = 0
     name = ""
     machine = ""
+    debug = False
 
     for i in range(ac):
         if av[i] == "-p":
@@ -49,9 +50,12 @@ def set_args(av, ac):
             name = av[i + 1]
         if av[i] == "-h":
             machine = av[i + 1]
+        if av[i] == "-d":
+            debug = True
+
     if machine == "":
         machine = "localhost"
-    return port, name, machine
+    return port, name, machine, debug
 
 def print_usage():
     print("USAGE: ./zappy_ai -help || -p [port] -n [name] -h [machine]")
@@ -59,37 +63,29 @@ def print_usage():
     print("\t[name]\tis the name of the team")
     print("\t[machine]\tis the name of the machine; localhost by default")
 
-def main(av, ac):
-    if ac == 2 and av[1] == "-help":
-        print_usage()
-        return 0
-    elif ac == 7 or ac == 5:
-        if check_args(av, ac) == 84:
-            return 84
-        port, team_name, host = set_args(av, ac)
-        sock = Socket(port, team_name, host)
-        sock.connect()
-        sock.buffer = sock._sock.recv(4096).decode()
-        sock.send(team_name)
-        sock.buffer = sock._sock.recv(4096).decode()
-
-        buff = sock.buffer.split("\n")
-        ai = AI(sock, int(buff[1].split()[0]), int(buff[1].split()[1]))
-        ai.set_map()
-        # game.update_map(player.look())
-        # print(f"Max X: {player.max_x} Max Y: {player.max_y}")
-        # print_map(game, player)
-        # message = player.pick_move(game.map)
-        # message = input("> ")
-        # message = "Look"
-        # print("-> Look")
-        message = ""
-        while True:
-            # ai.pick_move()
-            print(message)
+def launch_game(av, ac):
+    port, team_name, host, debug = set_args(av, ac)
+    sock = Socket(port, team_name, host)
+    sock.connect()
+    sock.buffer = sock._sock.recv(4096).decode()
+    print(sock.buffer)
+    print("Sending team name")
+    print(team_name)
+    sock.send(team_name)
+    print(sock.buffer)
+    sock.buffer = sock._sock.recv(4096).decode()
+    print(sock.buffer)
+    buff = sock.buffer.split("\n")
+    ai = AI(sock, int(buff[1].split()[0]), int(buff[1].split()[1]))
+    ai.set_map()
+    message = ""
+    while ai.level < 8:
+        if debug == False:
+            ai.pick_move()
+        else:
             if message == "Look":
                 ai.update_map(ai.look())
-                # print_map(game, player)
+                # print_map(ai)
             elif message == "Forward":
                 ai.forward()
             elif message == "Right":
@@ -99,11 +95,11 @@ def main(av, ac):
             elif message == "Inventory":
                 ai.update_inventory()
             elif message.split(" ")[0] == "Take":
-                print(message.split(" ")[1])
-                ai.take(message.split(" ")[1])
+                print(f" test:{message.split(' ')[1]}")
+                ai.take(message.split(' ')[1])
             elif message.split(" ")[0] == "Set":
-                print(message.split(" ")[1])
-                ai.set(message.split(" ")[1])
+                print(message.split(' ')[1])
+                ai.set(message.split(' ')[1])
             elif message == "Broadcast":
                 ai.broadcast(ai.send_inventory())
             elif message == "Incantation":
@@ -113,19 +109,20 @@ def main(av, ac):
             print(ai.socket.buffer)
             print(ai.inv_other_player)
             message = input("-> ")
-            # print(sock.buffer)
-            # print(message)
-            # print(f"X:{player.x} Y:{player.y}")
-        sock.close()
+    sock.close()
 
+def main(av, ac):
+    if ac == 2 and av[1] == "-help":
+        print_usage()
+        return 0
+    elif check_args(av, ac) == 0:
+        launch_game(av, ac)
     else:
         print_usage()
         return 0
 
-def print_map(game, player):
-    x = player.x
-    y = player.y
-    for i in game.map:
+def print_map(ai):
+    for i in ai.map:
         for z in i:
                 print(z["food"],end="\t")
         print("\n")
