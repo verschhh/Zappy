@@ -206,10 +206,11 @@ void zappy::InGame::drawScene(sf::RenderWindow& window)
         }
     };
 
+    drawRessources(window);
+    drawPnjs(window);
+
     drawLevelsBar(window);
     if (_selectedTile.x >= 0 && _selectedTile.y >= 0 && _selectedTile.x < _mapWidth && _selectedTile.y < _mapHeight) {
         drawRessourceBar(window);
     }
-    drawRessources(window);
-    drawPnjs(window);
 }
