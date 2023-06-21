@@ -31,6 +31,7 @@ inv_t *inv_ctor(void);
 slot_t *slot_ctor(args_t *arg);
 player_t *player_ctor(serv_t *server);
 void fill_client_struct(int sockfd, serv_t *serv, char *buffer);
+void new_slot(slot_t *slot, char *name);
 
 //* Server
 int start_server(args_t *args);
