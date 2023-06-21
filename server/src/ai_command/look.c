@@ -11,7 +11,6 @@ char *tile_to_string(map_t *tile, client_t *client)
 {
     char *str = malloc(256 * sizeof(char));
     str[0] = '\0';  // initialize the string to be empty
-
     // append the player(s) on the tile
     while (client != NULL) {
         if (client->player->x == tile->x && client->player->y == tile->y) {
@@ -19,7 +18,6 @@ char *tile_to_string(map_t *tile, client_t *client)
         }
         client = client->next;
     }
-
     // append each resource multiple times
     for (int i = 0; i < tile->food; i++) {
         strcat(str, "food ");
@@ -42,12 +40,9 @@ char *tile_to_string(map_t *tile, client_t *client)
     for (int i = 0; i < tile->thystame; i++) {
         strcat(str, "thystame ");
     }
-
-    // remove the trailing space
     if (strlen(str) > 0) {
         str[strlen(str) - 1] = '\0';
     }
-
     return str;
 }
 
@@ -56,7 +51,6 @@ coord_t *get_visible_tile_coords(serv_t *server, player_t *player)
     int n = player->level + 1;
     int vision_size = (n * (2 * 1 + (n - 1) * 2)) / 2;
     coord_t *visible_coords = calloc(vision_size, sizeof(coord_t));
-
     int k = 0;
     for (int i = 0; i < n; i++) {
         int row_width = 2 * i + 1;
@@ -82,13 +76,11 @@ coord_t *get_visible_tile_coords(serv_t *server, player_t *player)
             k++;
         }
     }
-
     return visible_coords;
 }
 
 char *build_look_response(serv_t *server, player_t *player)
 {
-    printf("Swag");
     int n = player->level + 1;
     int vision_size = (n * (2 * 1 + (n - 1) * 2)) / 2;
     coord_t *visible_coords = get_visible_tile_coords(server, player);
@@ -110,7 +102,6 @@ char *build_look_response(serv_t *server, player_t *player)
         free(tile_str);
     }
     strcat(response, "]\0\n");
-    printf("response = %s\n", response);
     return response;
 }
 
@@ -128,7 +119,6 @@ int look(int sockfd, serv_t *serv, char *buffer)
     if (cli->clocking) {
         /*coord_t *visible_coords = */get_visible_tile_coords(serv, player); //there was a warning here
         char *response = build_look_response(serv, player);
-        printf("response = %s\n", response);
         write(sockfd, response, strlen(response));
         cli->clocking = false;
     }

@@ -87,6 +87,7 @@ typedef struct client_s {
     int slot;
     double clock;
     double limit;
+    double dec_food_clock;
     char *cpy_buffer;
     bool clocking;
     struct player_s *player;
