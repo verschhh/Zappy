@@ -9,43 +9,34 @@
 
 int sound(player_t *start, player_t *goal)
 {
-    printf("\n%d %d, %d %d, %d\n",goal->x, goal->y,start->x,start->y, goal->orientation);
     int x_res = goal->x - start->x;
     int y_res = goal->y - start->y;
     int orientation = 0;
     if (x_res > 0) {
         if (y_res > 0) {
-            printf("up_right\n");
             orientation = 8;
         }
         if (y_res == 0) {
-            printf("Right\n");
             orientation = 7;
         }
         if (y_res < 0) {
-            printf("down_right\n");
             orientation = 6;
         }
     } else if (x_res == 0) {
         if (y_res > 0) {
-            printf("UP\n");
             orientation = 1;
         }
         if (y_res < 0) {
-            printf("DOWN\n");
             orientation = 5;
         }
     } else {
         if (y_res > 0) {
-            printf("up_left\n");
             orientation = 2;
         }
         if (y_res == 0) {
-            printf("Left\n");
             orientation = 3;
         }
         if (y_res < 0) {
-            printf("down_left\n");
             orientation = 4;
         }
     }
@@ -86,7 +77,6 @@ int broadcast(int sockfd, serv_t *serv, char *buffer)
                 break;
             }
             client = client->next;
-            printf("%d",i);
         }
         actual_client->clocking = false;
         write(sockfd, "ok\n", 3);

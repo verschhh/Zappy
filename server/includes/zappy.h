@@ -41,6 +41,9 @@ client_t *accept_new_client(fd_set *readfds, serv_t *serv);
 int check_name_team(serv_t *serv, char *buffer);
 void send_x_y_ai(int sockfd, serv_t *serv, int slot);
 char *send_nb_slot_ai(int slot);
+void clock_action(serv_t *serv);
+int lauch_cmd(int cmd, int sockfd, serv_t *serv, char *buffer);
+int parse_command(char *buffer);
 
 //* Tools
 void usage(void);
