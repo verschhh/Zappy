@@ -97,7 +97,7 @@ char *get_inv(inv_t *inv)
         inv->linemate, inv->deraumere);
     sprintf(tmp, "sibur %d, mendiane %d, phiras %d, thystame %d\n",
         inv->sibur, inv->mendiane, inv->phiras, inv->thystame);
-    strcat(msg, tmp);
+    strcpy(msg, tmp);
     len = strlen(msg);
     buf = malloc(sizeof(char) * (len + 1));
     strcpy(buf, msg);

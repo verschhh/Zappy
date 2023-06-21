@@ -89,7 +89,7 @@ int set_object(int sockfd, serv_t *serv, char *buffer)
     char **array = split_string_at_spaces(buffer, &count);
     char *food[7] = {"food", "linemate", "deraumere",
         "sibur", "mendiane", "phiras", "thystame"};
-    get_correct_tile(map_cpy, get_correct_client(serv, sockfd));
+    map_cpy = get_correct_tile(map_cpy, get_correct_client(serv, sockfd));
 
     printf("Position = %d %d\n", map_cpy->x, map_cpy->y);
     client_cpy->clocking = false;
