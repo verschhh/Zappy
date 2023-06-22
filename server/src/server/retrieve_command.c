@@ -57,6 +57,29 @@ int lauch_cmd(int cmd, int sockfd, serv_t *serv, char *buffer)
     return 0;
 }
 
+void destroy_node(client_t **client, int value)
+{
+    client_t *current = *client;
+    client_t *previous = NULL;
+
+    if (*client == NULL)
+        return;
+    while (current != NULL) {
+        if (current->player->id == value) {
+            if (previous == NULL) {
+                *client = current->next;
+            }
+            else
+                previous->next = current->next;
+            free(current);
+            printf("Node with value %d deleted.\n", value);
+            return;
+        }
+        previous = current;
+        current = current->next;
+    }
+}
+
 void check_death(serv_t *serv, int sockfd)
 {
     client_t *cpy = serv->clients;
@@ -66,9 +89,12 @@ void check_death(serv_t *serv, int sockfd)
         if (cpy->player->inventory->food == 0) {
             printf("DEATH\n");
             send_death_player(sockfd, cpy, NULL);
-            cpy->player->inventory->food = -1;
+            destroy_node(&serv->clients, cpy->player->id);
         }
-        cpy = cpy->next;
+        if (serv->clients == NULL)
+            return;
+        if (cpy != NULL)
+            cpy = cpy->next;
     }
 }
 
@@ -93,7 +119,8 @@ int receive_client_msg(int sockfd, fd_set *readfds, serv_t *serv)
                 write(sockfd, "suc\n", 4);
             return 0;
         }
-        clock_action(serv);
+        if (serv->clients != NULL)
+            clock_action(serv);
         lauch_cmd(cmd, sockfd, serv, buffer); //TODO: launch here and in decrement tick strange
         check_death(serv, sockfd);
     }

@@ -38,9 +38,9 @@ void fill_client_struct(int sockfd, serv_t *serv, char *buffer)
     new_node->player = player_ctor(serv);
     new_node->cpy_buffer = NULL;
     new_node->next = NULL;
-    new_node->clocking = false;
     new_node->dec_food_clock = micro_time();
     new_node->limit = 0;
+    new_node->clocking = false;
     if (serv->clients == NULL) {
         serv->clients = new_node;
     } else {

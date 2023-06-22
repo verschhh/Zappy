@@ -67,7 +67,7 @@ uint64_t micro_time(void)
 
 void update_time_limit(serv_t *serv, client_t *client, int time_limit, char *s)
 {
-    client->limit = time_limit / serv->freq;
+    client->limit = ((float) time_limit) / ((float) serv->freq);
     client->cpy_buffer = strdup(s);
     client->clock = micro_time();
     client->clocking = true;
