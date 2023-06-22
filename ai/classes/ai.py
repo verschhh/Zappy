@@ -34,9 +34,9 @@ class AI(Player, Game, Priority, Orientation):
             case 1:
                 self.level_1()
             case 2:
-                exit(42)
                 self.levels(Incantation.LVL_2)
             case 3:
+                exit(42)
                 self.levels(Incantation.LVL_3)
             case 4:
                 self.levels(Incantation.LVL_4)
@@ -156,12 +156,9 @@ class AI(Player, Game, Priority, Orientation):
             self.fetch_ressources()
         player_select = self.check_evolution_possible(level)
         if player_select != [] and self._inventory["food"] > 100:
-            print("Launch Incantation")
             self.broadcast(f"Incantation,{self.take_id_player_select(player_select)}")
-            print(f"{self.nb_joueur_ready} level = {level['player']} - 1")
             while self.nb_joueur_ready < level['player'] - 1:
                 self.broadcast(f"Here")
-
             self.drop_all_ressources()
             self.update_map(self.look())
             print(self.map[self.y][self.x])
