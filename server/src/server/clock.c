@@ -26,13 +26,8 @@ void decrement_tick(serv_t *serv)
 
 void spawn_rss(serv_t *serv)
 {
-    unsigned long long rss = ((unsigned long long) micro_time() - serv->rss_clock) / 1000000.0;
-    unsigned long long timer = (20 / serv->freq);
-    if (rss >= timer) {
-        printf("%llu\n", timer);
-        printf("rss = %f\n", rss);
-    }
-    if (rss >= (20 / serv->freq)) {
+    long double rss = (long double) ((micro_time() - serv->rss_clock) / 1000000.0);
+    if (rss >= (20.f / ((float)serv->freq))) {
         spawn_ressources(serv);
         serv->rss_clock = micro_time();
     }
@@ -45,7 +40,7 @@ void decrease_food(serv_t *serv)
     double elapsed = 0;
     while (copy != NULL) {
         elapsed = ((double) micro_time() - copy->dec_food_clock ) / 1000000.0;
-        if (elapsed >= (126 / serv->freq)) {
+        if (elapsed >= (126.f / ((float)serv->freq))) {
             copy->dec_food_clock = micro_time();
             copy->player->inventory->food -= 1;
         }
