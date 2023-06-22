@@ -70,7 +70,6 @@ void zappy::InGame::createPnj(int number, int x, int y, pnjOrientation orientati
     // TODO: tweak scale
     pnj.sprite.setScale(sf::Vector2f(_scaleFactor, _scaleFactor));
 
-    //? set origin
     pnj.sprite.setOrigin(32 / 2, 32 / 2);
 
     pnj.position = sf::Vector2f(x, y);

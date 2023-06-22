@@ -45,14 +45,21 @@ void zappy::InGame::pdiHandler(std::vector<std::string>& arguments)
     int number = std::stoi(arguments[1]);
     std::cout << "Pdi handler: player " << number << " died" << std::endl;
 
-    int nbPnj = _pnjs.size();
-    for (int i = 0; i < nbPnj; i++) {
-        if (_pnjs[i].number == number) {
-            _pnjs.erase(_pnjs.begin() + i);
-            _pnjMoveClocks.erase(_pnjMoveClocks.begin() + i);
+    // int nbPnj = _pnjs.size();
+    for (auto it = _pnjs.begin(); it != _pnjs.end(); ++it) {
+        if (it->number == number) {
+            std::cout << "DELETE HERE " << it->number << std::endl;
+            _pnjs.erase(it);
             break;
         }
     }
+    // for (int i = 0; i < nbPnj; i++) {
+    //     if (_pnjs[i].number == number) {
+    //         _pnjs.erase(_pnjs.begin() + i);
+    //         _pnjMoveClocks.erase(_pnjMoveClocks.begin() + i);
+    //         break;
+    //     }
+    // }
 
     _deathCounter++;
 }
