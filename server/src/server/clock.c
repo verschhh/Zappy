@@ -12,8 +12,6 @@ void decrement_tick(serv_t *serv)
 {
     client_t *copy = serv->clients;
     double elapsed = 0;
-    if (copy == NULL)
-        printf("copy is NULLLL\n");
     while (copy != NULL) {
         elapsed = ((double) micro_time() - copy->clock ) / 1000000.0;
         if (copy->clocking && elapsed >= copy->limit) {
@@ -53,8 +51,6 @@ void decrease_food(serv_t *serv)
 
 void clock_action(serv_t *serv)
 {
-    if (serv->clients == NULL)
-        printf("NULLLLLLLLLL\n");
     decrement_tick(serv);
     spawn_rss(serv);
     decrease_food(serv);

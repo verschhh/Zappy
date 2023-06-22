@@ -119,8 +119,7 @@ int receive_client_msg(int sockfd, fd_set *readfds, serv_t *serv)
                 write(sockfd, "suc\n", 4);
             return 0;
         }
-        if (serv->clients != NULL)
-            clock_action(serv);
+        clock_action(serv);
         lauch_cmd(cmd, sockfd, serv, buffer); //TODO: launch here and in decrement tick strange
         check_death(serv);
     }
