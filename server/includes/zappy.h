@@ -75,7 +75,7 @@ int send_queue(int sockfd, serv_t *serv, char *buffer);
 
 //* Server Commands
 void send_connection_msg(client_t *client, serv_t *serv);
-int send_death_player(int sockfd, serv_t *serv, char *buffer);
+int send_death_player(int sockfd, client_t *client, char *buffer);
 int send_expulsion(int sockfd, serv_t *serv, char *buffer);
 int send_egg_laying(int sockfd, serv_t *serv, char *buffer);
 int send_serv_msg(int sockfd, serv_t *serv, char *buffer);
