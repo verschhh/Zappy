@@ -33,7 +33,11 @@ void zappy::InGame::loadTextures()
 
     if (!_levelBarTexture.loadFromFile("gui/assets/hud/levelBar.png"))
         throw AScene::SceneException("Error: cannot load levelBar.png");
-    setSpriteProperties(_levelBarSprite, _levelBarTexture, sf::Vector2f(1.25, 1.25), sf::Vector2f(1873, 500));
+    setSpriteProperties(_levelBarSprite, _levelBarTexture, sf::Vector2f(1.25, 1.25), sf::Vector2f(1873, 400));
+
+    if (!_deathCounterTexture.loadFromFile("gui/assets/hud/deathCounter.png"))
+        throw AScene::SceneException("Error: cannot load deathCounter.png");
+    setSpriteProperties(_deathCounterSprite, _deathCounterTexture, sf::Vector2f(1.25, 1.25), sf::Vector2f(1873, 800));
 
     int nbPnjTextures = 3;
     for (int i = 0; i < nbPnjTextures; i++) {

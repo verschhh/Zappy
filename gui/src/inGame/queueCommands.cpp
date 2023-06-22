@@ -23,18 +23,50 @@ void zappy::InGame::pnwHandler(std::vector<std::string>& arguments)
     createPnj(number, x, y, orientation, level);
 }
 
-void zappy::InGame::command2Handler(std::vector<std::string>& arguments)
+void zappy::InGame::enwHandler(std::vector<std::string>& arguments)
 {
-    std::cout << "Command 2 handler" << std::endl;
     for (const std::string& arg : arguments) {
         std::cout << arg << std::endl;
     }
 }
 
-void zappy::InGame::command3Handler(std::vector<std::string>& arguments)
+void zappy::InGame::eboHandler(std::vector<std::string>& arguments)
 {
-    std::cout << "Command 3 handler" << std::endl;
     for (const std::string& arg : arguments) {
         std::cout << arg << std::endl;
     }
+}
+
+void zappy::InGame::pdiHandler(std::vector<std::string>& arguments)
+{
+    if (arguments.size() != 2)
+        throw AScene::SceneException("Error: pdi command has wrong number of arguments");
+
+    int number = std::stoi(arguments[1]);
+    std::cout << "Pdi handler: player " << number << " died" << std::endl;
+
+    int nbPnj = _pnjs.size();
+    for (int i = 0; i < nbPnj; i++) {
+        if (_pnjs[i].number == number) {
+            _pnjs.erase(_pnjs.begin() + i);
+            _pnjMoveClocks.erase(_pnjMoveClocks.begin() + i);
+            break;
+        }
+    }
+
+    _deathCounter++;
+}
+
+void zappy::InGame::segHandler(std::vector<std::string>& arguments)
+{
+    if (arguments.size() != 2)
+        throw AScene::SceneException("Error: seg command has wrong number of arguments");
+
+    std::string winnerName = arguments[1];
+
+    std::cout << "Seg handler: team " << winnerName << " won" << std::endl;
+
+    setWinnerName(winnerName);
+
+    setIndexScene(2);
 }

@@ -39,6 +39,12 @@ namespace zappy {
             void setIndexScene(int indexScene) {
                 _indexScene = indexScene;
             }
+            void setWinnerName(std::string winnerName) {
+                _winnerName = winnerName;
+            }
+            std::string getWinnerName(void) {
+                return (_winnerName);
+            }
 
             void setSpriteProperties(sf::Sprite& sprite, sf::Texture& texture, sf::Vector2f scale, sf::Vector2f position) {
                 sprite.setTexture(texture);
@@ -61,6 +67,7 @@ namespace zappy {
 
             private:
                 int _indexScene;
+                std::string _winnerName = "default";
     };
 
     class Menu : public AScene {
@@ -179,13 +186,16 @@ namespace zappy {
             void drawRessources(sf::RenderWindow& window);
             void drawRessourceBar(sf::RenderWindow& window);
             void drawLevelsBar(sf::RenderWindow& window);
+            void drawDeathCounter(sf::RenderWindow& window);
 
             void updateScene(void);
             void updateMap(void);
             void parseQueue(void);
             void pnwHandler(std::vector<std::string>& arguments);
-            void command2Handler(std::vector<std::string>& arguments);
-            void command3Handler(std::vector<std::string>& arguments);
+            void enwHandler(std::vector<std::string>& arguments);
+            void eboHandler(std::vector<std::string>& arguments);
+            void pdiHandler(std::vector<std::string>& arguments);
+            void segHandler(std::vector<std::string>& arguments);
             void updatePnj(void);
 
             sf::Text setText(std::string content, sf::Vector2f pos, int charSize, sf::Color color);
@@ -225,6 +235,11 @@ namespace zappy {
             //* Levels Bar
             sf::Texture _levelBarTexture;
             sf::Sprite _levelBarSprite;
+
+            //* Death Counter
+            sf::Texture _deathCounterTexture;
+            sf::Sprite _deathCounterSprite;
+            int _deathCounter = 0;
     };
 
     class EndGame : public AScene {

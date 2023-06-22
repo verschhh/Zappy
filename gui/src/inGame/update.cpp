@@ -64,23 +64,19 @@ void zappy::InGame::parseQueue(void)
             std::cout << "line: " << line << std::endl;
 
             if (cmd == "pnw") { // Connection of new player
-                std::cout << "pnw command" << std::endl;
                 pnwHandler(arguments);
             }
             else if (cmd == "enw") { // Egg laid by player
-                std::cout << "enw command" << std::endl;
-                command2Handler(arguments);
+                enwHandler(arguments);
             }
             else if (cmd == "ebo") { // Egg hatched
-                std::cout << "ebo command" << std::endl;
-                command3Handler(arguments);
+                eboHandler(arguments);
             }
             else if (cmd == "pdi") { // Player died
-                std::cout << "pdi command" << std::endl;
+                pdiHandler(arguments);
             }
             else if (cmd == "seg") { // End of game
-                std::cout << "seg command" << std::endl;
-                setIndexScene(2);
+                segHandler(arguments);
             }
             else { // Unknown command
                 std::cout << "Unknown command" << std::endl;

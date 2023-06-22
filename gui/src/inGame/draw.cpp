@@ -185,12 +185,24 @@ void zappy::InGame::drawLevelsBar(sf::RenderWindow& window)
     for (int i = 0; i < 8; i++) {
         sf::Text level_text = setText(
             std::to_string(levelCount[i]),
-            sf::Vector2f(1884, 328 + (i * 50)),
+            sf::Vector2f(1884, 228 + (i * 50)),
             30,
             sf::Color::White
         );
         window.draw(level_text);
     }
+}
+
+void zappy::InGame::drawDeathCounter(sf::RenderWindow& window)
+{
+    window.draw(_deathCounterSprite);
+    sf::Text death_text = setText(
+        std::to_string(_deathCounter),
+        sf::Vector2f(1868, 827),
+        30,
+        sf::Color::White
+    );
+    window.draw(death_text);
 }
 
 void zappy::InGame::drawScene(sf::RenderWindow& window)
@@ -213,4 +225,5 @@ void zappy::InGame::drawScene(sf::RenderWindow& window)
     if (_selectedTile.x >= 0 && _selectedTile.y >= 0 && _selectedTile.x < _mapWidth && _selectedTile.y < _mapHeight) {
         drawRessourceBar(window);
     }
+    drawDeathCounter(window);
 }
