@@ -58,6 +58,7 @@ void update_time_limit(serv_t *serv, client_t *client, int time_limit, char *s);
 uint64_t micro_time(void);
 map_t *get_correct_tile(map_t *map, client_t *client);
 int check_element_tile(int materials, int sockfd);
+int calc_tile_to_string(map_t *tile, client_t *client);
 
 //* Commands Gui
 int map_size(int sockfd, serv_t *serv, char *buffer);

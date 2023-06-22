@@ -9,40 +9,29 @@
 
 char *tile_to_string(map_t *tile, client_t *client)
 {
-    char *str = malloc(256 * sizeof(char));
-    str[0] = '\0';  // initialize the string to be empty
-    // append the player(s) on the tile
+    char *str = malloc(sizeof(char) * (calc_tile_to_string(tile, client) + 1));
+    str[0] = '\0';
     while (client != NULL) {
-        if (client->player->x == tile->x && client->player->y == tile->y) {
+        if (client->player->x == tile->x && client->player->y == tile->y)
             strcat(str, "player ");
-        }
         client = client->next;
     }
-    // append each resource multiple times
-    for (int i = 0; i < tile->food; i++) {
+    for (int i = 0; i < tile->food; i++)
         strcat(str, "food ");
-    }
-    for (int i = 0; i < tile->linemate; i++) {
+    for (int i = 0; i < tile->linemate; i++)
         strcat(str, "linemate ");
-    }
-    for (int i = 0; i < tile->deraumere; i++) {
+    for (int i = 0; i < tile->deraumere; i++)
         strcat(str, "deraumere ");
-    }
-    for (int i = 0; i < tile->sibur; i++) {
+    for (int i = 0; i < tile->sibur; i++)
         strcat(str, "sibur ");
-    }
-    for (int i = 0; i < tile->mendiane; i++) {
+    for (int i = 0; i < tile->mendiane; i++)
         strcat(str, "mendiane ");
-    }
-    for (int i = 0; i < tile->phiras; i++) {
+    for (int i = 0; i < tile->phiras; i++)
         strcat(str, "phiras ");
-    }
-    for (int i = 0; i < tile->thystame; i++) {
+    for (int i = 0; i < tile->thystame; i++)
         strcat(str, "thystame ");
-    }
-    if (strlen(str) > 0) {
+    if (strlen(str) > 0)
         str[strlen(str) - 1] = '\0';
-    }
     return str;
 }
 
@@ -84,14 +73,13 @@ char *build_look_response(serv_t *server, player_t *player)
     int n = player->level + 1;
     int vision_size = (n * (2 * 1 + (n - 1) * 2)) / 2;
     coord_t *visible_coords = get_visible_tile_coords(server, player);
-    char *response = malloc(256 * sizeof(char));
+    char *response = malloc(sizeof(char) * (256));
     response[0] = '\0';
     strcat(response, "[");
 
     for (int i = 0; i < vision_size; i++) {
-        if (i != 0) {
+        if (i != 0)
             strcat(response, ",");
-        }
         client_t *copy = server->clients;
         map_t *tile = find_tile(server, visible_coords[i].x, visible_coords[i].y);
         char *tile_str = tile_to_string(tile, copy);
