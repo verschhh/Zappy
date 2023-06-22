@@ -26,11 +26,9 @@ int send_player_position(int sockfd, serv_t *serv, char *buffer)
     if (t == NULL)
         return unknown_command(sockfd, serv, buffer);
     char *dir = get_orientation(t->orientation);
+
     int len = snprintf(str, 0, "ppo %d %d %d %s\n", t->id, t->x, t->y, dir);
     char s[len + 1];
-
-    if (t == NULL)
-        return unknown_command(sockfd, serv, buffer);
     sprintf(s, "ppo %d %d %d %s\n", t->id, t->x, t->y, dir);
     if (write(sockfd, s, len) == -1)
         return 84;
@@ -43,11 +41,11 @@ int send_player_level(int sockfd, serv_t *serv, char *buffer)
     char **array = split_string_at_spaces(buffer, &count);
     player_t *tmp = parse_player(sockfd, serv, atoi(array[1]));
     char *msg = NULL;
-    int len = snprintf(msg, 0, "plv %d %d%s\n", tmp->id, tmp->level, "\n");
-    char s[len];
 
     if (tmp == NULL)
         return unknown_command(sockfd, serv, buffer);
+    int len = snprintf(msg, 0, "plv %d %d%s\n", tmp->id, tmp->level, "\n");
+    char s[len];
     snprintf(s, len, "plv %d %d%s\n", tmp->id, tmp->level, "\n");
     if (write(sockfd, s, len) == -1)
         return 84;
@@ -62,13 +60,13 @@ int send_player_inventory(int sockfd, serv_t *serv, char *buffer)
     char **array = split_string_at_spaces(buffer, &count);
     erase_first_characters(array[1], 1);
     player_t *player = parse_player(sockfd, serv, atoi(array[1]));
+
+    if (player == NULL)
+        return unknown_command(sockfd, serv, buffer);
     int len = snprintf(msg, 0, "pin %d %d %d %d %d %d %d %d%s\n", player->id
         , player->inventory->food, player->inventory->linemate, player->inventory->deraumere, player->inventory->sibur, player->inventory->mendiane,
         player->inventory->phiras, player->inventory->thystame, "\n");
     char s[len + 1];
-
-    if (player == NULL)
-        return unknown_command(sockfd, serv, buffer);
     snprintf(s, len, "pin %d %d %d %d %d %d %d %d%s\n", player->id
         , player->inventory->food, player->inventory->linemate, player->inventory->deraumere, player->inventory->sibur, player->inventory->mendiane,
         player->inventory->phiras, player->inventory->thystame, "\n");
@@ -165,10 +163,10 @@ int end_of_game(int sockfd, serv_t *serv, char *buffer)
 int unknown_command(int sockfd, serv_t *serv, char *buffer)
 {
     (void)buffer;
-    (void) sockfd;
-    char msg[5];
+    (void)serv;
+    char msg[4];
 
-    sprintf(msg, "suc\n");
-    write(sockfd, msg, 5);
+    sprintf(msg, "ko\n");
+    write(sockfd, msg, 4);
     return 0;
 }

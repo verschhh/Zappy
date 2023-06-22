@@ -79,7 +79,7 @@ void destroy_node(client_t **client, int value)
     }
 }
 
-void check_death(serv_t *serv, int sockfd)
+void check_death(serv_t *serv)
 {
     client_t *next;
     client_t *cpy = serv->clients;
@@ -122,7 +122,7 @@ int receive_client_msg(int sockfd, fd_set *readfds, serv_t *serv)
         if (serv->clients != NULL)
             clock_action(serv);
         lauch_cmd(cmd, sockfd, serv, buffer); //TODO: launch here and in decrement tick strange
-        check_death(serv, sockfd);
+        check_death(serv);
     }
     return 0;
 }
