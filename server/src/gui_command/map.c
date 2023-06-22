@@ -7,13 +7,13 @@
 
 #include "../../includes/zappy.h"
 
-static const double FOOD_DENSITY = 0.5;
-static const double LINEMATE_DENSITY = 0.3;
-static const double DERAUMERE_DENSITY = 0.15;
-static const double SIBUR_DENSITY = 0.1;
-static const double MENDIANE_DENSITY = 0.1;
-static const double PHIRAS_DENSITY = 0.08;
-static const double THYSTAME_DENSITY = 0.05;
+static const double FOOD_DENSITY = 50;
+static const double LINEMATE_DENSITY = 30;
+static const double DERAUMERE_DENSITY = 15;
+static const double SIBUR_DENSITY = 10;
+static const double MENDIANE_DENSITY = 10;
+static const double PHIRAS_DENSITY = 8;
+static const double THYSTAME_DENSITY = 5;
 
 int map_size(int sockfd, serv_t *serv, char *buffer)
 {
@@ -82,30 +82,39 @@ int map_content(int sockfd, serv_t *serv, char *buffer)
 // TODO: change to a set number of ressources distributed randomly
 void spawn_ressources(serv_t *serv)
 {
-    int tot_rss = 0;
+    // int tot_rss = 0;
     srand(time(NULL)); // Seed the random number generator
     map_t *current = serv->map;
     while (current != NULL) {
-        tot_rss += current->food + current->linemate + current->deraumere +
+        printf("x: %d, y: %d\n", current->x, current->y);
+        printf("food: %d\n", current->food);
+        printf("linemate: %d\n", current->linemate);
+        printf("deraumere: %d\n", current->deraumere);
+        printf("sibur: %d\n", current->sibur);
+        printf("mendiane: %d\n", current->mendiane);
+        printf("phiras: %d\n", current->phiras);
+        printf("thystame: %d\n", current->thystame);
+        int tot_rss = current->food + current->linemate + current->deraumere +
             current->sibur + current->mendiane + current->phiras +
             current->thystame;
-        if (tot_rss >= 420) {
+        printf("tot_rss: %d\n", tot_rss);
+        if (tot_rss > 100) {
             current = current->next;
             continue;
         }
-        if (rand()< (RAND_MAX * FOOD_DENSITY))
+        if (rand() % 100 + 1 < FOOD_DENSITY)
             current->food += 1;
-        if (rand()< (RAND_MAX * LINEMATE_DENSITY))
+        if (rand() % 100 + 1 < LINEMATE_DENSITY)
             current->linemate += 1;
-        if (rand()< (RAND_MAX * DERAUMERE_DENSITY))
+        if (rand() % 100 + 1 < DERAUMERE_DENSITY)
             current->deraumere += 1;
-        if (rand()< (RAND_MAX * SIBUR_DENSITY))
+        if (rand() % 100 + 1 <  SIBUR_DENSITY)
             current->sibur += 1;
-        if (rand()< (RAND_MAX * MENDIANE_DENSITY))
+        if (rand() % 100 + 1 <  MENDIANE_DENSITY)
             current->mendiane += 1;
-        if (rand()< (RAND_MAX * PHIRAS_DENSITY))
+        if (rand() % 100 + 1 <  PHIRAS_DENSITY)
             current->phiras += 1;
-        if (rand()< (RAND_MAX * THYSTAME_DENSITY))
+        if (rand() % 100 + 1 < THYSTAME_DENSITY)
             current->thystame += 1;
         current = current->next;
     }
