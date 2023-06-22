@@ -261,4 +261,27 @@ namespace zappy {
             sf::Texture _quitButtonHoveredTexture;
             sf::Sprite _quitButtonSprite;
     };
+
+    class Pause : public AScene {
+        public:
+            //* Constructor / Destructor
+            Pause(Connection &connection);
+            ~Pause(void);
+
+            //* Abstract functions
+            void loadTextures(void);
+            void handleEvents(sf::RenderWindow& window);
+            void drawScene(sf::RenderWindow& window);
+        private:
+            sf::Texture _backgroundTexture;
+            sf::Sprite _backgroundSprite;
+
+            sf::Texture _quitButtonTexture;
+            sf::Texture _quitButtonHoveredTexture;
+            sf::Sprite _quitButtonSprite;
+
+            sf::Texture _backButtonTexture;
+            sf::Texture _backButtonHoveredTexture;
+            sf::Sprite _backButtonSprite;
+    };
 }
