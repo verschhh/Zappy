@@ -28,6 +28,7 @@ void spawn_rss(serv_t *serv)
 {
     double rss = ((double) micro_time() - serv->rss_clock) / 1000000.0;
     if (rss >= (20 / serv->freq)) {
+        
         spawn_ressources(serv);
         serv->rss_clock = micro_time();
     }
@@ -43,7 +44,6 @@ void decrease_food(serv_t *serv)
         if (elapsed >= (126 / serv->freq)) {
             copy->dec_food_clock = micro_time();
             copy->player->inventory->food -= 1;
-            printf("Food = %d\n", copy->player->inventory->food);
         }
         copy = copy->next;
     }
