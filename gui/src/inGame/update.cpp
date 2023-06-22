@@ -40,22 +40,19 @@ void zappy::InGame::updateMap(void)
 
 void zappy::InGame::parseQueue(void)
 {
-    std::cout << "Parse queue" << std::endl;
-
     std::string command = "queue\n";
     _connection.send(command);
 
     int maxBufferSize = 1000;
 
     std::string response = _connection.receive(maxBufferSize);
-    std::cout << "___________________________" << std::endl;
-    std::cout << "Response: " << response << std::endl;
-    std::cout << "___________________________" << std::endl;
+    // std::cout << "___________________________" << std::endl;
+    // std::cout << "Response: " << response << std::endl;
+    // std::cout << "___________________________" << std::endl;
 
     std::vector<std::string> lines = splitString(response, '\n');
 
     std::string cmd;
-    std::cout << "before selection" << std::endl;
     for (const std::string& line : lines) {
     std::vector<std::string> arguments = splitString(line, ' ');
 

@@ -41,6 +41,8 @@ zappy::Gui::Gui(int port, std::string machine) : _connection(port, machine), _in
         _scenes.push_back(new InGame(_connection, width, height));
 
         _scenes.push_back(new EndGame(_connection));
+
+        _scenes.push_back(new Pause(_connection));
     } catch (AScene::SceneException& e) {
         std::cerr << e.what() << std::endl;
         throw GuiException("Gui error: cannot load scenes");
@@ -66,6 +68,7 @@ void zappy::Gui::run() {
     _backgroundMusic.play();
 
     while (window.isOpen()) {
+        _scenes[_indexScene]->setIndexScene(_indexScene);
         _scenes[_indexScene]->handleEvents(window);
         setIndexScene(_scenes[_indexScene]->getIndexScene());
         window.clear();

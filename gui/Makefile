@@ -20,6 +20,9 @@ SRC = 	src/gui.cpp \
 		src/endGame/endGame.cpp \
 		src/endGame/draw.cpp \
 		src/endGame/handleEvents.cpp \
+		src/pause/pause.cpp \
+		src/pause/draw.cpp \
+		src/pause/handleEvents.cpp \
 
 OBJ = $(SRC:.cpp=.o)
 
