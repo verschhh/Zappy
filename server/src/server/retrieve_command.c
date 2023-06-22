@@ -66,9 +66,8 @@ void destroy_node(client_t **client, int value)
         return;
     while (current != NULL) {
         if (current->player->id == value) {
-            if (previous == NULL) {
+            if (previous == NULL)
                 *client = current->next;
-            }
             else
                 previous->next = current->next;
             free(current);
@@ -85,16 +84,15 @@ void check_death(serv_t *serv, int sockfd)
     client_t *cpy = serv->clients;
 
     while (cpy != NULL) {
-        printf("fodd = %d\n", cpy->player->inventory->food);
+        printf("food = %d\n", cpy->player->inventory->food);
         if (cpy->player->inventory->food == 0) {
             printf("DEATH\n");
-            send_death_player(sockfd, cpy, NULL);
+            send_death_player(serv, cpy->player->id);
             destroy_node(&serv->clients, cpy->player->id);
         }
         if (serv->clients == NULL)
             return;
-        if (cpy != NULL)
-            cpy = cpy->next;
+        cpy = cpy->next;
     }
 }
 

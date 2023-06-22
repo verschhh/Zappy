@@ -12,6 +12,8 @@ void decrement_tick(serv_t *serv)
 {
     client_t *copy = serv->clients;
     double elapsed = 0;
+    if (copy == NULL)
+        printf("copy is NULLLL\n");
     while (copy != NULL) {
         elapsed = ((double) micro_time() - copy->clock ) / 1000000.0;
         if (copy->clocking && elapsed >= copy->limit) {
