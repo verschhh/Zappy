@@ -82,22 +82,12 @@ int map_content(int sockfd, serv_t *serv, char *buffer)
 // TODO: change to a set number of ressources distributed randomly
 void spawn_ressources(serv_t *serv)
 {
-    // int tot_rss = 0;
-    srand(time(NULL)); // Seed the random number generator
+    srand(time(NULL));
     map_t *current = serv->map;
     while (current != NULL) {
-        printf("x: %d, y: %d\n", current->x, current->y);
-        printf("food: %d\n", current->food);
-        printf("linemate: %d\n", current->linemate);
-        printf("deraumere: %d\n", current->deraumere);
-        printf("sibur: %d\n", current->sibur);
-        printf("mendiane: %d\n", current->mendiane);
-        printf("phiras: %d\n", current->phiras);
-        printf("thystame: %d\n", current->thystame);
         int tot_rss = current->food + current->linemate + current->deraumere +
             current->sibur + current->mendiane + current->phiras +
             current->thystame;
-        printf("tot_rss: %d\n", tot_rss);
         if (tot_rss > 100) {
             current = current->next;
             continue;

@@ -45,19 +45,19 @@ coord_t *get_visible_tile_coords(serv_t *server, player_t *player)
         int row_width = 2 * i + 1;
         for (int j = 0; j < row_width; j++) {
             switch (player->orientation) {
-                case 1:  // North
+                case NORTH:
                     visible_coords[k].y = (player->y - i + server->max_y) % server->max_y;
                     visible_coords[k].x = (player->x + j - i + server->max_x) % server->max_x;
                     break;
-                case 2:  // East
+                case EAST:
                     visible_coords[k].x = (player->x + i + server->max_x) % server->max_x;
                     visible_coords[k].y = (player->y + j - i + server->max_y) % server->max_y;
                     break;
-                case 3:  // South
+                case SOUTH:
                     visible_coords[k].y = (player->y + i + server->max_y) % server->max_y;
                     visible_coords[k].x = (player->x - j + i + server->max_x) % server->max_x;
                     break;
-                case 4:  // West
+                case WEST:
                     visible_coords[k].x = (player->x - i + server->max_x) % server->max_x;
                     visible_coords[k].y = (player->y - j + i + server->max_y) % server->max_y;
                     break;
