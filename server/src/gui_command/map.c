@@ -82,9 +82,17 @@ int map_content(int sockfd, serv_t *serv, char *buffer)
 // TODO: change to a set number of ressources distributed randomly
 void spawn_ressources(serv_t *serv)
 {
+    int tot_rss = 0;
     srand(time(NULL)); // Seed the random number generator
     map_t *current = serv->map;
     while (current != NULL) {
+        tot_rss += current->food + current->linemate + current->deraumere +
+            current->sibur + current->mendiane + current->phiras +
+            current->thystame;
+        if (tot_rss >= 420) {
+            current = current->next;
+            continue;
+        }
         if (rand()< (RAND_MAX * FOOD_DENSITY))
             current->food += 1;
         if (rand()< (RAND_MAX * LINEMATE_DENSITY))
