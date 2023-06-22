@@ -44,11 +44,8 @@ class Socket:
                 print(buff)
                 if buff[1] == " Inventory":
                     print("Updating inventory")
-                    print(buff[2][:-1])
-                    buff[2] = buff[2][:-1]
-                    if buff[2][-1] != '\n':
-                        print("Rennntree")
-                        player.update_inventory_other_player(buff[2])
+                    print(buff[2])
+                    player.update_inventory_other_player(buff[2])
                     print("Updated inventory")
                 elif buff[1] == " Ready\n":
                     player.nb_joueur_ready += 1

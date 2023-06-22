@@ -93,10 +93,6 @@ class Player:
                 i["inventory"]["sibur"] = int(message[4])
                 i["inventory"]["mendiane"] = int(message[5])
                 i["inventory"]["phiras"] = int(message[6])
-                if message[7][-1] == '\n' or message[7][-1] == '[':
-                    message[7] = message[7][:-1]
-                    if message[7][-1] == '[' or message[7][-1] == '\n':
-                        message[7] = message[7][:-1]
                 i["inventory"]["thystame"] = int(message[7])
 
     def get_distance(self, x, y):

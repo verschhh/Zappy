@@ -73,7 +73,7 @@ int broadcast(int sockfd, serv_t *serv, char *buffer)
         for (int i = 0; client != NULL; i++) {
             if (client->sockfd != sockfd) {
                 sprintf(send,"message %d,%s\n", sound(actual_client->player, client->player), buffer);
-                write(client->sockfd, send, len - 1);
+                write(client->sockfd, send, len);
                 break;
             }
             client = client->next;
