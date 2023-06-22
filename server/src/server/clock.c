@@ -51,6 +51,8 @@ void decrease_food(serv_t *serv)
 
 void clock_action(serv_t *serv)
 {
+    if (serv->clients == NULL)
+        printf("NULLLLLLLLLL\n");
     decrement_tick(serv);
     spawn_rss(serv);
     decrease_food(serv);
