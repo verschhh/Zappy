@@ -57,6 +57,21 @@ int lauch_cmd(int cmd, int sockfd, serv_t *serv, char *buffer)
     return 0;
 }
 
+void check_death(serv_t *serv, int sockfd)
+{
+    client_t *cpy = serv->clients;
+
+    while (cpy != NULL) {
+        printf("fodd = %d\n", cpy->player->inventory->food);
+        if (cpy->player->inventory->food == 0) {
+            printf("DEATH\n");
+            send_death_player(sockfd, cpy, NULL);
+            cpy->player->inventory->food = -1;
+        }
+        cpy = cpy->next;
+    }
+}
+
 int receive_client_msg(int sockfd, fd_set *readfds, serv_t *serv)
 {
     char buffer[1024] = {0};
@@ -80,6 +95,7 @@ int receive_client_msg(int sockfd, fd_set *readfds, serv_t *serv)
         }
         clock_action(serv);
         lauch_cmd(cmd, sockfd, serv, buffer); //TODO: launch here and in decrement tick strange
+        check_death(serv, sockfd);
     }
     return 0;
 }

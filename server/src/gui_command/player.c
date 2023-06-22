@@ -93,14 +93,16 @@ int send_expulsion(int sockfd, serv_t *serv, char *buffer)
 }
 
 
-int send_death_player(int sockfd, serv_t *serv, char *buffer)
+int send_death_player(int sockfd, client_t *client, char *buffer)
 {
     (void)buffer;
-    client_t *cpy = get_correct_client(serv, sockfd);
-    char msg[10];
+    char msg[0];
+    int len = snprintf(msg, 0, "pdi %d\n", client->player->id);
+    char send[len];
 
-    sprintf(msg, "pdi %d\n", cpy->player->id);
-    write(serv->sockfd, msg, 10);
+    sprintf(send, "pdi %d\n", client->player->id);
+    printf("Death message = %s\n", send);
+    write(sockfd, send, len);
     return 0;
 }
 
