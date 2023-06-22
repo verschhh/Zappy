@@ -85,7 +85,7 @@ void spawn_ressources(serv_t *serv)
     srand(time(NULL)); // Seed the random number generator
     map_t *current = serv->map;
     while (current != NULL) {
-        if (current->food > 700)
+        if (current->thystame > 69 || current->food > 420)
             continue;
         if (rand()< (RAND_MAX * FOOD_DENSITY))
             current->food += 1;
