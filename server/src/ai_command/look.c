@@ -74,8 +74,7 @@ char *build_look_response(serv_t *server, player_t *player)
     int vision_size = (n * (2 * 1 + (n - 1) * 2)) / 2;
     coord_t *visible_coords = get_visible_tile_coords(server, player);
     char *response = malloc(sizeof(char) * (256));
-    response[0] = '\0';
-    strcat(response, "[");
+    strcpy(response, "[");
 
     for (int i = 0; i < vision_size; i++) {
         if (i != 0)
@@ -83,13 +82,15 @@ char *build_look_response(serv_t *server, player_t *player)
         client_t *copy = server->clients;
         map_t *tile = find_tile(server, visible_coords[i].x, visible_coords[i].y);
         char *tile_str = tile_to_string(tile, copy);
+        size_t tile_str_len = strlen(tile_str);
+        response = realloc(response, sizeof(char) * (strlen(response) + tile_str_len + 6));
         if (strlen(tile_str) > 1 && i > 0) {
             strcat(response, " ");
         }
         strcat(response, tile_str);
         free(tile_str);
     }
-    strcat(response, "]\0\n");
+    strcat(response, "]\n");
     return response;
 }
 
