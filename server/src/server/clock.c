@@ -26,9 +26,13 @@ void decrement_tick(serv_t *serv)
 
 void spawn_rss(serv_t *serv)
 {
-    double rss = ((double) micro_time() - serv->rss_clock) / 1000000.0;
+    unsigned long long rss = ((unsigned long long) micro_time() - serv->rss_clock) / 1000000.0;
+    unsigned long long timer = (20 / serv->freq);
+    if (rss >= timer) {
+        printf("%llu\n", timer);
+        printf("rss = %f\n", rss);
+    }
     if (rss >= (20 / serv->freq)) {
-        
         spawn_ressources(serv);
         serv->rss_clock = micro_time();
     }
