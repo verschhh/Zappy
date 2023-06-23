@@ -45,6 +45,13 @@ namespace zappy {
             std::string getWinnerName(void) {
                 return (_winnerName);
             }
+            void loadFont(void) {
+                if (!_font.loadFromFile("gui/assets/font/DeterminationMono.ttf"))
+                    throw AScene::SceneException("Error: cannot load DeterminationMono.ttf");
+            }
+            sf::Font getFont(void) {
+                return (_font);
+            }
 
             void setSpriteProperties(sf::Sprite& sprite, sf::Texture& texture, sf::Vector2f scale, sf::Vector2f position) {
                 sprite.setTexture(texture);
@@ -53,6 +60,17 @@ namespace zappy {
 
                 sf::FloatRect spriteBounds = sprite.getLocalBounds();
                 sprite.setOrigin(spriteBounds.width / 2, spriteBounds.height / 2);
+            }
+
+            sf::Text setText(std::string content, sf::Vector2f pos, int charSize, sf::Color color)
+            {
+                sf::Text text;
+                text.setFont(_font);
+                text.setString(content);
+                text.setCharacterSize(charSize);
+                text.setFillColor(color);
+                text.setPosition(pos);
+                return text;
             }
 
             class SceneException : public std::exception {
@@ -68,6 +86,7 @@ namespace zappy {
             private:
                 int _indexScene;
                 std::string _winnerName = "default";
+                sf::Font _font;
     };
 
     class Menu : public AScene {
@@ -199,8 +218,6 @@ namespace zappy {
             void segHandler(std::vector<std::string>& arguments);
             void updatePnj(void);
 
-            sf::Text setText(std::string content, sf::Vector2f pos, int charSize, sf::Color color);
-
         private:
             //* Background
             sf::Texture _backgroundTexture;
@@ -226,7 +243,6 @@ namespace zappy {
 
             //* Class Values
             float _scaleFactor;
-            sf::Font _font;
 
             //* Tile selection
             sf::Vector2i _selectedTile;
@@ -261,6 +277,8 @@ namespace zappy {
             sf::Texture _quitButtonTexture;
             sf::Texture _quitButtonHoveredTexture;
             sf::Sprite _quitButtonSprite;
+
+            sf::Text _winnerText;
     };
 
     class Pause : public AScene {

@@ -20,8 +20,7 @@ zappy::InGame::~InGame() {}
 
 void zappy::InGame::loadTextures()
 {
-    if (!_font.loadFromFile("gui/assets/font/DeterminationMono.ttf"))
-        throw AScene::SceneException("Error: cannot load font");
+    loadFont();
 
     if (!_backgroundTexture.loadFromFile("gui/assets/images/space.jpg"))
         throw AScene::SceneException("Error: cannot load in game background texture");

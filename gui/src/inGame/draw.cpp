@@ -86,17 +86,6 @@ void zappy::InGame::drawRessources(sf::RenderWindow& window)
     }
 }
 
-sf::Text zappy::InGame::setText(std::string content, sf::Vector2f pos, int charSize, sf::Color color)
-{
-    sf::Text text;
-    text.setFont(_font);
-    text.setString(content);
-    text.setCharacterSize(charSize);
-    text.setFillColor(color);
-    text.setPosition(pos);
-    return text;
-}
-
 void zappy::InGame::drawRessourceBar(sf::RenderWindow& window)
 {
     const sf::Sprite& gridSprite = _map[_selectedTile.x][_selectedTile.y].gridSprite;
