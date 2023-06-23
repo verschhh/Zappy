@@ -12,4 +12,5 @@ void zappy::Pause::drawScene(sf::RenderWindow& window)
     window.draw(_backgroundSprite);
     window.draw(_backButtonSprite);
     window.draw(_quitButtonSprite);
+    window.draw(_statsLogoSprite);
 }

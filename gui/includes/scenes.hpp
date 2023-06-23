@@ -302,5 +302,8 @@ namespace zappy {
             sf::Texture _backButtonTexture;
             sf::Texture _backButtonHoveredTexture;
             sf::Sprite _backButtonSprite;
+
+            sf::Texture _statsLogoTexture;
+            sf::Sprite _statsLogoSprite;
     };
 }

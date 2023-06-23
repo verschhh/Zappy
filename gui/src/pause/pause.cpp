@@ -40,4 +40,8 @@ void zappy::Pause::loadTextures(void)
         throw AScene::SceneException("Error: cannot load menu quit button texture");
 
     setSpriteProperties(_quitButtonSprite, _quitButtonTexture, sf::Vector2f(4, 4), sf::Vector2f(1160, 800));
+
+    if (!_statsLogoTexture.loadFromFile("gui/assets/hud/statisticsLogo.png"))
+        throw AScene::SceneException("Error: cannot load stats logo texture");
+    setSpriteProperties(_statsLogoSprite, _statsLogoTexture, sf::Vector2f(7, 7), sf::Vector2f(960, 200));
 }
