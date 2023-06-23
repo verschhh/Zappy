@@ -14,7 +14,7 @@ void zappy::InGame::drawPnjs(sf::RenderWindow& window)
     int nbPnj = _pnjs.size();
     std::cout << "Nb pnj: " << nbPnj << std::endl;
     for (int i = 0; i < nbPnj; i++) {
-        std::cout << "DRAW Pnj level " << _pnjs[i].level << " at " << _pnjs[i].position.x << ", " << _pnjs[i].position.y << std::endl;
+        std::cout << "DRAW Pnj num " << _pnjs[i].number << " level " << _pnjs[i].level << " at " << _pnjs[i].position.x << ", " << _pnjs[i].position.y << std::endl;
         int mapX = _pnjs[i].position.x;
         int mapY = _pnjs[i].position.y;
 

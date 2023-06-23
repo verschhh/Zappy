@@ -24,18 +24,11 @@ void zappy::InGame::updateMap(void)
 
     std::string command = "mct\n";
     _connection.send(command);
-    std::cout << "Command sent" << std::endl;
 
     int mctBufferSize = _mapHeight * _mapWidth * MAX_BCT_SIZE;
     std::string response = _connection.receive(mctBufferSize);
-    std::cout << "Response received" << std::endl;
 
     std::vector<std::string> lines = splitString(response, '\n');
-    int numberLines = lines.size();
-    std::cout << "Lines: " << numberLines << std::endl;
-    for (int i = 0; i < numberLines; i++) {
-        std::cout << "Line " << i << ": " << lines[i] << std::endl;
-    }
 
     MessageHandler handler;
     for (int i = 0; i < _mapWidth; i++) {
@@ -98,10 +91,18 @@ void zappy::InGame::updatePnj(void)
     for (int i = 0; i < numberPnj; i++) {
         // send command ppo & update position
         std::string posCommand = "ppo #" + std::to_string(_pnjs[i].number) + "\n";
+        std::cout << "Position command: " << posCommand << std::endl;
         _connection.send(posCommand);
 
         int maxBufferSize = 1024;
         std::string response = _connection.receive(maxBufferSize);
+        std::cout << "Response: " << response << std::endl;
+
+        if (response == "ko\n") {
+            std::cout << "Player position " << _pnjs[i].number << ": RECEIVED KO" << std::endl;
+            // return;
+            exit (12);
+        }
 
         std::vector<std::string> arguments = splitString(response, ' ');
         int newX = std::stoi(arguments[2]);
@@ -113,10 +114,19 @@ void zappy::InGame::updatePnj(void)
 
         // send command plv & update level
         std::string levelCommand = "plv #" + std::to_string(_pnjs[i].number) + "\n";
+        std::cout << "Level command: " << levelCommand << std::endl;
 
         _connection.send(levelCommand);
+        std::cout << "Sent" << std::endl;
 
         response = _connection.receive(maxBufferSize);
+        std::cout << "Response: " << response << std::endl;
+
+        if (response == "ko\n") {
+            std::cout << "Player level " << _pnjs[i].number << ": RECEIVED KO" << std::endl;
+            // return;
+            exit (12);
+        }
 
         arguments = splitString(response, ' ');
 
