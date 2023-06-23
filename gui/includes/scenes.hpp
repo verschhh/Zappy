@@ -73,6 +73,20 @@ namespace zappy {
                 return text;
             }
 
+            typedef struct total_s {
+                int pnj = 0;
+                int death = 0;
+                int food = 0;
+                int linemate = 0;
+                int deraumere = 0;
+                int sibur = 0;
+                int mendiane = 0;
+                int phiras = 0;
+                int thystame = 0;
+            } total_t;
+
+            total_t _total;
+
             class SceneException : public std::exception {
                 public:
                     SceneException(const std::string &message) throw()
@@ -303,7 +317,47 @@ namespace zappy {
             sf::Texture _backButtonHoveredTexture;
             sf::Sprite _backButtonSprite;
 
+            //* Stats
             sf::Texture _statsLogoTexture;
             sf::Sprite _statsLogoSprite;
+
+            sf::Texture _pnjsLogoTexture;
+            sf::Sprite _pnjsLogoSprite;
+            sf::Text _pnjText;
+
+            sf::Texture _deathsLogoTexture;
+            sf::Sprite _deathsLogoSprite;
+            sf::Text _deathText;
+
+            sf::Texture _ressourcesLogoTexture;
+            sf::Sprite _ressourcesLogoSprite;
+
+            sf::Texture _foodTexture;
+            sf::Sprite _foodSprite;
+            sf::Text _foodText;
+
+            sf::Texture _linemateTexture;
+            sf::Sprite _linemateSprite;
+            sf::Text _linemateText;
+
+            sf::Texture _deraumereTexture;
+            sf::Sprite _deraumereSprite;
+            sf::Text _deraumereText;
+
+            sf::Texture _siburTexture;
+            sf::Sprite _siburSprite;
+            sf::Text _siburText;
+
+            sf::Texture _mendianeTexture;
+            sf::Sprite _mendianeSprite;
+            sf::Text _mendianeText;
+
+            sf::Texture _phirasTexture;
+            sf::Sprite _phirasSprite;
+            sf::Text _phirasText;
+
+            sf::Texture _thystameTexture;
+            sf::Sprite _thystameSprite;
+            sf::Text _thystameText;
     };
 }
