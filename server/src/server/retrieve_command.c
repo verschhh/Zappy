@@ -105,7 +105,6 @@ int receive_client_msg(int sockfd, fd_set *readfds, serv_t *serv)
     int bytes_read = recv(sockfd, buffer, sizeof(buffer), 0);
     int next = 0;
     if (bytes_read <= 0) {
-        printf("STOP ?\n");
         close(sockfd);
         FD_CLR(sockfd, readfds);
     } else {
