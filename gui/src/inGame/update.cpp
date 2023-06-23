@@ -99,9 +99,9 @@ void zappy::InGame::updatePnj(void)
         std::cout << "Response: " << response << std::endl;
 
         if (response == "ko\n") {
-            std::cout << "Player position " << _pnjs[i].number << ": RECEIVED KO" << std::endl;
-            // return;
-            exit (12);
+            std::cout << "Player " << _pnjs[i].number << " died" << std::endl;
+            erasePnj(_pnjs[i].number);
+            return;
         }
 
         std::vector<std::string> arguments = splitString(response, ' ');
@@ -123,9 +123,9 @@ void zappy::InGame::updatePnj(void)
         std::cout << "Response: " << response << std::endl;
 
         if (response == "ko\n") {
-            std::cout << "Player level " << _pnjs[i].number << ": RECEIVED KO" << std::endl;
-            // return;
-            exit (12);
+            std::cout << "Player " << _pnjs[i].number << " died" << std::endl;
+            erasePnj(_pnjs[i].number);
+            return;
         }
 
         arguments = splitString(response, ' ');

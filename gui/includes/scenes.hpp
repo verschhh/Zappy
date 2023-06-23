@@ -181,6 +181,7 @@ namespace zappy {
 
             //* Class methods
             void createPnj(int number, int x, int y, pnjOrientation orientation, int level);
+            void erasePnj(int number);
 
             void drawPnjs(sf::RenderWindow& window);
             void drawRessources(sf::RenderWindow& window);
