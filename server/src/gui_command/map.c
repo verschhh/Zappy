@@ -82,18 +82,26 @@ int map_content(int sockfd, serv_t *serv, char *buffer)
 // TODO: change to a set number of ressources distributed randomly
 void spawn_ressources(serv_t *serv)
 {
+    int d = 0;
     srand(time(NULL));
     map_t *current = serv->map;
+    if (current == NULL)
+        printf("HEHEHEHEHEHEHEHHEHEHEH\nHEHEHEHHEHHE\n");
     while (current != NULL) {
+        printf("Loop count = %d\n", d);
+        d++;
         int tot_rss = current->food + current->linemate + current->deraumere +
             current->sibur + current->mendiane + current->phiras +
             current->thystame;
-        if (tot_rss > 60) {
+        if (tot_rss > 80) {
+            printf("TOO MUCH\n");
             current = current->next;
             continue;
         }
-        if (rand() % 100 + 1 < FOOD_DENSITY)
+        if (rand() % 100 + 1 < FOOD_DENSITY) {
+            printf("MORE FOOD MIAM\n");
             current->food += 1;
+        }
         if (rand() % 100 + 1 < LINEMATE_DENSITY)
             current->linemate += 1;
         if (rand() % 100 + 1 < DERAUMERE_DENSITY)
