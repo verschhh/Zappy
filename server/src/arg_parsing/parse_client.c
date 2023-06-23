@@ -7,13 +7,13 @@
 
 #include "../../includes/zappy.h"
 
-player_t *parse_player(int sockfd, serv_t *serv, int nb)
+player_t *parse_player(int sockfd, serv_t *serv, int id)
 {
     client_t *temp = serv->clients;
 
     (void) sockfd;
     while (temp != NULL) {
-        if (temp->player->id == nb) {
+        if (temp->player->id == id) {
             return temp->player;
         }
         temp = temp->next;

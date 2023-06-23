@@ -39,6 +39,7 @@ int send_player_level(int sockfd, serv_t *serv, char *buffer)
 {
     int count = 0;
     char **array = split_string_at_spaces(buffer, &count);
+    erase_first_characters(array[1], 1);
     player_t *tmp = parse_player(sockfd, serv, atoi(array[1]));
     char *msg = NULL;
 

@@ -105,6 +105,7 @@ int receive_client_msg(int sockfd, fd_set *readfds, serv_t *serv)
     int bytes_read = recv(sockfd, buffer, sizeof(buffer), 0);
     int next = 0;
     if (bytes_read <= 0) {
+        printf("STOP ?\n");
         close(sockfd);
         FD_CLR(sockfd, readfds);
     } else {
@@ -123,5 +124,6 @@ int receive_client_msg(int sockfd, fd_set *readfds, serv_t *serv)
         lauch_cmd(cmd, sockfd, serv, buffer); //TODO: launch here and in decrement tick strange
         check_death(serv);
     }
+    printf("CONINUE\n");
     return 0;
 }

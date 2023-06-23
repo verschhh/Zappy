@@ -30,6 +30,7 @@ void spawn_rss(serv_t *serv)
     if (rss >= (20.f / ((float)serv->freq))) {
         spawn_ressources(serv);
         serv->rss_clock = micro_time();
+        printf("SPAWN\n");
     }
     return;
 }
