@@ -96,7 +96,8 @@ int receive_client_msg(int sockfd, fd_set *readfds, serv_t *serv)
         close(sockfd);
         FD_CLR(sockfd, readfds);
     } else {
-        cmd = parse_command(buffer);
+        if (buffer != NULL)
+            cmd = parse_command(buffer);
         if (init_new_client(serv, buffer, cmd, sockfd) == 1)
             return 0;
         clock_action(serv);
