@@ -27,13 +27,15 @@ void print_broadcast(client_t *client, client_t *actual_client,
     int sockfd, char *buffer)
 {
     char msg[0];
-    int len = snprintf(msg, 0, "message 8,%s", buffer);
+    int len = snprintf(msg,0,"message %d,%s", sound(client->player, client->player), buffer);
     char send[len];
+
     for (; client != NULL; client = client->next) {
         if (client->sockfd != sockfd) {
             sprintf(send, "message %d,%s\n",
                 sound(actual_client->player, client->player), buffer);
             write(client->sockfd, send, len);
+            break;
         }
     }
     write(sockfd, "ok\n", 3);
@@ -43,13 +45,13 @@ int broadcast(int sockfd, serv_t *serv, char *buffer)
 {
     client_t *client;
     client_t *actual_client = get_correct_client(serv, sockfd);
+    char msg[0];
 
     if (!actual_client->clocking) {
         update_time_limit(serv, actual_client, 7, buffer);
         return 0;
     }
     if (actual_client->clocking) {
-        buffer += 9;
         client = serv->clients;
         print_broadcast(client, actual_client, sockfd, buffer);
         actual_client->clocking = false;
