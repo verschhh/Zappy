@@ -34,7 +34,7 @@ void zappy::InGame::handleEvents(sf::RenderWindow& window)
 
     while (window.pollEvent(event)) {
         if (event.type == sf::Event::Closed || (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)) {
-            setIndexScene(3);
+            _stats->setIndexScene(PAUSE);
         }
         if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
             clickTile(window);

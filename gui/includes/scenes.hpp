@@ -19,9 +19,18 @@ static const int WINDOW_WIDTH = 1920;
 static const int WINDOW_HEIGHT = 1080;
 
 namespace zappy {
+    enum scenes {
+        MENU,
+        IN_GAME,
+        END_GAME,
+        PAUSE
+    };
+
     class Stats {
         public:
-            Stats() {
+            Stats(int indexScene) {
+                _indexScene = indexScene;
+
                 _pnjCounter = 0;
                 _deathCounter = 0;
                 _foodCounter = 0;
@@ -31,9 +40,18 @@ namespace zappy {
                 _mendianeCounter = 0;
                 _phirasCounter = 0;
                 _thystameCounter = 0;
+                _winnerName = "default";
             }
 
             ~Stats() = default;
+
+            //* Index Scene
+            void setIndexScene(int indexScene) {
+                _indexScene = indexScene;
+            }
+            int getIndexScene(void) {
+                return (_indexScene);
+            }
 
             //* Getters
             int getPnjCounter(void) {
@@ -62,6 +80,9 @@ namespace zappy {
             }
             int getThystameCounter(void) {
                 return (_thystameCounter);
+            }
+            std::string getWinnerName(void) {
+                return (_winnerName);
             }
 
             //* Setters
@@ -92,8 +113,13 @@ namespace zappy {
             void setThystameCounter(int thystameCounter) {
                 _thystameCounter = thystameCounter;
             }
+            void setWinnerName(std::string winnerName) {
+                _winnerName = winnerName;
+            }
 
         private:
+            int _indexScene;
+
             int _pnjCounter;
             int _deathCounter;
             int _foodCounter;
@@ -103,6 +129,7 @@ namespace zappy {
             int _mendianeCounter;
             int _phirasCounter;
             int _thystameCounter;
+            std::string _winnerName;
     };
 
     class IScene {
@@ -110,9 +137,6 @@ namespace zappy {
             virtual void handleEvents(sf::RenderWindow& window) = 0;
             virtual void drawScene(sf::RenderWindow& window) = 0;
             virtual void setSpriteProperties(sf::Sprite& sprite, sf::Texture& texture, sf::Vector2f scale, sf::Vector2f position) = 0;
-
-            virtual int getIndexScene(void) = 0;
-            virtual void setIndexScene(int indexScene) = 0;
     };
 
     class AScene : public IScene {
@@ -123,18 +147,6 @@ namespace zappy {
             AScene() = default;
             ~AScene() = default;
 
-            int getIndexScene(void) {
-                return (_indexScene);
-            }
-            void setIndexScene(int indexScene) {
-                _indexScene = indexScene;
-            }
-            void setWinnerName(std::string winnerName) {
-                _winnerName = winnerName;
-            }
-            std::string getWinnerName(void) {
-                return (_winnerName);
-            }
             void loadFont(void) {
                 if (!_font.loadFromFile("gui/assets/font/DeterminationMono.ttf"))
                     throw AScene::SceneException("Error: cannot load DeterminationMono.ttf");
@@ -174,8 +186,6 @@ namespace zappy {
             };
 
             private:
-                int _indexScene;
-                std::string _winnerName = "default";
                 sf::Font _font;
     };
 

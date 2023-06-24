@@ -26,7 +26,7 @@ void zappy::Pause::handleEvents(sf::RenderWindow& window)
 
         if (event.type == sf::Event::MouseButtonPressed) {
             if (_backButtonSprite.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
-                setIndexScene(1);
+                _stats->setIndexScene(IN_GAME);
             }
         }
 

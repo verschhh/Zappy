@@ -10,7 +10,6 @@
 zappy::Menu::Menu(Connection& connection, std::shared_ptr<Stats> stats) : _connection(connection)
 {
     this->_stats = stats;
-    setIndexScene(0);
     loadTextures();
 }
 
@@ -61,7 +60,7 @@ void zappy::Menu::handleMouseClicks(sf::RenderWindow &window, sf::Event event, s
 {
     if (event.type == sf::Event::MouseButtonPressed) {
         if (_playButtonSprite.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
-            setIndexScene(1);
+            _stats->setIndexScene(IN_GAME);
         }
         if (_quitButtonSprite.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
             window.close();

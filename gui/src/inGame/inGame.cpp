@@ -11,7 +11,6 @@ zappy::InGame::InGame(Connection& connection, int mapWidth, int mapHeight, std::
     : _connection(connection), _mapWidth(mapWidth), _mapHeight(mapHeight)
 {
     this->_stats = stats;
-    setIndexScene(1);
     createMap();
     loadTextures();
     setRessourcesInMap();

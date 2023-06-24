@@ -59,7 +59,7 @@ void zappy::InGame::segHandler(std::vector<std::string>& arguments)
 
     std::cout << "Seg handler: team " << winnerName << " won" << std::endl;
 
-    setWinnerName(winnerName);
+    _stats->setWinnerName(winnerName);
 
-    setIndexScene(2);
+    _stats->setIndexScene(END_GAME);
 }

@@ -11,7 +11,7 @@
 #include <unistd.h>
 #include <sstream>
 
-zappy::Gui::Gui(int port, std::string machine) : _connection(port, machine), _indexScene(0)
+zappy::Gui::Gui(int port, std::string machine) : _connection(port, machine), _indexScene(MENU)
 {
     try {
         _connection.connect();
@@ -26,9 +26,7 @@ zappy::Gui::Gui(int port, std::string machine) : _connection(port, machine), _in
         throw GuiException("Gui error: cannot load background music");
 
     try {
-        this->_stats = std::make_shared<Stats>();
-
-        _scenes.push_back(std::make_shared<Menu>(_connection, this->_stats));
+        this->_stats = std::make_shared<Stats>(_indexScene);
 
         int width = 20;
         int height = 10;
@@ -39,11 +37,14 @@ zappy::Gui::Gui(int port, std::string machine) : _connection(port, machine), _in
         std::string cmd;
         iss >> cmd >> width >> height;
 
+        _scenes.push_back(std::make_shared<Menu>(_connection, this->_stats));
+
         _scenes.push_back(std::make_shared<InGame>(_connection, width, height, this->_stats));
 
         _scenes.push_back(std::make_shared<EndGame>(_connection, this->_stats));
 
         _scenes.push_back(std::make_shared<Pause>(_connection, this->_stats));
+
     } catch (AScene::SceneException& e) {
         std::cerr << e.what() << std::endl;
         throw GuiException("Gui error: cannot load scenes");
@@ -69,9 +70,11 @@ void zappy::Gui::run() {
     _backgroundMusic.play();
 
     while (window.isOpen()) {
-        _scenes[_indexScene]->setIndexScene(_indexScene);
         _scenes[_indexScene]->handleEvents(window);
-        setIndexScene(_scenes[_indexScene]->getIndexScene());
+
+        int indexSceneAfterEvent = this->_stats->getIndexScene();
+        setIndexScene(indexSceneAfterEvent);
+
         window.clear();
         _scenes[_indexScene]->drawScene(window);
         window.display();

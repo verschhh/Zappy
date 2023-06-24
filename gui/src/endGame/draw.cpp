@@ -12,7 +12,7 @@ void zappy::EndGame::drawScene(sf::RenderWindow& window)
     window.draw(_backgroundSprite);
     window.draw(_quitButtonSprite);
 
-    std::string winnerString = "The winner is: " + getWinnerName();
+    std::string winnerString = "The winner team is: " + _stats->getWinnerName();
 
     _winnerText = setText(
         winnerString,

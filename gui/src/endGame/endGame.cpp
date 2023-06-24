@@ -11,7 +11,6 @@ zappy::EndGame::EndGame(Connection& connection, std::shared_ptr<Stats> stats)
 {
     this->_stats = stats;
     (void)connection;
-    setIndexScene(2);
     loadTextures();
 }
 
