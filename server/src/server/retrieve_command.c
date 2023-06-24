@@ -34,10 +34,6 @@ int parse_command(char *buffer)
 {
     char *cmd = malloc(sizeof(char) * strlen(buffer) + 1);
     int index = 0;
-
-    if (buffer == NULL)
-        printf("Buffer is NULL\n");
-
     while (buffer[index] != ' ' && buffer[index] != '\0') {
         cmd[index] = buffer[index];
         index++;
@@ -87,7 +83,6 @@ void check_death(serv_t *serv)
     while (cpy != NULL) {
         next = cpy->next;
         if (cpy->player->inventory->food <= 0) {
-            printf("DEATH\n");
             write(cpy->sockfd, "dead\n", 5);
             send_death_player(serv, cpy->player->id);
             destroy_node(&serv->clients, cpy->player->id);

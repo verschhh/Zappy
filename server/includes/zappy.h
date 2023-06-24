@@ -97,5 +97,8 @@ int res_under_zero(int y_res);
 int res_over_zero(int y_res);
 int res_equal_zero(int y_res);
 int get_facing(player_t *start, player_t *goal);
+int level_1_2_3(map_t *map, client_t *client, int nb_player_on_title);
+int level_4_5(map_t *map, client_t *client, int nb_player_on_title);
+int level_6_7(map_t *map, client_t *client, int nb_player_on_title);
 
 #endif

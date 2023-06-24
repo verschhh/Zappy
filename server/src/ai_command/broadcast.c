@@ -33,7 +33,6 @@ void print_broadcast(client_t *client, client_t *actual_client,
         if (client->sockfd != sockfd) {
             sprintf(send, "message %d,%s\n",
                 sound(actual_client->player, client->player), buffer);
-            printf(send);
             write(client->sockfd, send, len);
         }
     }

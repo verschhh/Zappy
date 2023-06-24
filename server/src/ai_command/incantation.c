@@ -7,80 +7,12 @@
 
 #include "../../includes/zappy.h"
 
-int level_1_2_3(map_t *map, client_t *client, int nb_player_on_title)
-{
-    if (client->player->level == 1 && map->linemate >= 1
-    && nb_player_on_title >= 1) {
-        map->linemate--;
-        return 0;
-    }
-    if (client->player->level == 2 && map->linemate >= 1
-    && map->deraumere >= 1 && map->sibur >= 1 && nb_player_on_title >= 2) {
-        map->linemate--;
-        map->deraumere--;
-        map->sibur--;
-        return 1;
-    }
-    if (client->player->level == 3 && map->linemate >= 2 && map->sibur >= 1
-    && map->phiras >= 2 && nb_player_on_title >= 2) {
-        map->linemate -= 2;
-        map->sibur--;
-        map->phiras -= 2;
-        return 1;
-    }
-    return 84;
-}
-
-int level_4_5(map_t *map, client_t *client, int nb_player_on_title)
-{
-    if (client->player->level == 4 && map->linemate >= 1 && map->deraumere >= 1
-    && map->sibur >= 2 && map->phiras >= 1 && nb_player_on_title >= 4) {
-        map->linemate--;
-        map->deraumere--;
-        map->sibur -= 2;
-        map->phiras--;
-        return 3;
-    }
-    if (client->player->level == 5 && map->linemate >= 1 && map->deraumere >= 2
-    && map->sibur >= 1 && map->mendiane >= 3 && nb_player_on_title >= 4) {
-        map->linemate--;
-        map->deraumere -= 2;
-        map->sibur--;
-        map->mendiane -= 3;
-        return 3;
-    }
-    return 84;
-}
-
-int level_6_7(map_t *map, client_t *client, int nb_player_on_title)
-{
-    if (client->player->level == 6 && map->linemate >= 1 && map->deraumere >= 2
-    && map->sibur >= 3 && map->phiras >= 1 && nb_player_on_title >= 6) {
-        map->linemate--;
-        map->deraumere -= 2;
-        map->sibur -= 3;
-        map->phiras--;
-        return 5;
-    }
-    if (client->player->level == 7 && map->linemate >= 2 && map->deraumere >= 2
-    && map->sibur >= 2 && map->mendiane >= 2 && map->phiras >= 2
-    && map->thystame >= 1 && nb_player_on_title >= 6) {
-        map->linemate -= 2;
-        map->deraumere -= 2;
-        map->sibur -= 2;
-        map->mendiane -= 2;
-        map->phiras -= 2;
-        map->thystame--;
-        return 5;
-    }
-    return 84;
-}
-
 int check_enough_element(map_t *map, client_t *client, serv_t *serv)
 {
     int nb_player_on_title = 0;
     for (client_t *temp = serv->clients; temp != NULL; temp = temp->next) {
-        if (temp->player->x == client->player->x && temp->player->y == client->player->y)
+        if (temp->player->x == client->player->x
+            && temp->player->y == client->player->y)
             nb_player_on_title++;
     }
     int nb = level_1_2_3(map, client, nb_player_on_title);
@@ -93,6 +25,33 @@ int check_enough_element(map_t *map, client_t *client, serv_t *serv)
     if (nb3 != 84)
         return nb3;
     return 84;
+}
+
+static int start_incataion(serv_t *serv, client_t *client, char *buff, int tmp)
+{
+    for (client_t *temp = serv->clients; temp != NULL && tmp > 0;
+        temp = temp->next) {
+        if (temp->player->x == client->player->x
+        && temp->player->y == client->player->y) {
+            update_time_limit(serv, temp, 300, buff);
+            tmp--;
+            }
+        }
+        update_time_limit(serv, client, 300, buff);
+        return 0;
+}
+
+static int finish_incantation(serv_t *serv, client_t *client, char *s, int nb)
+{
+    for (client_t *temp = serv->clients; temp != NULL && nb > 0;
+        temp = temp->next) {
+        if (temp->player->x == client->player->x
+        && temp->player->y == client->player->y) {
+            write(temp->sockfd, s, 17);
+            nb--;
+        }
+    }
+    return 0;
 }
 
 int incantation(int sockfd, serv_t *serv, char *buffer)
@@ -109,26 +68,12 @@ int incantation(int sockfd, serv_t *serv, char *buffer)
     int tmp = nb;
     if (!client->clocking) {
         write(sockfd, "Elevation underway\n", 20);
-        for (client_t *temp = serv->clients; temp != NULL && tmp > 0; temp = temp->next) {
-            if (temp->player->x == client->player->x
-            && temp->player->y == client->player->y) {
-                update_time_limit(serv, temp, 300, buffer);
-                tmp--;
-            }
-        }
-        update_time_limit(serv, client, 300, buffer);
-        return 0;
+        return start_incataion(serv, client, buffer, tmp);
     }
     client->clocking = false;
     client->player->level += 1;
     sprintf(msg, "Current level: %d\n", client->player->level);
     write(sockfd, msg, 17);
-    for (client_t *temp = serv->clients; temp != NULL && nb > 0; temp = temp->next) {
-        if (temp->player->x == client->player->x
-        && temp->player->y == client->player->y) {
-            write(temp->sockfd, msg, 17);
-            nb--;
-        }
-    }
-    return 0;
+    printf("Player %d level up to %d\n", client->player->id, client->player->level);
+    return finish_incantation(serv, client, msg, nb);
 }
