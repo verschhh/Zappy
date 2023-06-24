@@ -45,19 +45,19 @@ coord_t *get_visible_tile_coords(serv_t *server, player_t *player)
         int row_width = 2 * i + 1;
         for (int j = 0; j < row_width; j++) {
             switch (player->orientation) {
-                case NORTH:
+                case 1:
                     visible_coords[k].y = (player->y - i + server->max_y) % server->max_y;
                     visible_coords[k].x = (player->x + j - i + server->max_x) % server->max_x;
                     break;
-                case EAST:
+                case 2:
                     visible_coords[k].x = (player->x + i + server->max_x) % server->max_x;
                     visible_coords[k].y = (player->y + j - i + server->max_y) % server->max_y;
                     break;
-                case SOUTH:
+                case 3:
                     visible_coords[k].y = (player->y + i + server->max_y) % server->max_y;
                     visible_coords[k].x = (player->x - j + i + server->max_x) % server->max_x;
                     break;
-                case WEST:
+                case 4:
                     visible_coords[k].x = (player->x - i + server->max_x) % server->max_x;
                     visible_coords[k].y = (player->y - j + i + server->max_y) % server->max_y;
                     break;
@@ -98,15 +98,13 @@ int look(int sockfd, serv_t *serv, char *buffer)
 {
     client_t *cli = get_correct_client(serv, sockfd);
     player_t *player = cli->player;
-    // int n = player->level + 1;
-    // int vision_size = (n * (2 * 1 + (n - 1) * 2)) / 2; //unused for now
 
     if (!cli->clocking) {
         update_time_limit(serv, cli, 7, buffer);
         return 0;
     }
     if (cli->clocking) {
-        /*coord_t *visible_coords = */get_visible_tile_coords(serv, player); //there was a warning here
+        get_visible_tile_coords(serv, player);
         char *response = build_look_response(serv, player);
         write(sockfd, response, strlen(response));
         cli->clocking = false;

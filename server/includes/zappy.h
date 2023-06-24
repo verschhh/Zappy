@@ -93,5 +93,9 @@ int take_object(int sockfd, serv_t *serv, char *buffer);
 int broadcast(int sockfd, serv_t *serv, char *buffer);
 int set_object(int sockfd, serv_t *serv, char *buffer);
 int incantation(int sockfd, serv_t *serv, char *buffer);
+int res_under_zero(int y_res);
+int res_over_zero(int y_res);
+int res_equal_zero(int y_res);
+int get_facing(player_t *start, player_t *goal);
 
 #endif

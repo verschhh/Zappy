@@ -24,6 +24,7 @@ serv_t *serv_ctor2(serv_t *serv, args_t *arg)
 serv_t *serv_ctor(args_t *arg)
 {
     serv_t *serv = malloc(sizeof(serv_t));
+
     serv->addr.sin_family = AF_INET;
     serv->addr.sin_port = htons(arg->port);
     serv->addr.sin_addr.s_addr = INADDR_ANY;

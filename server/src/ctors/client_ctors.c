@@ -30,7 +30,7 @@ client_t *client_ctor(serv_t *serv)
 void fill_client_struct(int sockfd, serv_t *serv, char *buffer)
 {
     client_t *new_node = malloc(sizeof(client_t));
-
+    client_t *temp = NULL;
     if (new_node == NULL)
         return;
     new_node->team_name = strdup(buffer);
@@ -44,10 +44,9 @@ void fill_client_struct(int sockfd, serv_t *serv, char *buffer)
     if (serv->clients == NULL) {
         serv->clients = new_node;
     } else {
-        client_t *temp = serv->clients;
-        while (temp->next != NULL) {
+        temp = serv->clients;
+        while (temp->next != NULL)
             temp = temp->next;
-        }
         temp->next = new_node;
     }
 }
