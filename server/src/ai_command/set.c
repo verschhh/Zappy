@@ -31,7 +31,7 @@ int set_object(int sockfd, serv_t *serv, char *buffer)
     map_t *map_cpy = serv->map;
     char **array = split_string_at_spaces(buffer, &count);
     char *food[7] = {"f", "l", "d",
-        "s", "m", "p", "t"};
+        "s", "m", "ph", "t"};
     map_cpy = get_correct_tile(map_cpy, get_correct_client(serv, sockfd));
     for (int i = 0; i < 7; i++) {
         if (strstr(array[1], food[i]) != NULL) {

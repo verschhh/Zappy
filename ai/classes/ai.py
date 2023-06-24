@@ -12,13 +12,13 @@ from random import randint
 from math import sqrt
 
 class Incantation:
-    LVL_1 = {"player": 1, "linemate": 1, "deraumere": 0, "sibur": 0, "mendiane": 0, "phiras": 0, "thystame": 0}
-    LVL_2 = {"player": 2, "linemate": 1, "deraumere": 1, "sibur": 1, "phiras": 0, "thystame": 0, "mendiane": 0}
-    LVL_3 = {"player": 2, "linemate": 2, "sibur": 1, "phiras": 2, "thystame": 0, "mendiane": 0, "deraumere": 0}
-    LVL_4 = {"player": 4, "linemate": 1, "deraumere": 1, "sibur": 2, "phiras": 1, "thystame": 0, "mendiane": 0}
-    LVL_5 = {"player": 4, "linemate": 1, "deraumere": 2, "sibur": 1, "mendiane": 3, "phiras": 0, "thystame": 0}
-    LVL_6 = {"player": 6, "linemate": 1, "deraumere": 2, "sibur": 3, "phiras": 1, "thystame": 0, "mendiane": 0}
-    LVL_7 = {"player": 6, "linemate": 2, "deraumere": 2, "sibur": 2, "mendiane": 2, "phiras": 2, "thystame": 1}
+    LVL_1 = {"p": 1, "l": 1, "d": 0, "s": 0, "m": 0, "ph": 0, "t": 0}
+    LVL_2 = {"p": 2, "l": 1, "d": 1, "s": 1, "ph": 0, "t": 0, "m": 0}
+    LVL_3 = {"p": 2, "l": 2, "s": 1, "ph": 2, "t": 0, "m": 0, "d": 0}
+    LVL_4 = {"p": 4, "l": 1, "d": 1, "s": 2, "ph": 1, "t": 0, "m": 0}
+    LVL_5 = {"p": 4, "l": 1, "d": 2, "s": 1, "m": 3, "ph": 0, "t": 0}
+    LVL_6 = {"p": 6, "l": 1, "d": 2, "s": 3, "ph": 1, "t": 0, "m": 0}
+    LVL_7 = {"p": 6, "l": 2, "d": 2, "s": 2, "m": 2, "p": 2, "t": 1}
 
 class AI(Player, Game, Priority, Orientation):
     def __init__(self, socket, x, y):
@@ -35,9 +35,9 @@ class AI(Player, Game, Priority, Orientation):
             case 2:
                 self.levels(Incantation.LVL_2)
             case 3:
-                exit(42)
                 self.levels(Incantation.LVL_3)
             case 4:
+                exit(42)
                 self.levels(Incantation.LVL_4)
             case 5:
                 self.levels(Incantation.LVL_5)
@@ -65,7 +65,7 @@ class AI(Player, Game, Priority, Orientation):
 
     def check_if_dict_empty(self, dict):
         for i in dict:
-            if dict[i] > 0 and i != "player":
+            if dict[i] > 0 and i != "p":
                 return False
         return True
 
@@ -92,43 +92,43 @@ class AI(Player, Game, Priority, Orientation):
         tmp = level.copy()
         player_select = []
 
-        player_select.append({"id": self.id, "inventory": {"food": 0, "linemate": 0, "deraumere": 0, "sibur": 0, "mendiane": 0, "phiras": 0, "thystame": 0}})
+        player_select.append({"id": self.id, "inventory": {"f": 0, "l": 0, "d": 0, "s": 0, "m": 0, "ph": 0, "t": 0}})
         for cle, valeur in self._inventory.items():
-            while cle != "food" and tmp[cle] > 0 and valeur > 0:
+            while cle != "f" and tmp[cle] > 0 and valeur > 0:
                 player_select[0]["inventory"][cle] += 1
                 tmp[cle] -= 1
                 valeur -= 1
 
         for player in self.inv_other_player:
-            player_select.append({"id": player["id"], "inventory": {"food": 0, "linemate": 0, "deraumere": 0, "sibur": 0, "mendiane": 0, "phiras": 0, "thystame": 0}})
+            player_select.append({"id": player["id"], "inventory": {"f": 0, "l": 0, "d": 0, "s": 0, "m": 0, "ph": 0, "t": 0}})
             for cle, valeur in player["inventory"].items():
-                while cle in tmp and tmp[cle] > 0 and cle != "player" and cle != "food" and valeur > 0:
+                while cle in tmp and tmp[cle] > 0 and cle != 'p' and cle != 'f' and valeur > 0:
                     if self.check_if_dict_empty(tmp) == True:
                         break
                     player_select[-1]["inventory"][cle] += 1
                     tmp[cle] -= 1
                     valeur -= 1
 
-        if self.check_if_dict_empty(tmp) == False or self._inventory["food"] < 50:
+        if self.check_if_dict_empty(tmp) == False or self._inventory["f"] < 50:
             print("bad 1")
             self.regive_ressources(player_select)
             return []
 
-        if len(player_select) == level["player"]:
+        if len(player_select) == level["p"]:
             print("good")
             return player_select
 
-        elif len(player_select) > level["player"]:
-            print("bad 2")
+        elif len(player_select) > level["p"]:
+            print(f"bad 2, len(player_select) = {len(player_select)}, level['p'] = {level['p']}, tmp = {tmp}, player_select = {player_select}")
             self.regive_ressources(player_select)
             return []
 
 
         for i in self.inv_other_player:
-            if self.check_if_id_in_list(i["id"], player_select) == False and len(player_select) < level["player"]:
-                player_select.append({"id": i["id"], "inventory": {"food": 0, "linemate": 0, "deraumere": 0, "sibur": 0, "mendiane": 0, "phiras": 0, "thystame": 0}})
+            if self.check_if_id_in_list(i["id"], player_select) == False and len(player_select) < level["p"]:
+                player_select.append({"id": i["id"], "inventory": {"f": 0, "l": 0, "d": 0, "s": 0, "m": 0, "ph": 0, "t": 0}})
 
-        if len(player_select) < level["player"]:
+        if len(player_select) < level["p"]:
             print("bad 3")
             self.regive_ressources(player_select)
             return []
@@ -145,68 +145,66 @@ class AI(Player, Game, Priority, Orientation):
     def nb_player_on_tile(self, title):
         nb = 0
         for i in title:
-            if i == "player":
+            if i == "p":
                 nb += 1
         return nb
 
     def levels(self, level):
-        if self._inventory["food"] < 40:
+        if self._inventory["f"] < 40:
             self.fetch_ressources()
         player_select = self.check_evolution_possible(level)
         if player_select != []:
             self.broadcast(f"Incantation,{self.take_id_player_select(player_select)}")
-            while self.nb_joueur_ready < level['player'] - 1:
+            while self.nb_joueur_ready < level['p'] - 1:
                 self.broadcast(f"Here")
             print("Leave")
             self.drop_all_ressources()
-            self.update_map(self.look())
-            print(self.map[self.y][self.x])
-            self.take_usseless_ressources(level)
             self.update_map(self.look())
             print(self.map[self.y][self.x])
             self.incantation()
             self.nb_joueur_ready = 0
         self.broadcast(self.send_inventory())
         self.fetch_ressources()
+        print(self.level)
 
     def fetch_ressources(self):
-        pos_food = self.nb_ressources_tile(3, "food")
+        pos_food = self.nb_ressources_tile(3, "f")
         self.get_next_move(pos_food)
-        self.take("food")
-        while self.socket.buffer == "ok\n" and self._inventory["food"] < 100:
-            self.take("food")
+        self.take("f")
+        while self.socket.buffer == "ok\n" and self._inventory["f"] < 100:
+            self.take("f")
         self.update_inventory()
 
     def take_usseless_ressources(self, level):
         print(level)
         for ressource in self.map[self.y][self.x]:
-            while ressource != "player" and ressource != "food" and self.map[self.y][self.x][ressource] > level[ressource]:
-                print(f"ressource = {ressource}")
+            while ressource != "p" and ressource != "f" and self.map[self.y][self.x][ressource] > level[ressource]:
+                # print(f"ressource = {ressource}")
                 self.take(ressource)
                 self.map[self.y][self.x][ressource] -= 1
         self.update_inventory()
 
     def level_1(self):
-        pos_limenate = self.nb_ressources_tile(1, "linemate")
-        pos_food = self.nb_ressources_tile(2, "food")
+        pos_limenate = self.nb_ressources_tile(1, "l")
+        pos_food = self.nb_ressources_tile(2, "f")
         self.update_inventory()
-        if pos_limenate != (-1, -1) and self._inventory["food"] > 20:
+        if pos_limenate != (-1, -1) and self._inventory["f"] > 20:
             self.get_next_move(pos_limenate)
             self.update_map(self.look())
             # print(self.map[self.y][self.x])
             self.take_usseless_ressources(Incantation.LVL_1)
             self.update_map(self.look())
             # print(self.map[self.y][self.x])
-            if self.map[self.y][self.x]["player"] > 1:
+            if self.map[self.y][self.x]["p"] > 1:
                 self.random_move()
             elif self.incantation() == 84:
                 self.random_move()
         elif pos_food != (-1, -1):
             nb_loop = 0
             self.get_next_move(pos_food)
-            self.take("food")
+            self.take("f")
             while self.socket.buffer == "ok\n" and nb_loop < 50:
-                self.take("food")
+                self.take("f")
                 nb_loop += 1
             self.update_inventory()
         else:
@@ -229,11 +227,9 @@ class AI(Player, Game, Priority, Orientation):
         return shortest_pos
 
     def update_inventory(self):
-        print("Updating inventory")
+        # print("Updating inventory")
         self.socket.send("Inventory")
         self.socket.receive(self)
-        print(self._inventory)
-        print(self.socket.buffer)
         inventory_regex = r"(\w+)\s+(\d+)"
         matches = re.findall(inventory_regex, self.socket.buffer)
         for item, quantity in matches:
@@ -241,14 +237,14 @@ class AI(Player, Game, Priority, Orientation):
                 self._inventory[item] = int(quantity)
 
     def take_ressource_if_possible(self):
-        if self.map[self.y][self.x]["player"] > 1:
+        if self.map[self.y][self.x]["p"] > 1:
             return
         for ressource in self.map[self.y][self.x]:
-            if self.map[self.y][self.x][ressource] > 0 and ressource != "player" and randint(0, 1) == 1:
+            if self.map[self.y][self.x][ressource] > 0 and ressource != "p" and randint(0, 1) == 1:
                 self.take(ressource)
-            if ressource == "food":
-                self.take("food")
-            while ressource == "food" and self.map[self.y][self.x][ressource] > 0 and self.socket.buffer == "ok\n" and self._inventory["food"] < 100 :
+            if ressource == "f":
+                self.take("f")
+            while ressource == "f" and self.map[self.y][self.x][ressource] > 0 and self.socket.buffer == "ok\n" and self._inventory["f"] < 100 :
                 self.take(ressource)
 
 

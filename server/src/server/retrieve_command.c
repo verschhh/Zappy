@@ -33,6 +33,8 @@ const cmd_t cmd_list[NB_CMD] = {
 
 int parse_command(char *buffer)
 {
+    if (buffer == NULL)
+        return -1;
     char *cmd = malloc(sizeof(char) * strlen(buffer) + 1);
     int index = 0;
     while (buffer[index] != ' ' && buffer[index] != '\0') {

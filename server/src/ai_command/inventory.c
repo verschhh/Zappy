@@ -15,7 +15,7 @@ char *get_inv(inv_t *inv)
     char *buf = NULL;
     sprintf(msg, "f %d, l %d, d %d, ", inv->food,
         inv->linemate, inv->deraumere);
-    sprintf(tmp, "s %d, m %d, p %d, t %d\n",
+    sprintf(tmp, "s %d, m %d, ph %d, t %d\n",
         inv->sibur, inv->mendiane, inv->phiras, inv->thystame);
     strcat(msg, tmp);
     len = strlen(msg);

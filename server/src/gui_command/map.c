@@ -80,7 +80,7 @@ void spawn_ressources(serv_t *serv)
         int tot_rss = current->food + current->linemate + current->deraumere +
             current->sibur + current->mendiane + current->phiras +
             current->thystame;
-        if (tot_rss > 60) {
+        if (tot_rss > 30) {
             current = current->next;
             continue;
         }

@@ -9,6 +9,11 @@
 
 int level_1_2_3(map_t *map, client_t *client, int nb_player_on_title)
 {
+    printf("nb_player_on_title = %d\n", nb_player_on_title);
+    printf("linemate = %d\n", map->linemate);
+    printf("deraumere = %d\n", map->deraumere);
+    printf("sibur = %d\n", map->sibur);
+    printf("mendiane = %d\n", map->mendiane);
     if (client->player->level == 1 && map->linemate >= 1
     && nb_player_on_title >= 1) {
         map->linemate--;

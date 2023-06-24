@@ -13,13 +13,13 @@ SUCESS = 0
 FAIL = 84
 
 class Incantation:
-    LVL_1 = {"player": 1, "linemate": 1, "deraumere": 0, "sibur": 0, "mendiane": 0, "phiras": 0, "thystame": 0}
-    LVL_2 = {"player": 2, "linemate": 1, "deraumere": 1, "sibur": 1, "phiras": 0, "thystame": 0, "mendiane": 0}
-    LVL_3 = {"player": 2, "linemate": 2, "sibur": 1, "phiras": 2, "thystame": 0, "mendiane": 0, "deraumere": 0}
-    LVL_4 = {"player": 4, "linemate": 1, "deraumere": 1, "sibur": 2, "phiras": 1, "thystame": 0, "mendiane": 0}
-    LVL_5 = {"player": 4, "linemate": 1, "deraumere": 2, "sibur": 1, "mendiane": 3, "phiras": 0, "thystame": 0}
-    LVL_6 = {"player": 6, "linemate": 1, "deraumere": 2, "sibur": 3, "phiras": 1, "thystame": 0, "mendiane": 0}
-    LVL_7 = {"player": 6, "linemate": 2, "deraumere": 2, "sibur": 2, "mendiane": 2, "phiras": 2, "thystame": 1}
+    LVL_1 = {"p": 1, "l": 1, "d": 0, "s": 0, "m": 0, "ph": 0, "t": 0}
+    LVL_2 = {"p": 2, "l": 1, "d": 1, "s": 1, "ph": 0, "t": 0, "m": 0}
+    LVL_3 = {"p": 2, "l": 2, "s": 1, "ph": 2, "t": 0, "m": 0, "d": 0}
+    LVL_4 = {"p": 4, "l": 1, "d": 1, "s": 2, "ph": 1, "t": 0, "m": 0}
+    LVL_5 = {"p": 4, "l": 1, "d": 2, "s": 1, "m": 3, "ph": 0, "t": 0}
+    LVL_6 = {"p": 6, "l": 1, "d": 2, "s": 3, "ph": 1, "t": 0, "m": 0}
+    LVL_7 = {"p": 6, "l": 2, "d": 2, "s": 2, "m": 2, "ph": 2, "t": 1}
 
 class Orientation:
     NORTH = 0
@@ -44,7 +44,7 @@ class Player:
         self.max_x = map_size_x - 1
         self.max_y = map_size_y - 1
         self.level = 1
-        self._inventory = {"food": 10, "linemate": 0, "deraumere": 0, "sibur": 0, "mendiane": 0, "phiras": 0, "thystame": 0}
+        self._inventory = {"f": 10, "l": 0, "d": 0, "s": 0, "m": 0, "ph": 0, "t": 0}
         self.team = ""
         self.orientation = Orientation.WEST
         self.priority = Priority.EXPLORE
@@ -58,42 +58,47 @@ class Player:
         self.incantation_launched = False
 
     def player_is_in_inventory(self, id):
-        print(id)
+        # print(id)
         for i in self.inv_other_player:
             if i["id"] == int(id):
-                print("True")
+                # print("True")
                 return True
-        print("False")
+        # print("False")
         return False
 
     def drop_all_ressources(self):
         for ressource in self._inventory:
             print(ressource)
             tmp = 0
-            while self._inventory[ressource] > 0 and ressource != "food" and tmp <= 4:
-                print(f"ressource = {ressource}")
+            while self._inventory[ressource] > 0 and ressource != "f" and tmp <= 4:
+                # print(f"ressource = {ressource}")
                 self.set(ressource)
                 tmp += 1
 
     def update_inventory_other_player(self, message):
-        print("bizzare")
-        print(message)
+        # print("bizzare")
+        # print(message)
         message = message.split(' ')
-        print(message[-1].split('\n'))
+        # print(message[-1].split('\n'))
         message[-1] = message[-1].split('\n')[0]
-        print(f"??? {message}")
+        # print(f"deb self.inv_other_player = {self.inv_other_player}")
         if self.player_is_in_inventory(message[0]) == False:
-            self.inv_other_player.append({"id": int(message[0]), "inventory": {"food": 0, "linemate": 0, "deraumere": 0, "sibur": 0, "mendiane": 0, "phiras": 0, "thystame": 0}})
+            self.inv_other_player.append({"id": int(message[0]), "inventory": {"f": 0, "l": 0, "d": 0, "s": 0, "m": 0, "ph": 0, "t": 0}})
 
         for i in self.inv_other_player:
             if i["id"] == int(message[0]):
-                i["inventory"]["food"] = int(message[1])
-                i["inventory"]["linemate"] = int(message[2])
-                i["inventory"]["deraumere"] = int(message[3])
-                i["inventory"]["sibur"] = int(message[4])
-                i["inventory"]["mendiane"] = int(message[5])
-                i["inventory"]["phiras"] = int(message[6])
-                i["inventory"]["thystame"] = int(message[7])
+                i["inventory"]["f"] = int(message[1])
+                i["inventory"]["l"] = int(message[2])
+                i["inventory"]["d"] = int(message[3])
+                i["inventory"]["s"] = int(message[4])
+                i["inventory"]["m"] = int(message[5])
+                i["inventory"]["ph"] = int(message[6])
+                if not(message[7].isnumeric()):
+                    message[7] = message[7].split('\n')[0]
+                i["inventory"]["t"] = int(message[7])
+    
+        # print(f"fin self.inv_other_player = {self.inv_other_player}")
+        
 
     def get_distance(self, x, y):
         dx = abs(self.x - x)
@@ -105,7 +110,7 @@ class Player:
         return wrapped_dx + wrapped_dy
 
     def forward(self):
-        print("Forward")
+        # print("Forward")
         self.socket.send("Forward")
         self.socket.receive(self)
         if self.orientation == Orientation.NORTH:
@@ -126,15 +131,19 @@ class Player:
             self.y = 0
 
     def right(self):
-        print("Right")
+        # print("Right")
         self.socket.send("Right")
         self.socket.receive(self)
         self.orientation += 1
         if self.orientation > Orientation.WEST:
             self.orientation = Orientation.NORTH
 
+    def fork(self):
+        self.socket.send("Fork")
+        self.socket.receive(self)
+
     def left(self):
-        print("Left")
+        # print("Left")
         self.socket.send("Left")
         self.socket.receive(self)
         self.orientation -= 1
@@ -142,14 +151,14 @@ class Player:
             self.orientation = Orientation.WEST
 
     def look(self):
-        print("Look")
+        # print("Look")
         self.socket.send("Look")
         self.socket.receive(self)
         print(self.socket.buffer)
-        while self.socket.buffer == "ko\n":
+        while self.socket.buffer == "ko\n" or self.socket.buffer.split(" ")[0] == "Current":
             self.socket.send("Look")
             self.socket.receive(self)
-
+            print("Tourn")
         buff = self.socket.buffer[1:-1]
         print(buff)
         buff += "\0"
@@ -161,10 +170,11 @@ class Player:
                     break
             i += 1
         self.vision = buff.split(',')
+        # print(self.vision)
+        print(f"len(self.vision) = {len(self.vision)}")
         for i in range(len(self.vision)):
             self.vision[i] = self.vision[i].split(' ')
-        if len(self.vision[-1]) > 1:
-            self.vision[-1] = self.vision[-1][:-1]
+        print(self.vision)
         self.find_pos_of_look()
         return self.vision_with_pos
 
@@ -173,8 +183,10 @@ class Player:
         floor = 0
         pos_vision = 0
 
-        for c,i in enumerate(range(1, 1+3*self.level, 2)):
+        for c,i in enumerate(range(1, 2*self.level + 2, 2)):
+            print(f"c = {c}, i = {i}")
             for x in range(i):
+                print(f"x = {x}")
                 if x + 1 < i/2:
                     self.set_object_pos(-c+x, floor, pos_vision)
                 elif x + 1 == ceil(i/2):
@@ -185,6 +197,9 @@ class Player:
             floor += 1
 
     def set_object_pos(self, move, floor, i):
+
+        print(f"move = {move}, floor = {floor}, i = {i}")
+        print(f"self.vision = {self.vision}")
         if self.orientation == Orientation.NORTH:
             if self.x + move > self.max_x:
                 move = -self.max_x - move + 1
@@ -249,7 +264,7 @@ class Player:
         message += str(self.id) + " "
         for key, value in self._inventory.items():
             message += f"{value}"
-            if key != "thystame":
+            if key != "t":
                 message += " "
         return message
 
@@ -261,13 +276,13 @@ class Player:
             self.socket.receive(self)
 
     def inventory(self):
-        print("Inventory")
+        # print("Inventory")
         self.socket.send("Inventory")
         self.socket.receive(self)
         return self._inventory
 
     def take(self, item):
-        print(f"Take {item}")
+        # print(f"Take {item}")
         self.socket.send(f"Take {item}")
         self.socket.receive(self)
         if self.socket.buffer == "ok\n":
@@ -276,7 +291,7 @@ class Player:
         return FAIL
 
     def set(self, item):
-        print(f"Set {item}")
+        # print(f"Set {item}")
         self.socket.send(f"Set {item}")
         self.socket.receive(self)
         if self.socket.buffer == "ok\n":
@@ -305,73 +320,41 @@ class Player:
             print("Elevation Finished")
             print("You are now level %d" % (self.level))
             return SUCESS
+        elif self.socket.buffer.split(' ')[0] == "Elevation":
+            print("Elevation Started\n")
+            self.socket.buffer = ""
+            self.socket.receive(self)
+            print(f"Return:{self.socket.buffer}")
+            if self.socket.buffer.split(' ')[0] == "Current":
+                print("Elevation Finished")
+                print("You are now level %d" % (self.level))
+                return SUCESS
+
         print("Elevation Failed")
         return FAIL
 
     def go_to_direction(self):
         print(f"self.incantation_direction = {self.incantation_direction}")
+        tmp = 0
+        while (self.orientation != Orientation.EAST):
+            self.left()
         while int(self.incantation_direction) != 0:
-            print(int(self.incantation_direction))
-            match int(self.incantation_direction):
-                case 0:
-                    print("I am here")
-                    break
-                case 1:
-                    self.forward()
-                    print("Front")
-
-                case 2:
-                    self.forward()
-                    self.left()
-                    self.forward()
-                    if randint(0, 1) == 0:
-                        self.right()
-                    print("Front Left")
-
-                case 3:
-                    self.left()
-                    self.forward()
-                    print("Left")
-
-                case 4:
-                    self.left()
-                    self.forward()
-                    self.left()
-                    self.forward()
-                    if randint(0, 1) == 0:
-                        self.right()
-                    print("Back Left")
-
-                case 5:
-                    self.left()
-                    self.left()
-                    self.forward()
-                    print("Back")
-
-                case 6:
-                    self.right()
-                    self.forward()
-                    self.right()
-                    self.forward()
-                    if randint(0, 1) == 0:
-                        self.left()
-                    print("Back Right")
-
-                case 7:
-                    self.right()
-                    self.forward()
-                    print("Right")
-
-                case 8:
-                    self.right()
-                    self.forward()
-                    self.left()
-                    self.forward()
-                    if randint(0, 1) == 0:
-                        self.right()
-                    print("Front Right")
-
-        self.drop_all_ressources()
+            if (self.x == self.max_x) and tmp == 0:
+                self.left()
+                self.forward()
+                self.left()
+                tmp = 1
+            elif (self.x == 0) and tmp == 1:
+                self.right()
+                self.forward()
+                self.right()
+                tmp = 0
+            else:
+                self.forward()
+            for i in range(5):
+                self.inventory()
+        for i in range(5):
+            self.inventory()
         match int(self.incantation_direction):
                 case 0:
                     print("I am here")
@@ -423,9 +406,14 @@ class Player:
                     self.left()
                     self.forward()
                     print("Front Right")
+        print(f" ok {int(self.incantation_direction)}")
+        print("Droopp all")
+        self.drop_all_ressources()
+        print(f" ok {int(self.incantation_direction)}")
 
+        print("Ready")
         self.broadcast("Ready")
-        print(self.look()[0])
+        # print(self.look()[0])
 
     def call_for_incantation(self, direction, message):
         for i in message:

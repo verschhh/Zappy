@@ -29,7 +29,7 @@ class Socket:
 
     def receive(self, player):
         buff = self._sock.recv(4096)
-        print(f"buff = {buff}")
+        # print(f"buff = {buff}")
         if not buff:
             print("Server disconnected")
             sys.exit(10)
@@ -40,32 +40,36 @@ class Socket:
             buff = buff.decode().split(',')
             # print(f"Message received {buff}")
             if player.level > 1:
-                print(buff)
+                # print(buff)
                 if buff[1] == " Inventory":
-                    print("Updating inventory")
+                    # print("Updating inventory")
                     player.update_inventory_other_player(buff[2])
-                    print("Updated inventory")
+                    print(player.inv_other_player)
+                    # print("Updated inventory")
                 elif buff[1] == " Ready\n":
                     print("Player ready")
-                    player.nb_joueur_ready += 1
+                    if int(buff[0].split(' ')[1]) == 0:
+                        player.nb_joueur_ready += 1
+                    else:
+                        print(f"buff[0].split(' ')[1] = {buff[0].split(' ')[1]}")
+
                 elif buff[1] == " Incantation":
                     print("Incantation launched")
                     print(f"buff[0].split(' ')[1] = {buff[0].split(' ')[1]}, buff[2] = {buff[2].split(' ')}")
                     player.call_for_incantation(buff[0].split(" ")[1], buff[2].split(' ')[:-1])
                     print("Incantation finished")
                 elif buff[1] == " Here\n":
-                    print(f"New direction ;{buff[0].split(' ')[1]};")
+                    # print(f"New direction ;{buff[0].split(' ')[1]};")
                     player.incantation_direction = int(buff[0].split(' ')[1])
             self.buffer = ""
             self.receive(player)
 
         else:
-            self.buffer += buff.decode()
+            self.buffer = buff.decode().split('\n')[0]
+
             if self.buffer.split(' ')[0] == "Current":
-                player.level += 1
-                print(player.level)
-            if player.level == 3:
-                exit(333)
+                player.level = int(self.buffer.split(' ')[2][0])
+                print(f"Up to level: {player.level}")
             
 
     def close(self):
