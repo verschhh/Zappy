@@ -7,6 +7,12 @@
 
 #include "../includes/zappy.h"
 
+void crtld_handler(int signal)
+{
+    (void)signal;
+    exit(0);
+}
+
 map_t *find_tile(serv_t *server, int x, int y)
 {
     map_t *tile = server->map;
@@ -19,7 +25,7 @@ map_t *find_tile(serv_t *server, int x, int y)
     return NULL;
 }
 
-int calc_tile_to_string(map_t *tile, client_t *client)
+static int calc_nb_player(client_t *client, map_t *tile)
 {
     int len = 0;
     while (client != NULL) {
@@ -27,6 +33,13 @@ int calc_tile_to_string(map_t *tile, client_t *client)
             len += 8;
         client = client->next;
     }
+    return len;
+}
+
+int calc_tile_to_string(map_t *tile, client_t *client)
+{
+    int len = 0;
+    len += calc_nb_player(client, tile);
     for (int i = 0; i < tile->food; i++)
         len += 6;
     for (int i = 0; i < tile->linemate; i++)
@@ -44,7 +57,7 @@ int calc_tile_to_string(map_t *tile, client_t *client)
     return len;
 }
 
-void erase_first_characters(char* str, int num_chars)
+void erase_first_characters(char *str, int num_chars)
 {
     int len = strlen(str);
 

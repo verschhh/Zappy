@@ -14,7 +14,7 @@ int write_player_inventory(int sockfd, player_t *player)
         player->inventory->food, player->inventory->linemate,
             player->inventory->deraumere, player->inventory->sibur,
                 player->inventory->mendiane,
-                     player->inventory->phiras,
+                    player->inventory->phiras,
                         player->inventory->thystame, "\n");
     char s[len + 1];
 

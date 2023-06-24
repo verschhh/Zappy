@@ -28,7 +28,6 @@ void fill_new_node_map(map_t *new_node, args_t *arg)
     }
 }
 
-
 map_t *create_map(args_t *arg)
 {
     map_t *root = NULL;

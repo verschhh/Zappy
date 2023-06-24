@@ -7,12 +7,6 @@
 
 #include "../includes/zappy.h"
 
-void crtld_handler(int signal)
-{
-    (void)signal;
-    exit(0);
-}
-
 void reset_timeval(serv_t *serv)
 {
     double min = 1;
@@ -42,7 +36,7 @@ struct termios init_signal(void)
 void game_state(serv_t *serv, fd_set *readfds, fd_set tmpfds)
 {
     for (int i = 0; i <= serv->max_sd; i++) {
-        if (!FD_ISSET(i, &tmpfds)) // Valgrind HERE
+        if (!FD_ISSET(i, &tmpfds))
             continue;
         if (i == serv->sockfd) {
             accept_new_client(readfds, serv);

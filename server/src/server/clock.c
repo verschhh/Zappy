@@ -7,7 +7,6 @@
 
 #include "../../includes/zappy.h"
 
-
 void decrement_tick(serv_t *serv)
 {
     client_t *copy = serv->clients;
@@ -26,7 +25,8 @@ void decrement_tick(serv_t *serv)
 
 void spawn_rss(serv_t *serv)
 {
-    long double rss = (long double) ((micro_time() - serv->rss_clock) / 1000000.0);
+    long double rss = (long double) ((micro_time() - serv->rss_clock)
+        / 1000000.0);
     if (rss >= (20.f / ((float)serv->freq))) {
         spawn_ressources(serv);
         serv->rss_clock = micro_time();

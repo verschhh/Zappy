@@ -27,16 +27,16 @@ void usage(void)
     printf("for execution of actions\n");
 }
 
-char** split_string_at_spaces(const char* input, int* count)
+char **split_string_at_spaces(const char *input, int *count)
 {
-    const char* delimiter = " ";
-    char* copy = strdup(input);
-    char* token = strtok(copy, delimiter);
-    char** result = NULL;
+    const char *delimiter = " ";
+    char *copy = strdup(input);
+    char *token = strtok(copy, delimiter);
+    char **result = NULL;
     int i = 0;
 
     while (token != NULL) {
-        result = realloc(result, (i + 1) * sizeof(char*));
+        result = realloc(result, (i + 1) * sizeof(char *));
         result[i] = strdup(token);
         i++;
         token = strtok(NULL, delimiter);
@@ -56,20 +56,4 @@ client_t *get_correct_client(serv_t *serv, int sockfd)
         copy = copy->next;
     }
     return NULL;
-}
-
-uint64_t micro_time(void)
-{
-    struct timeval tv;
-    gettimeofday(&tv, NULL);
-    return tv.tv_sec * (uint64_t)1000000 + tv.tv_usec;
-}
-
-void update_time_limit(serv_t *serv, client_t *client, int time_limit, char *s)
-{
-    client->limit = ((float) time_limit) / ((float) serv->freq);
-    client->cpy_buffer = strdup(s);
-    client->clock = micro_time();
-    client->clocking = true;
-    return;
 }

@@ -30,7 +30,7 @@ serv_t *serv_ctor(args_t *arg)
     serv->addr.sin_addr.s_addr = INADDR_ANY;
     if ((serv->sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
         print_and_exit("ERROR opening socket");
-    if (bind(serv->sockfd, (struct sockaddr*)&serv->addr,
+    if (bind(serv->sockfd, (struct sockaddr *)&serv->addr,
             sizeof(serv->addr)) < 0)
         print_and_exit("ERROR on binding");
     if (listen(serv->sockfd, 16) < 0)

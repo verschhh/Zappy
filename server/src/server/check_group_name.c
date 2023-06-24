@@ -7,7 +7,6 @@
 
 #include "../../includes/zappy.h"
 
-
 int check_slot_team(int slot)
 {
     if (slot == 0)

@@ -9,7 +9,7 @@
 
 client_t *pop_client(client_t **client)
 {
-    client_t* temp = *client;
+    client_t *temp = *client;
 
     if (temp == NULL)
         return NULL;

@@ -49,7 +49,7 @@ int parse_command(char *buffer);
 void usage(void);
 void print_and_exit(char *str);
 void usage(void);
-char** split_string_at_spaces(const char* input, int* count);
+char **split_string_at_spaces(const char *input, int *count);
 char *get_orientation(enum orientation orientation);
 client_t *get_correct_client(serv_t *serv, int sockfd);
 int check_time_limit(serv_t *serv, int sockfd);
@@ -59,7 +59,8 @@ uint64_t micro_time(void);
 map_t *get_correct_tile(map_t *map, client_t *client);
 int check_element_tile(int materials, int sockfd);
 int calc_tile_to_string(map_t *tile, client_t *client);
-void erase_first_characters(char* str, int numChars);
+void erase_first_characters(char *str, int numChars);
+void crtld_handler(int signal);
 
 //* Commands Gui
 int map_size(int sockfd, serv_t *serv, char *buffer);
@@ -105,5 +106,6 @@ int level_6_7(map_t *map, client_t *client, int nb_player_on_title);
 char *tile_to_string(map_t *tile, client_t *client);
 void switch_case_take(int i, map_t *map_cpy, client_t *c_cpy, int sockfd);
 void switch_case_set(int i, map_t *map_cpy, client_t *c_cpy, int sockfd);
+int check_inventory_material(int materials, int sockfd);
 
 #endif

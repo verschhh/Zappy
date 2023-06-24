@@ -14,7 +14,7 @@ int check_level(slot_t *tmp)
         if (tmp->team_member->player->level == 8)
             count++;
         tmp->team_member = tmp->team_member->next;
-       if (count >= 6)
+        if (count >= 6)
             return 1;
     }
     return 0;
