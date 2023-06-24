@@ -7,8 +7,9 @@
 
 #include "../../includes/scenes.hpp"
 
-zappy::Pause::Pause(Connection& connection)
+zappy::Pause::Pause(Connection& connection, std::shared_ptr<int> deathCounter)
 {
+    this->_deathCounter = deathCounter;
     (void)connection;
     setIndexScene(3);
     loadTextures();
@@ -21,6 +22,8 @@ zappy::Pause::~Pause(void)
 
 void zappy::Pause::loadTextures(void)
 {
+    loadFont();
+
     if (!_backgroundTexture.loadFromFile("gui/assets/images/space.jpg"))
         throw AScene::SceneException("Error: cannot load space.png");
     setSpriteProperties(_backgroundSprite, _backgroundTexture, sf::Vector2f(1, 1), sf::Vector2f(960, 540));

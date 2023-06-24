@@ -7,9 +7,10 @@
 
 #include "../../includes/scenes.hpp"
 
-zappy::InGame::InGame(Connection& connection, int mapWidth, int mapHeight)
+zappy::InGame::InGame(Connection& connection, int mapWidth, int mapHeight, std::shared_ptr<int> deathCounter)
     : _connection(connection), _mapWidth(mapWidth), _mapHeight(mapHeight)
 {
+    this->_deathCounter = deathCounter;
     setIndexScene(1);
     createMap();
     loadTextures();

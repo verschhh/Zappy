@@ -7,8 +7,9 @@
 
 #include "../includes/scenes.hpp"
 
-zappy::Menu::Menu(Connection& connection) : _connection(connection)
+zappy::Menu::Menu(Connection& connection, std::shared_ptr<int> deathCounter) : _connection(connection)
 {
+    this->_deathCounter = deathCounter;
     setIndexScene(0);
     loadTextures();
 }

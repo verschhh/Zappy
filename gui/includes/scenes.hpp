@@ -13,6 +13,8 @@
 #include <random>
 #include "network.hpp"
 #include <array>
+#include <memory>
+#include <iostream> //! TEMP
 
 static const int WINDOW_WIDTH = 1920;
 static const int WINDOW_HEIGHT = 1080;
@@ -29,6 +31,9 @@ namespace zappy {
     };
 
     class AScene : public IScene {
+        protected:
+            std::shared_ptr<int> _deathCounter;
+
         public:
             AScene() = default;
             ~AScene() = default;
@@ -106,7 +111,7 @@ namespace zappy {
     class Menu : public AScene {
         public:
             //* Constructor / Destructor
-            Menu(Connection& connection);
+            Menu(Connection& connection, std::shared_ptr<int> deathCounter);
             ~Menu(void);
 
             void loadTextures(void);
@@ -143,7 +148,7 @@ namespace zappy {
     class InGame : public AScene {
         public:
             //* Constructor / Destructor
-            InGame(Connection& _connection, int mapWidth, int mapHeight);
+            InGame(Connection& _connection, int mapWidth, int mapHeight, std::shared_ptr<int> deathCounter);
             ~InGame(void);
 
             void createMap(void);
@@ -270,13 +275,12 @@ namespace zappy {
             //* Death Counter
             sf::Texture _deathCounterTexture;
             sf::Sprite _deathCounterSprite;
-            int _deathCounter = 0;
     };
 
     class EndGame : public AScene {
         public:
             //* Constructor / Destructor
-            EndGame(Connection &connection);
+            EndGame(Connection &connection, std::shared_ptr<int> deathCounter);
             ~EndGame(void);
 
             //* Abstract functions
@@ -298,13 +302,14 @@ namespace zappy {
     class Pause : public AScene {
         public:
             //* Constructor / Destructor
-            Pause(Connection &connection);
+            Pause(Connection &connection, std::shared_ptr<int> deathCounter);
             ~Pause(void);
 
             //* Abstract functions
             void loadTextures(void);
             void handleEvents(sf::RenderWindow& window);
             void drawScene(sf::RenderWindow& window);
+
         private:
             sf::Texture _backgroundTexture;
             sf::Sprite _backgroundSprite;

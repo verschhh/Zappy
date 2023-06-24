@@ -47,7 +47,7 @@ void zappy::InGame::pdiHandler(std::vector<std::string>& arguments)
 
     erasePnj(number);
 
-    _deathCounter++;
+    (*_deathCounter)++;
 }
 
 void zappy::InGame::segHandler(std::vector<std::string>& arguments)

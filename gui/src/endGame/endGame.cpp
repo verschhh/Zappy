@@ -7,8 +7,9 @@
 
 #include "../../includes/scenes.hpp"
 
-zappy::EndGame::EndGame(Connection& connection)
+zappy::EndGame::EndGame(Connection& connection, std::shared_ptr<int> deathCounter)
 {
+    this->_deathCounter = deathCounter;
     (void)connection;
     setIndexScene(2);
     loadTextures();
