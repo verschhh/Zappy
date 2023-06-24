@@ -5,8 +5,7 @@
 ** draw.cpp
 */
 
-#include "../../includes/scenes.hpp"
-#include <iostream> //! TEMP
+#include "../../includes/gui.hpp"
 
 void zappy::Pause::drawScene(sf::RenderWindow& window)
 {
@@ -26,7 +25,6 @@ void zappy::Pause::drawScene(sf::RenderWindow& window)
     window.draw(_pnjText);
 
     window.draw(_deathsLogoSprite);
-    std::cout << "Death counter: " << _stats->getDeathCounter() << std::endl;
     std::string deathString = std::to_string(_stats->getDeathCounter());
     _deathText = setText(
         deathString,

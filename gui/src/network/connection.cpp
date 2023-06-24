@@ -59,7 +59,6 @@ void zappy::Connection::send(const std::string& message)
     }
 }
 
-//! Old receive function (keep for reference)
 std::string zappy::Connection::receive(int bufferSize)
 {
     if (_sockfd == -1) {
@@ -77,7 +76,7 @@ std::string zappy::Connection::receive(int bufferSize)
         throw std::runtime_error("Error: Connection closed by the server");
     } else {
         // Data received successfully
-        buffer[bytesRead] = '\0';  // Null-terminate the received data
+        buffer[bytesRead] = '\0';
         return std::string(buffer);
     }
 }

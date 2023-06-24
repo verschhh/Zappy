@@ -29,11 +29,5 @@ void zappy::EndGame::handleEvents(sf::RenderWindow& window)
         } else {
             _quitButtonSprite.setTexture(_quitButtonTexture);
         }
-
-        //! TEMP: display mouse click position
-        // if (event.type == sf::Event::MouseButtonPressed) {
-        //     sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
-        //     std::cout << "Mouse position: " << mousePosition.x << ", " << mousePosition.y << std::endl;
-        // }
     }
 }

@@ -62,23 +62,6 @@ void zappy::InGame::loadTextures()
 
     if (!_foodTexture.loadFromFile("gui/assets/objects/apple.png"))
         throw AScene::SceneException("Error: cannot load apple.png");
-
-    // ! TEMP
-    // createPnj(10, 4, NORTH);
-    // createPnj(5, 8, WEST);
-    // createPnj(5, 8, EAST);
-    // createPnj(10, 2, SOUTH);
-    // createPnj(10, 3, SOUTH);
-
-    // createRessources(10, 6, {1, 1, 1, 1, 1, 1, 1});
-    // createRessources(2, 1, {1, 0, 0, 0, 0, 0, 0});
-    // createRessources(2, 2, {0, 1, 0, 0, 0, 0, 0});
-    // createRessources(2, 3, {0, 0, 1, 0, 0, 0, 0});
-    // createRessources(2, 4, {0, 0, 0, 1, 0, 0, 0});
-    // createRessources(2, 5, {0, 0, 0, 0, 1, 0, 0});
-    // createRessources(2, 6, {0, 0, 0, 0, 0, 1, 0});
-    // createRessources(2, 7, {0, 0, 0, 0, 0, 0, 1});
-    // createRessources(5, 8, {1, 1, 1, 1, 1, 1, 1});
 }
 
 void zappy::InGame::setRessourcesInMap(void)
@@ -154,9 +137,6 @@ void zappy::InGame::setRessourcesInMap(void)
             randomOffsetY = randomNumber(-25, 25);
             thystameSprite.setPosition(thystamePosition.x + randomOffsetX, thystamePosition.y + randomOffsetY);
             _map[i][j].content.thystameSprite = thystameSprite;
-
-            //! Temp values
-            // _map[i][j].content.quantity = {randomNumber(0, 5), randomNumber(0, 5), randomNumber(0, 5), randomNumber(0, 5), randomNumber(0, 5), randomNumber(0, 5), randomNumber(0, 5)};
         }
     }
 }

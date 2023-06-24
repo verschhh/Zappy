@@ -5,8 +5,7 @@
 ** draw.cpp
 */
 
-#include "../../includes/scenes.hpp"
-#include <iostream>
+#include "../../includes/gui.hpp"
 
 //! Kentin's version
 void zappy::InGame::drawPnjs(sf::RenderWindow& window)
@@ -40,21 +39,6 @@ void zappy::InGame::drawPnjs(sf::RenderWindow& window)
         window.draw(_pnjs[i].sprite);
     }
 }
-
-//! TEMP: keep this version of the function without the animation
-// void zappy::InGame::drawPnjs(sf::RenderWindow& window) {
-//     int nbPnj = _pnjs.size();
-//     for (int i = 0; i < nbPnj; i++) {
-//         int mapX = _pnjs[i].position.x;
-//         int mapY = _pnjs[i].position.y;
-
-//         sf::Vector2f mapPosition = _map[mapX][mapY].gridSprite.getPosition();
-
-//         _pnjs[i].sprite.setPosition(mapPosition);
-
-//         window.draw(_pnjs[i].sprite);
-//     };
-// }
 
 void zappy::InGame::drawRessources(sf::RenderWindow& window)
 {

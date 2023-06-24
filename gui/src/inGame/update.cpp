@@ -5,9 +5,8 @@
 ** update.cpp
 */
 
-#include "../../includes/scenes.hpp"
+#include "../../includes/gui.hpp"
 #include "../../includes/messageHandler.hpp"
-#include <iostream>
 
 void zappy::InGame::updateScene(void)
 {
@@ -43,9 +42,6 @@ void zappy::InGame::parseQueue(void)
     int maxBufferSize = 1000;
 
     std::string response = _connection.receive(maxBufferSize);
-    // std::cout << "___________________________" << std::endl;
-    // std::cout << "Response: " << response << std::endl;
-    // std::cout << "___________________________" << std::endl;
 
     std::vector<std::string> lines = splitString(response, '\n');
 

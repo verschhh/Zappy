@@ -7,7 +7,6 @@
 
 #include "../../includes/scenes.hpp"
 #include "../../includes/messageHandler.hpp"
-#include <iostream> //! TEMP
 
 void zappy::InGame::clickTile(sf::RenderWindow& window)
 {
@@ -40,11 +39,5 @@ void zappy::InGame::handleEvents(sf::RenderWindow& window)
         if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
             clickTile(window);
         }
-
-        //! TEMP: display mouse click position
-        // if (event.type == sf::Event::MouseButtonPressed) {
-        //     sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
-        //     std::cout << "Mouse position: " << mousePosition.x << ", " << mousePosition.y << std::endl;
-        // }
     }
 }

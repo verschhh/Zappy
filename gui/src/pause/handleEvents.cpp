@@ -17,7 +17,7 @@ void zappy::Pause::handleEvents(sf::RenderWindow& window)
 
         sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
 
-        //* Back button events
+        // Back button events
         if (_backButtonSprite.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
             _backButtonSprite.setTexture(_backButtonHoveredTexture);
         } else {
@@ -30,7 +30,7 @@ void zappy::Pause::handleEvents(sf::RenderWindow& window)
             }
         }
 
-        //* Quit button events
+        // Quit button events
         if (_quitButtonSprite.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
             _quitButtonSprite.setTexture(_quitButtonHoveredTexture);
         } else {
