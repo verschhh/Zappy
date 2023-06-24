@@ -5,11 +5,11 @@
 ** endGame.cpp
 */
 
-#include "../../includes/scenes.hpp"
+#include "../../includes/gui.hpp"
 
-zappy::EndGame::EndGame(Connection& connection, std::shared_ptr<int> deathCounter)
+zappy::EndGame::EndGame(Connection& connection, std::shared_ptr<Stats> stats)
 {
-    this->_deathCounter = deathCounter;
+    this->_stats = stats;
     (void)connection;
     setIndexScene(2);
     loadTextures();

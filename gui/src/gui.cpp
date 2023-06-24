@@ -27,9 +27,9 @@ zappy::Gui::Gui(int port, std::string machine) : _connection(port, machine), _in
         throw GuiException("Gui error: cannot load background music");
 
     try {
-        this->_deathCounter = std::make_shared<int>(0);
+        this->_stats = std::make_shared<Stats>();
 
-        _scenes.push_back(std::make_shared<Menu>(_connection, this->_deathCounter));
+        _scenes.push_back(std::make_shared<Menu>(_connection, this->_stats));
 
         int width = 20;
         int height = 10;
@@ -40,11 +40,11 @@ zappy::Gui::Gui(int port, std::string machine) : _connection(port, machine), _in
         std::string cmd;
         iss >> cmd >> width >> height;
 
-        _scenes.push_back(std::make_shared<InGame>(_connection, width, height, this->_deathCounter));
+        _scenes.push_back(std::make_shared<InGame>(_connection, width, height, this->_stats));
 
-        _scenes.push_back(std::make_shared<EndGame>(_connection, this->_deathCounter));
+        _scenes.push_back(std::make_shared<EndGame>(_connection, this->_stats));
 
-        _scenes.push_back(std::make_shared<Pause>(_connection, this->_deathCounter));
+        _scenes.push_back(std::make_shared<Pause>(_connection, this->_stats));
     } catch (AScene::SceneException& e) {
         std::cerr << e.what() << std::endl;
         throw GuiException("Gui error: cannot load scenes");

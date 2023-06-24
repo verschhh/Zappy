@@ -187,7 +187,7 @@ void zappy::InGame::drawDeathCounter(sf::RenderWindow& window)
 {
     window.draw(_deathCounterSprite);
     sf::Text death_text = setText(
-        std::to_string(*_deathCounter),
+        std::to_string(_stats->getDeathCounter()),
         sf::Vector2f(1868, 827),
         30,
         sf::Color::White

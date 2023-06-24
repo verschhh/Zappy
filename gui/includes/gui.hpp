@@ -9,7 +9,6 @@
 
 #include <iostream>
 #include <getopt.h>
-#include <memory>
 #include "scenes.hpp"
 #include "network.hpp"
 
@@ -64,7 +63,7 @@ namespace zappy {
 
             sf::Font _font;
 
-            std::shared_ptr<int> _deathCounter;
+            std::shared_ptr<Stats> _stats;
             int _indexScene;
             std::vector<std::shared_ptr<IScene>> _scenes;
 

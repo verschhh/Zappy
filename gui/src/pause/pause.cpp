@@ -5,11 +5,11 @@
 ** pause.cpp
 */
 
-#include "../../includes/scenes.hpp"
+#include "../../includes/gui.hpp"
 
-zappy::Pause::Pause(Connection& connection, std::shared_ptr<int> deathCounter)
+zappy::Pause::Pause(Connection& connection, std::shared_ptr<Stats> stats)
 {
-    this->_deathCounter = deathCounter;
+    this->_stats = stats;
     (void)connection;
     setIndexScene(3);
     loadTextures();
