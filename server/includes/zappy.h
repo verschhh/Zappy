@@ -59,12 +59,14 @@ uint64_t micro_time(void);
 map_t *get_correct_tile(map_t *map, client_t *client);
 int check_element_tile(int materials, int sockfd);
 int calc_tile_to_string(map_t *tile, client_t *client);
+void erase_first_characters(char* str, int numChars);
 
 //* Commands Gui
 int map_size(int sockfd, serv_t *serv, char *buffer);
 int tile_content(int sockef, serv_t *serv, char *buffer);
 int map_content(int sockf, serv_t *serv, char *buffer);
 void spawn_ressources(serv_t *serv);
+void add_ressources_on_map(map_t *current);
 int get_all_names_group(int sockfd, serv_t *serv, char *buffer);
 int send_unit_time(int sockfd, serv_t *serv, char *buffer);
 int send_player_position(int sockfd, serv_t *serv, char *buffer);

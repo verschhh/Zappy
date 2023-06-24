@@ -43,3 +43,14 @@ int calc_tile_to_string(map_t *tile, client_t *client)
         len += 10;
     return len;
 }
+
+void erase_first_characters(char* str, int num_chars)
+{
+    int len = strlen(str);
+
+    if (num_chars >= len) {
+        str[0] = '\0';
+    } else {
+        memmove(str, str + num_chars, len - num_chars + 1);
+    }
+}

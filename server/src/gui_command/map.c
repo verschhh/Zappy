@@ -7,14 +7,6 @@
 
 #include "../../includes/zappy.h"
 
-static const double FOOD_DENSITY = 50;
-static const double LINEMATE_DENSITY = 30;
-static const double DERAUMERE_DENSITY = 15;
-static const double SIBUR_DENSITY = 10;
-static const double MENDIANE_DENSITY = 10;
-static const double PHIRAS_DENSITY = 8;
-static const double THYSTAME_DENSITY = 5;
-
 int map_size(int sockfd, serv_t *serv, char *buffer)
 {
     char get_len[0];
@@ -65,7 +57,7 @@ int tile_content(int sockfd, serv_t *serv, char *buffer)
 
 int map_content(int sockfd, serv_t *serv, char *buffer)
 {
-    (void) buffer;
+    (void)buffer;
     char msg[25000] = "";
     map_t *map = serv->map;
 
@@ -79,11 +71,11 @@ int map_content(int sockfd, serv_t *serv, char *buffer)
     return 0;
 }
 
-// TODO: change to a set number of ressources distributed randomly
 void spawn_ressources(serv_t *serv)
 {
-    srand(time(NULL));
     map_t *current = serv->map;
+
+    srand(time(NULL));
     while (current != NULL) {
         int tot_rss = current->food + current->linemate + current->deraumere +
             current->sibur + current->mendiane + current->phiras +
@@ -92,20 +84,7 @@ void spawn_ressources(serv_t *serv)
             current = current->next;
             continue;
         }
-        if (rand() % 100 + 1 < FOOD_DENSITY)
-            current->food += 1;
-        if (rand() % 100 + 1 < LINEMATE_DENSITY)
-            current->linemate += 1;
-        if (rand() % 100 + 1 < DERAUMERE_DENSITY)
-            current->deraumere += 1;
-        if (rand() % 100 + 1 <  SIBUR_DENSITY)
-            current->sibur += 1;
-        if (rand() % 100 + 1 <  MENDIANE_DENSITY)
-            current->mendiane += 1;
-        if (rand() % 100 + 1 <  PHIRAS_DENSITY)
-            current->phiras += 1;
-        if (rand() % 100 + 1 < THYSTAME_DENSITY)
-            current->thystame += 1;
+        add_ressources_on_map(current);
         current = current->next;
     }
 }

@@ -11,7 +11,7 @@ int get_all_names_group(int sockfd, serv_t *serv, char *buffer)
 {
     slot_t *copy = serv->slots;
     int len = 0;
-    (void) buffer;
+    (void)buffer;
 
     while (copy->next != NULL) {
         len = strlen(copy->team_name);
@@ -27,9 +27,8 @@ void send_connection_msg(client_t *client, serv_t *serv)
 {
     client_t *cpy = client;
 
-    while (cpy != NULL && cpy->next != NULL) {
+    while (cpy != NULL && cpy->next != NULL)
         cpy = cpy->next;
-    }
     if (cpy != NULL) {
         sprintf(serv->queue + strlen(serv->queue), "pnw #%d %d %d %d %d %s",
             cpy->player->id, cpy->player->x,
