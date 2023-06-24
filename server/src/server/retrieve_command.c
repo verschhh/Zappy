@@ -61,14 +61,8 @@ void destroy_node(client_t **client, int value)
     if (*client == NULL)
         return;
     while (current != NULL) {
-        if (current->player->id == value) {
-            if (previous == NULL)
-                *client = current->next;
-            else
-                previous->next = current->next;
-            free(current);
+        if (change_node(client, current, previous, value) == 1)
             return;
-        }
         previous = current;
         current = current->next;
     }
@@ -90,23 +84,6 @@ void check_death(serv_t *serv)
             return;
         cpy = next;
     }
-}
-
-int init_new_client(serv_t *serv, char *buffer, int cmd, int sockfd)
-{
-    int next = 0;
-
-    if (cmd == -1) {
-        next = check_name_team(serv, buffer);
-        if (next >= 0) {
-            fill_client_struct(sockfd, serv, buffer);
-            send_x_y_ai(sockfd, serv, next);
-            send_connection_msg(serv->clients, serv);
-        } else
-            write(sockfd, "suc\n", 4);
-        return 1;
-    }
-    return 0;
 }
 
 int receive_client_msg(int sockfd, fd_set *readfds, serv_t *serv)

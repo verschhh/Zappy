@@ -37,13 +37,14 @@ void new_slot(slot_t *slot, char *name);
 int start_server(args_t *args);
 int receive_client_msg(int sockfd, fd_set *readfds, serv_t *serv);
 client_t *accept_new_client(fd_set *readfds, serv_t *serv);
-// void get_group_name(client_t *client, serv_t *serv, fd_set *readfds);
+int init_new_client(serv_t *serv, char *buffer, int cmd, int sockfd);
 int check_name_team(serv_t *serv, char *buffer);
 void send_x_y_ai(int sockfd, serv_t *serv, int slot);
-char *send_nb_slot_ai(int slot);
 void clock_action(serv_t *serv);
 int lauch_cmd(int cmd, int sockfd, serv_t *serv, char *buffer);
 int parse_command(char *buffer);
+int change_node(client_t **client, client_t *current,
+    client_t *previous, int value);
 
 //* Tools
 void usage(void);
@@ -52,7 +53,6 @@ void usage(void);
 char **split_string_at_spaces(const char *input, int *count);
 char *get_orientation(enum orientation orientation);
 client_t *get_correct_client(serv_t *serv, int sockfd);
-int check_time_limit(serv_t *serv, int sockfd);
 map_t *find_tile(serv_t *server, int x, int y);
 void update_time_limit(serv_t *serv, client_t *client, int time_limit, char *s);
 uint64_t micro_time(void);
