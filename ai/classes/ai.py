@@ -36,7 +36,6 @@ class AI(Player, Game, Priority, Orientation):
             case 3:
                 self.levels(Incantation.LVL_3)
             case 4:
-                exit(42)
                 self.levels(Incantation.LVL_4)
             case 5:
                 self.levels(Incantation.LVL_5)
