@@ -58,6 +58,8 @@ class Socket:
                     print(f"buff[0].split(' ')[1] = {buff[0].split(' ')[1]}, buff[2] = {buff[2].split(' ')}")
                     player.call_for_incantation(buff[0].split(" ")[1], buff[2].split(' ')[:-1])
                     print("Incantation finished")
+                    self.buffer = "ok\n"
+                    return
                 elif buff[1] == " Here\n":
                     # print(f"New direction ;{buff[0].split(' ')[1]};")
                     player.incantation_direction = int(buff[0].split(' ')[1])

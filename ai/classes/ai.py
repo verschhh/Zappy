@@ -99,6 +99,8 @@ class AI(Player, Game, Priority, Orientation):
                 valeur -= 1
 
         for player in self.inv_other_player:
+            if player["level"] != self.level:
+                continue
             player_select.append({"id": player["id"], "inventory": {"f": 0, "l": 0, "d": 0, "s": 0, "m": 0, "ph": 0, "t": 0}})
             for cle, valeur in player["inventory"].items():
                 while cle in tmp and tmp[cle] > 0 and cle != 'p' and cle != 'f' and valeur > 0:

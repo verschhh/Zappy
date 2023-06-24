@@ -22,6 +22,7 @@ int fork_cmd(int sockfd, serv_t *serv, char *buffer)
             slot->nb += 1;
             write(sockfd, "ok\n", 4);
         }
+        slot = slot->next;
     }
     cpy->clocking = false;
     return 0;

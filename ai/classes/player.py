@@ -83,19 +83,20 @@ class Player:
         message[-1] = message[-1].split('\n')[0]
         # print(f"deb self.inv_other_player = {self.inv_other_player}")
         if self.player_is_in_inventory(message[0]) == False:
-            self.inv_other_player.append({"id": int(message[0]), "inventory": {"f": 0, "l": 0, "d": 0, "s": 0, "m": 0, "ph": 0, "t": 0}})
+            self.inv_other_player.append({"id": int(message[0]), "level": 0, "inventory": {"f": 0, "l": 0, "d": 0, "s": 0, "m": 0, "ph": 0, "t": 0}})
 
         for i in self.inv_other_player:
             if i["id"] == int(message[0]):
-                i["inventory"]["f"] = int(message[1])
-                i["inventory"]["l"] = int(message[2])
-                i["inventory"]["d"] = int(message[3])
-                i["inventory"]["s"] = int(message[4])
-                i["inventory"]["m"] = int(message[5])
-                i["inventory"]["ph"] = int(message[6])
-                if not(message[7].isnumeric()):
-                    message[7] = message[7].split('\n')[0]
-                i["inventory"]["t"] = int(message[7])
+                i["level"] = int(message[1])
+                i["inventory"]["f"] = int(message[2])
+                i["inventory"]["l"] = int(message[3])
+                i["inventory"]["d"] = int(message[4])
+                i["inventory"]["s"] = int(message[5])
+                i["inventory"]["m"] = int(message[6])
+                i["inventory"]["ph"] = int(message[7])
+                if not(message[8].isnumeric()):
+                    message[8] = message[8].split('\n')[0]
+                i["inventory"]["t"] = int(message[8])
     
         # print(f"fin self.inv_other_player = {self.inv_other_player}")
         
@@ -266,6 +267,7 @@ class Player:
     def send_inventory(self):
         message = "Inventory,"
         message += str(self.id) + " "
+        message += str(self.level) + " "
         for key, value in self._inventory.items():
             message += f"{value}"
             if key != "t":
