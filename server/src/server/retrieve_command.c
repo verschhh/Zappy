@@ -86,9 +86,9 @@ void check_death(serv_t *serv)
 
     while (cpy != NULL) {
         next = cpy->next;
-        printf("food = %d\n", cpy->player->inventory->food);
-        if (cpy->player->inventory->food == 0) {
+        if (cpy->player->inventory->food <= 0) {
             printf("DEATH\n");
+            write(cpy->sockfd, "dead\n", 5);
             send_death_player(serv, cpy->player->id);
             destroy_node(&serv->clients, cpy->player->id);
         }
@@ -123,6 +123,5 @@ int receive_client_msg(int sockfd, fd_set *readfds, serv_t *serv)
         lauch_cmd(cmd, sockfd, serv, buffer); //TODO: launch here and in decrement tick strange
         check_death(serv);
     }
-    printf("CONINUE\n");
     return 0;
 }

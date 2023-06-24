@@ -25,7 +25,6 @@ class AI(Player, Game, Priority, Orientation):
         Player.__init__(self, socket, x, y)
         Game.__init__(self, x, y)
 
-        
     # * AI Strategy
     def pick_move(self):
         self.update_map(self.look())
@@ -48,7 +47,6 @@ class AI(Player, Game, Priority, Orientation):
                 self.levels(Incantation.LVL_7)
             case _:
                 self.random_move()
-        
 
     def random_move(self):
         foo = randint(0,1)
@@ -111,7 +109,7 @@ class AI(Player, Game, Priority, Orientation):
                     tmp[cle] -= 1
                     valeur -= 1
 
-        if self.check_if_dict_empty(tmp) == False:
+        if self.check_if_dict_empty(tmp) == False or self._inventory["food"] < 50:
             print("bad 1")
             self.regive_ressources(player_select)
             return []
@@ -155,10 +153,11 @@ class AI(Player, Game, Priority, Orientation):
         if self._inventory["food"] < 40:
             self.fetch_ressources()
         player_select = self.check_evolution_possible(level)
-        if player_select != [] and self._inventory["food"] > 100:
+        if player_select != []:
             self.broadcast(f"Incantation,{self.take_id_player_select(player_select)}")
             while self.nb_joueur_ready < level['player'] - 1:
                 self.broadcast(f"Here")
+            print("Leave")
             self.drop_all_ressources()
             self.update_map(self.look())
             print(self.map[self.y][self.x])

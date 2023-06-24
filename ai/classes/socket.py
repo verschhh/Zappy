@@ -37,17 +37,16 @@ class Socket:
             print("You died")
             sys.exit(1)
         elif buff.decode().split(' ')[0] == "message":
-
             buff = buff.decode().split(',')
             # print(f"Message received {buff}")
             if player.level > 1:
                 print(buff)
                 if buff[1] == " Inventory":
                     print("Updating inventory")
-                    print(buff[2])
                     player.update_inventory_other_player(buff[2])
                     print("Updated inventory")
                 elif buff[1] == " Ready\n":
+                    print("Player ready")
                     player.nb_joueur_ready += 1
                 elif buff[1] == " Incantation":
                     print("Incantation launched")
@@ -59,6 +58,7 @@ class Socket:
                     player.incantation_direction = int(buff[0].split(' ')[1])
             self.buffer = ""
             self.receive(player)
+
         else:
             self.buffer += buff.decode()
             if self.buffer.split(' ')[0] == "Current":
