@@ -24,7 +24,6 @@ void zappy::InGame::clickTile(sf::RenderWindow& window)
                 } else {
                     _selectedTile = sf::Vector2i(x, y);    // Select the tile
                 }
-                std::cout << "Selected tile: " << _selectedTile.x << ", " << _selectedTile.y << std::endl;
             }
         }
     }

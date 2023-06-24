@@ -12,7 +12,6 @@
 void zappy::InGame::drawPnjs(sf::RenderWindow& window)
 {
     int nbPnj = _pnjs.size();
-    std::cout << "Nb pnj: " << nbPnj << std::endl;
     for (int i = 0; i < nbPnj; i++) {
         std::cout << "DRAW Pnj num " << _pnjs[i].number << " level " << _pnjs[i].level << " at " << _pnjs[i].position.x << ", " << _pnjs[i].position.y << std::endl;
         int mapX = _pnjs[i].position.x;
@@ -188,7 +187,7 @@ void zappy::InGame::drawDeathCounter(sf::RenderWindow& window)
 {
     window.draw(_deathCounterSprite);
     sf::Text death_text = setText(
-        std::to_string(_deathCounter),
+        std::to_string(_stats->getDeathCounter()),
         sf::Vector2f(1868, 827),
         30,
         sf::Color::White

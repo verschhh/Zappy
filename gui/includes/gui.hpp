@@ -63,8 +63,9 @@ namespace zappy {
 
             sf::Font _font;
 
+            std::shared_ptr<Stats> _stats;
             int _indexScene;
-            std::vector<IScene*> _scenes;
+            std::vector<std::shared_ptr<IScene>> _scenes;
 
             //* Music
             sf::Music _backgroundMusic;

@@ -67,7 +67,6 @@ void zappy::InGame::createPnj(int number, int x, int y, pnjOrientation orientati
 
     pnj.sprite.setTextureRect(pnj.rect);
 
-    // TODO: tweak scale
     pnj.sprite.setScale(sf::Vector2f(_scaleFactor, _scaleFactor));
 
     pnj.sprite.setOrigin(32 / 2, 32 / 2);

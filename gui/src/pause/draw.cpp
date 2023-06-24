@@ -15,39 +15,96 @@ void zappy::Pause::drawScene(sf::RenderWindow& window)
     window.draw(_quitButtonSprite);
     window.draw(_statsLogoSprite);
 
-    total_t total = _total;
-
-    std::string str = "Total pnj: " + std::to_string(total.pnj) + "\n";
-    str += "Total food: " + std::to_string(total.food) + "\n";
-    str += "Total linemate: " + std::to_string(total.linemate) + "\n";
-    str += "Total deraumere: " + std::to_string(total.deraumere) + "\n";
-    str += "Total sibur: " + std::to_string(total.sibur) + "\n";
-    str += "Total mendiane: " + std::to_string(total.mendiane) + "\n";
-    str += "Total phiras: " + std::to_string(total.phiras) + "\n";
-    str += "Total thystame: " + std::to_string(total.thystame) + "\n";
-
-    std::cout << str << std::endl;
-
     window.draw(_pnjsLogoSprite);
-    // std::string pnjString = std::to_string(total.pnj);
-    std::string pnjString = "Hello world";
+    std::string pnjString = std::to_string(_stats->getPnjCounter());
     _pnjText = setText(
         pnjString,
-        sf::Vector2f(800, 350),
+        sf::Vector2f(525, 315),
         50,
-        sf::Color::Yellow
+        sf::Color::White
     );
     window.draw(_pnjText);
 
-    // TODO: fix draw text & display all the ressources
+    window.draw(_deathsLogoSprite);
+    std::cout << "Death counter: " << _stats->getDeathCounter() << std::endl;
+    std::string deathString = std::to_string(_stats->getDeathCounter());
+    _deathText = setText(
+        deathString,
+        sf::Vector2f(525, 415),
+        50,
+        sf::Color::White
+    );
+    window.draw(_deathText);
 
-    // window.draw(_deathsLogoSprite);
-    // window.draw(_ressourcesLogoSprite);
-    // window.draw(_foodSprite);
-    // window.draw(_linemateSprite);
-    // window.draw(_deraumereSprite);
-    // window.draw(_siburSprite);
-    // window.draw(_mendianeSprite);
-    // window.draw(_phirasSprite);
-    // window.draw(_thystameSprite);
+    window.draw(_ressourcesLogoSprite);
+
+    window.draw(_foodSprite);
+    std::string foodString = std::to_string(_stats->getFoodCounter());
+    _foodText = setText(
+        foodString,
+        sf::Vector2f(620, 515),
+        50,
+        sf::Color::White
+    );
+    window.draw(_foodText);
+
+    window.draw(_linemateSprite);
+    std::string linemateString = std::to_string(_stats->getLinemateCounter());
+    _linemateText = setText(
+        linemateString,
+        sf::Vector2f(820, 515),
+        50,
+        sf::Color::White
+    );
+    window.draw(_linemateText);
+
+    window.draw(_deraumereSprite);
+    std::string deraumereString = std::to_string(_stats->getDeraumereCounter());
+    _deraumereText = setText(
+        deraumereString,
+        sf::Vector2f(1020, 515),
+        50,
+        sf::Color::White
+    );
+    window.draw(_deraumereText);
+
+    window.draw(_siburSprite);
+    std::string siburString = std::to_string(_stats->getSiburCounter());
+    _siburText = setText(
+        siburString,
+        sf::Vector2f(1220, 515),
+        50,
+        sf::Color::White
+    );
+    window.draw(_siburText);
+
+    window.draw(_mendianeSprite);
+    std::string mendianeString = std::to_string(_stats->getMendianeCounter());
+    _mendianeText = setText(
+        mendianeString,
+        sf::Vector2f(1420, 515),
+        50,
+        sf::Color::White
+    );
+    window.draw(_mendianeText);
+
+    window.draw(_phirasSprite);
+    std::string phirasString = std::to_string(_stats->getPhirasCounter());
+    _phirasText = setText(
+        phirasString,
+        sf::Vector2f(1620, 515),
+        50,
+        sf::Color::White
+    );
+    window.draw(_phirasText);
+
+    window.draw(_thystameSprite);
+    std::string thystameString = std::to_string(_stats->getThystameCounter());
+    _thystameText = setText(
+        thystameString,
+        sf::Vector2f(1820, 515),
+        50,
+        sf::Color::White
+    );
+    window.draw(_thystameText);
 }

@@ -5,10 +5,11 @@
 ** menu.cpp
 */
 
-#include "../includes/scenes.hpp"
+#include "../includes/gui.hpp"
 
-zappy::Menu::Menu(Connection& connection) : _connection(connection)
+zappy::Menu::Menu(Connection& connection, std::shared_ptr<Stats> stats) : _connection(connection)
 {
+    this->_stats = stats;
     setIndexScene(0);
     loadTextures();
 }

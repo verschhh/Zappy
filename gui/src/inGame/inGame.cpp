@@ -5,11 +5,12 @@
 ** inGame.cpp
 */
 
-#include "../../includes/scenes.hpp"
+#include "../../includes/gui.hpp"
 
-zappy::InGame::InGame(Connection& connection, int mapWidth, int mapHeight)
+zappy::InGame::InGame(Connection& connection, int mapWidth, int mapHeight, std::shared_ptr<Stats> stats)
     : _connection(connection), _mapWidth(mapWidth), _mapHeight(mapHeight)
 {
+    this->_stats = stats;
     setIndexScene(1);
     createMap();
     loadTextures();

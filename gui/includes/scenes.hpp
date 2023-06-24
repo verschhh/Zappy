@@ -13,11 +13,99 @@
 #include <random>
 #include "network.hpp"
 #include <array>
+#include <memory>
+#include <iostream> //! TEMP
 
 static const int WINDOW_WIDTH = 1920;
 static const int WINDOW_HEIGHT = 1080;
 
 namespace zappy {
+    class Stats {
+        public:
+            Stats() {
+                _pnjCounter = 0;
+                _deathCounter = 0;
+                _foodCounter = 0;
+                _linemateCounter = 0;
+                _deraumereCounter = 0;
+                _siburCounter = 0;
+                _mendianeCounter = 0;
+                _phirasCounter = 0;
+                _thystameCounter = 0;
+            }
+
+            ~Stats() = default;
+
+            //* Getters
+            int getPnjCounter(void) {
+                return (_pnjCounter);
+            }
+            int getDeathCounter(void) {
+                return (_deathCounter);
+            }
+            int getFoodCounter(void) {
+                return (_foodCounter);
+            }
+            int getLinemateCounter(void) {
+                return (_linemateCounter);
+            }
+            int getDeraumereCounter(void) {
+                return (_deraumereCounter);
+            }
+            int getSiburCounter(void) {
+                return (_siburCounter);
+            }
+            int getMendianeCounter(void) {
+                return (_mendianeCounter);
+            }
+            int getPhirasCounter(void) {
+                return (_phirasCounter);
+            }
+            int getThystameCounter(void) {
+                return (_thystameCounter);
+            }
+
+            //* Setters
+            void setPnjCounter(int pnjCounter) {
+                _pnjCounter = pnjCounter;
+            }
+            void increaseDeathCounter(void) {
+                _deathCounter++;
+            }
+            void setFoodCounter(int foodCounter) {
+                _foodCounter = foodCounter;
+            }
+            void setLinemateCounter(int linemateCounter) {
+                _linemateCounter = linemateCounter;
+            }
+            void setDeraumereCounter(int deraumereCounter) {
+                _deraumereCounter = deraumereCounter;
+            }
+            void setSiburCounter(int siburCounter) {
+                _siburCounter = siburCounter;
+            }
+            void setMendianeCounter(int mendianeCounter) {
+                _mendianeCounter = mendianeCounter;
+            }
+            void setPhirasCounter(int phirasCounter) {
+                _phirasCounter = phirasCounter;
+            }
+            void setThystameCounter(int thystameCounter) {
+                _thystameCounter = thystameCounter;
+            }
+
+        private:
+            int _pnjCounter;
+            int _deathCounter;
+            int _foodCounter;
+            int _linemateCounter;
+            int _deraumereCounter;
+            int _siburCounter;
+            int _mendianeCounter;
+            int _phirasCounter;
+            int _thystameCounter;
+    };
+
     class IScene {
         public:
             virtual void handleEvents(sf::RenderWindow& window) = 0;
@@ -29,6 +117,9 @@ namespace zappy {
     };
 
     class AScene : public IScene {
+        protected:
+            std::shared_ptr<Stats> _stats;
+
         public:
             AScene() = default;
             ~AScene() = default;
@@ -73,20 +164,6 @@ namespace zappy {
                 return text;
             }
 
-            typedef struct total_s {
-                int pnj = 0;
-                int death = 0;
-                int food = 0;
-                int linemate = 0;
-                int deraumere = 0;
-                int sibur = 0;
-                int mendiane = 0;
-                int phiras = 0;
-                int thystame = 0;
-            } total_t;
-
-            total_t _total;
-
             class SceneException : public std::exception {
                 public:
                     SceneException(const std::string &message) throw()
@@ -106,7 +183,7 @@ namespace zappy {
     class Menu : public AScene {
         public:
             //* Constructor / Destructor
-            Menu(Connection& connection);
+            Menu(Connection& connection, std::shared_ptr<Stats> stats);
             ~Menu(void);
 
             void loadTextures(void);
@@ -143,7 +220,7 @@ namespace zappy {
     class InGame : public AScene {
         public:
             //* Constructor / Destructor
-            InGame(Connection& _connection, int mapWidth, int mapHeight);
+            InGame(Connection& _connection, int mapWidth, int mapHeight, std::shared_ptr<Stats> stats);
             ~InGame(void);
 
             void createMap(void);
@@ -231,6 +308,7 @@ namespace zappy {
             void pdiHandler(std::vector<std::string>& arguments);
             void segHandler(std::vector<std::string>& arguments);
             void updatePnj(void);
+            void updateStats(void);
 
         private:
             //* Background
@@ -270,13 +348,12 @@ namespace zappy {
             //* Death Counter
             sf::Texture _deathCounterTexture;
             sf::Sprite _deathCounterSprite;
-            int _deathCounter = 0;
     };
 
     class EndGame : public AScene {
         public:
             //* Constructor / Destructor
-            EndGame(Connection &connection);
+            EndGame(Connection &connection, std::shared_ptr<Stats> stats);
             ~EndGame(void);
 
             //* Abstract functions
@@ -298,13 +375,14 @@ namespace zappy {
     class Pause : public AScene {
         public:
             //* Constructor / Destructor
-            Pause(Connection &connection);
+            Pause(Connection &connection, std::shared_ptr<Stats> stats);
             ~Pause(void);
 
             //* Abstract functions
             void loadTextures(void);
             void handleEvents(sf::RenderWindow& window);
             void drawScene(sf::RenderWindow& window);
+
         private:
             sf::Texture _backgroundTexture;
             sf::Sprite _backgroundSprite;
