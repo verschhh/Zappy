@@ -31,7 +31,5 @@ slot_t *slot_ctor(args_t *arg)
     slot->team_name = arg->names[0];
     slot->nb = arg->clientsnb;
     slot->next = NULL;
-    for (int i = 0; i < arg->namescount; i++)
-        new_slot(slot, arg->names[i]);
     return slot;
 }

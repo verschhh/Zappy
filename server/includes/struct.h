@@ -29,7 +29,7 @@
 
 
 enum nb_command {
-    NB_CMD = 20
+    NB_CMD = 21
 };
 
 enum enum_slot {

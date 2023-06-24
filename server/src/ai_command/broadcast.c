@@ -45,7 +45,6 @@ int broadcast(int sockfd, serv_t *serv, char *buffer)
 {
     client_t *client;
     client_t *actual_client = get_correct_client(serv, sockfd);
-    char msg[0];
 
     if (!actual_client->clocking) {
         update_time_limit(serv, actual_client, 7, buffer);

@@ -12,12 +12,15 @@ int unused_slot(int sockfd, serv_t *serv, char *buffer)
     (void)buffer;
     client_t *cpy = get_correct_client(serv, sockfd);
     slot_t *slot = serv->slots;
-    char msg[4];
+    char msg[0];
+    int len = 0;
 
-    while (slot->next != NULL) {
-        if (strcmp(slot->team_name, cpy->team_name) == 0) {
-            sprintf(msg, "%d\n", slot->nb);
-            write(sockfd, msg, 2);
+    while (slot != NULL) {
+        if (strstr(cpy->team_name, slot->team_name) != NULL) {
+            len = snprintf(msg, 0, "%d\n", slot->nb);
+            char send[len];
+            sprintf(send, "%d\n", slot->nb);
+            write(sockfd, send, len);
         }
         slot = slot->next;
     }

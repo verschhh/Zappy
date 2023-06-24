@@ -107,5 +107,6 @@ char *tile_to_string(map_t *tile, client_t *client);
 void switch_case_take(int i, map_t *map_cpy, client_t *c_cpy, int sockfd);
 void switch_case_set(int i, map_t *map_cpy, client_t *c_cpy, int sockfd);
 int check_inventory_material(int materials, int sockfd);
+int fork_cmd(int sockfd, serv_t *serv, char *buffer);
 
 #endif

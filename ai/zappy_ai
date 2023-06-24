@@ -94,6 +94,10 @@ def launch_game(av, ac):
                 ai.left()
             elif message == "Inventory":
                 ai.update_inventory()
+            elif message == "Connect_nbr":
+                print(ai.connect_nbr())
+            elif message == "Fork":
+                print(ai.fork())
             elif message.split(" ")[0] == "Take":
                 print(f" test:{message.split(' ')[1]}")
                 ai.take(message.split(' ')[1])
