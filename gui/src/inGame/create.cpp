@@ -76,6 +76,4 @@ void zappy::InGame::createPnj(int number, int x, int y, pnjOrientation orientati
 
     _pnjMoveClocks.push_back(sf::Clock());
     _pnjs.push_back(pnj);
-
-    _stats->increasePnjCounter();
 }

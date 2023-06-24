@@ -33,7 +33,6 @@ void zappy::InGame::erasePnj(int number)
     for (auto it = _pnjs.begin(); it != _pnjs.end(); ++it) {
         if (it->number == number) {
             _pnjs.erase(it);
-            _stats->decreasePnjCounter();
             _stats->increaseDeathCounter();
             break;
         }

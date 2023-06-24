@@ -66,11 +66,8 @@ namespace zappy {
             }
 
             //* Setters
-            void increasePnjCounter(void) {
-                _pnjCounter++;
-            }
-            void decreasePnjCounter(void) {
-                _pnjCounter--;
+            void setPnjCounter(int pnjCounter) {
+                _pnjCounter = pnjCounter;
             }
             void increaseDeathCounter(void) {
                 _deathCounter++;
@@ -311,6 +308,7 @@ namespace zappy {
             void pdiHandler(std::vector<std::string>& arguments);
             void segHandler(std::vector<std::string>& arguments);
             void updatePnj(void);
+            void updateStats(void);
 
         private:
             //* Background

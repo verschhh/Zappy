@@ -14,6 +14,7 @@ void zappy::InGame::updateScene(void)
     updateMap();
     parseQueue();
     updatePnj();
+    updateStats();
 }
 
 void zappy::InGame::updateMap(void)
@@ -122,4 +123,38 @@ void zappy::InGame::updatePnj(void)
 
         _pnjs[i].level = newLevel;
     }
+}
+
+void zappy::InGame::updateStats(void)
+{
+    int numberPnj = _pnjs.size();
+
+    int nbFood = 0;
+    int nbLinemate = 0;
+    int nbDeraumere = 0;
+    int nbSibur = 0;
+    int nbMendiane = 0;
+    int nbPhiras = 0;
+    int nbThystame = 0;
+
+    for (int i = 0; i < _mapHeight; i++) {
+        for (int j = 0; j < _mapWidth; j++) {
+            nbFood += _map[i][j].content.quantity.food;
+            nbLinemate += _map[i][j].content.quantity.linemate;
+            nbDeraumere += _map[i][j].content.quantity.deraumere;
+            nbSibur += _map[i][j].content.quantity.sibur;
+            nbMendiane += _map[i][j].content.quantity.mendiane;
+            nbPhiras += _map[i][j].content.quantity.phiras;
+            nbThystame += _map[i][j].content.quantity.thystame;
+        }
+    }
+
+    _stats->setPnjCounter(numberPnj);
+    _stats->setFoodCounter(nbFood);
+    _stats->setLinemateCounter(nbLinemate);
+    _stats->setDeraumereCounter(nbDeraumere);
+    _stats->setSiburCounter(nbSibur);
+    _stats->setMendianeCounter(nbMendiane);
+    _stats->setPhirasCounter(nbPhiras);
+    _stats->setThystameCounter(nbThystame);
 }
