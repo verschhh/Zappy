@@ -136,3 +136,12 @@ typedef struct cmd_s {
     char *command;
     int(*pointer)(int, serv_t *, char *);
 } cmd_t;
+
+
+static const double FOOD_DENSITY = 50;
+static const double LINEMATE_DENSITY = 30;
+static const double DERAUMERE_DENSITY = 15;
+static const double SIBUR_DENSITY = 10;
+static const double MENDIANE_DENSITY = 10;
+static const double PHIRAS_DENSITY = 8;
+static const double THYSTAME_DENSITY = 5;

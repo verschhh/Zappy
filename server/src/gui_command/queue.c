@@ -23,3 +23,21 @@ int send_queue(int sockfd, serv_t *serv, char *buffer)
     }
     return 0;
 }
+
+int send_serv_msg(int sockfd, serv_t *serv, char *buffer)
+{
+    (void)serv;
+    write(sockfd, buffer, strlen(buffer));
+    return 0;
+}
+
+int unknown_command(int sockfd, serv_t *serv, char *buffer)
+{
+    (void)buffer;
+    (void)serv;
+    char msg[4];
+
+    sprintf(msg, "ko\n");
+    write(sockfd, msg, 4);
+    return 0;
+}
