@@ -67,7 +67,6 @@ void destroy_node(client_t **client, int value)
             else
                 previous->next = current->next;
             free(current);
-            printf("Node with value %d deleted.\n", value);
             return;
         }
         previous = current;
@@ -93,27 +92,35 @@ void check_death(serv_t *serv)
     }
 }
 
+int init_new_client(serv_t *serv, char *buffer, int cmd, int sockfd)
+{
+    int next = 0;
+
+    if (cmd == -1) {
+        next = check_name_team(serv, buffer);
+        if (next >= 0) {
+            fill_client_struct(sockfd, serv, buffer);
+            send_x_y_ai(sockfd, serv, next);
+            send_connection_msg(serv->clients, serv);
+        } else
+            write(sockfd, "suc\n", 4);
+        return 1;
+    }
+    return 0;
+}
+
 int receive_client_msg(int sockfd, fd_set *readfds, serv_t *serv)
 {
     char buffer[1024] = {0};
     int cmd = 0;
     int bytes_read = recv(sockfd, buffer, sizeof(buffer), 0);
-    int next = 0;
     if (bytes_read <= 0) {
         close(sockfd);
         FD_CLR(sockfd, readfds);
     } else {
         cmd = parse_command(buffer);
-        if (cmd == -1) {
-            next = check_name_team(serv, buffer);
-            if (next >= 0) {
-                fill_client_struct(sockfd, serv, buffer);
-                send_x_y_ai(sockfd, serv, next);
-                send_connection_msg(serv->clients, serv);
-            } else
-                write(sockfd, "suc\n", 4);
+        if (init_new_client(serv, buffer, cmd, sockfd) == 1)
             return 0;
-        }
         clock_action(serv);
         lauch_cmd(cmd, sockfd, serv, buffer);
         check_death(serv);

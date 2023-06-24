@@ -12,8 +12,7 @@ int check_element_tile(int materials, int sockfd)
     if (materials > 0) {
         write(sockfd, "ok\n", 4);
         return 1;
-    }
-    else {
+    } else {
         write(sockfd, "ko\n", 4);
         return 0;
     }

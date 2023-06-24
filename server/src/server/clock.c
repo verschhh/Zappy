@@ -11,6 +11,7 @@ void decrement_tick(serv_t *serv)
 {
     client_t *copy = serv->clients;
     double elapsed = 0;
+
     while (copy != NULL) {
         elapsed = ((double) micro_time() - copy->clock ) / 1000000.0;
         if (copy->clocking && elapsed >= copy->limit) {
@@ -38,6 +39,7 @@ void decrease_food(serv_t *serv)
 {
     client_t *copy = serv->clients;
     double elapsed = 0;
+
     while (copy != NULL) {
         elapsed = ((double) micro_time() - copy->dec_food_clock ) / 1000000.0;
         if (elapsed >= (126.f / ((float)serv->freq))) {
