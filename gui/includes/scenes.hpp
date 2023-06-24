@@ -332,6 +332,13 @@ namespace zappy {
             //* Ressources
             sf::Texture _foodTexture;
             std::vector<sf::Texture> _ressourcesTextures;
+            sf::Text _foodText;
+            sf::Text _linemateText;
+            sf::Text _deraumereText;
+            sf::Text _siburText;
+            sf::Text _mendianeText;
+            sf::Text _phirasText;
+            sf::Text _thystameText;
 
             //* Class Values
             float _scaleFactor;

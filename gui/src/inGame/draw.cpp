@@ -100,64 +100,62 @@ void zappy::InGame::drawRessourceBar(sf::RenderWindow& window)
     window.draw(border);
 
     // Draw the content bar
-    // TODO: Maybe instead of redeclaring each text at each frame, declare in the class and update each frame
-
     window.draw(_contentBarSprite);
     ressources_t quantity = _map[_selectedTile.x][_selectedTile.y].content.quantity;
-    sf::Text food_text = setText(
+    _foodText = setText(
         std::to_string(quantity.food),
         sf::Vector2f(710, 985),
         30,
         sf::Color::White);
-    window.draw(food_text);
+    window.draw(_foodText);
 
-    sf::Text linemate_text = setText(
+    _linemateText = setText(
         std::to_string(quantity.linemate),
         sf::Vector2f(802, 1015),
         20,
         sf::Color::White
     );
-    window.draw(linemate_text);
+    window.draw(_linemateText);
 
-    sf::Text deraumere_text = setText(
+    _deraumereText = setText(
         std::to_string(quantity.deraumere),
         sf::Vector2f(892, 1015),
         20,
         sf::Color::White
     );
-    window.draw(deraumere_text);
+    window.draw(_deraumereText);
 
-    sf::Text sibur_text = setText(
+    _siburText = setText(
         std::to_string(quantity.sibur),
         sf::Vector2f(982, 1015),
         20,
         sf::Color::White
     );
-    window.draw(sibur_text);
+    window.draw(_siburText);
 
-    sf::Text mendiane_text = setText(
+    _mendianeText = setText(
         std::to_string(quantity.mendiane),
         sf::Vector2f(1072, 1015),
         20,
         sf::Color::White
     );
-    window.draw(mendiane_text);
+    window.draw(_mendianeText);
 
-    sf::Text phiras_text = setText(
+    _phirasText = setText(
         std::to_string(quantity.phiras),
         sf::Vector2f(1162, 1015),
         20,
         sf::Color::White
     );
-    window.draw(phiras_text);
+    window.draw(_phirasText);
 
-    sf::Text thystame_text = setText(
+    _thystameText = setText(
         std::to_string(quantity.thystame),
         sf::Vector2f(1252, 1015),
         20,
         sf::Color::White
     );
-    window.draw(thystame_text);
+    window.draw(_thystameText);
 }
 
 void zappy::InGame::drawLevelsBar(sf::RenderWindow& window)
