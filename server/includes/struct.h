@@ -48,6 +48,9 @@ enum orientation {
 typedef struct coord_s{
     int x;
     int y;
+    int i;
+    int j;
+    int k;
 } coord_t;
 
 typedef struct args_s {
