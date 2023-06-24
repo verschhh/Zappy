@@ -30,8 +30,8 @@ int set_object(int sockfd, serv_t *serv, char *buffer)
     client_cpy->clocking = false;
     map_t *map_cpy = serv->map;
     char **array = split_string_at_spaces(buffer, &count);
-    char *food[7] = {"food", "linemate", "deraumere",
-        "sibur", "mendiane", "phiras", "thystame"};
+    char *food[7] = {"f", "l", "d",
+        "s", "m", "p", "t"};
     map_cpy = get_correct_tile(map_cpy, get_correct_client(serv, sockfd));
     for (int i = 0; i < 7; i++) {
         if (strstr(array[1], food[i]) != NULL) {

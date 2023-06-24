@@ -11,19 +11,19 @@
 static char *add_map_content(char *str, map_t *tile)
 {
     for (int i = 0; i < tile->food; i++)
-        strcat(str, "food ");
+        strcat(str, "f ");
     for (int i = 0; i < tile->linemate; i++)
-        strcat(str, "linemate ");
+        strcat(str, "l ");
     for (int i = 0; i < tile->deraumere; i++)
-        strcat(str, "deraumere ");
+        strcat(str, "d ");
     for (int i = 0; i < tile->sibur; i++)
-        strcat(str, "sibur ");
+        strcat(str, "s ");
     for (int i = 0; i < tile->mendiane; i++)
-        strcat(str, "mendiane ");
+        strcat(str, "m ");
     for (int i = 0; i < tile->phiras; i++)
-        strcat(str, "phiras ");
+        strcat(str, "p ");
     for (int i = 0; i < tile->thystame; i++)
-        strcat(str, "thystame ");
+        strcat(str, "t ");
     if (strlen(str) > 0)
         str[strlen(str) - 1] = '\0';
     return str;
