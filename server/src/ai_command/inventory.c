@@ -35,10 +35,8 @@ int inventory(int sockfd, serv_t *serv, char *buffer)
     inv_t *tmp = cpy->player->inventory;
     char *msg = get_inv(tmp);
     int len = strlen(msg);
-    if (cpy->clocking) {
-        if (write(sockfd, msg, len + 1) == -1)
-            return 84;
-    }
+    if (write(sockfd, msg, len + 1) == -1)
+        return 84;
     cpy->clocking = false;
     return 0;
 }
