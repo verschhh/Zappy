@@ -172,6 +172,10 @@ class Player:
         self.vision = buff.split(',')
         # print(self.vision)
         print(f"len(self.vision) = {len(self.vision)}")
+        level_len = [4, 9, 16, 27, 38, 51, 65, 82, 101]
+        if len(self.vision) != level_len[self.level - 1]:
+            print("Look Failed")
+            return []
         for i in range(len(self.vision)):
             self.vision[i] = self.vision[i].split(' ')
         print(self.vision)
