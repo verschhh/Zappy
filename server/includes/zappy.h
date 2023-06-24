@@ -102,5 +102,6 @@ int get_facing(player_t *start, player_t *goal);
 int level_1_2_3(map_t *map, client_t *client, int nb_player_on_title);
 int level_4_5(map_t *map, client_t *client, int nb_player_on_title);
 int level_6_7(map_t *map, client_t *client, int nb_player_on_title);
+char *tile_to_string(map_t *tile, client_t *client);
 
 #endif

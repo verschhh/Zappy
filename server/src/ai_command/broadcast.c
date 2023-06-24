@@ -49,7 +49,6 @@ int broadcast(int sockfd, serv_t *serv, char *buffer)
         return 0;
     }
     if (actual_client->clocking) {
-        char msg[0];
         buffer += 9;
         client = serv->clients;
         print_broadcast(client, actual_client, sockfd, buffer);

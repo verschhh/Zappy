@@ -74,6 +74,5 @@ int incantation(int sockfd, serv_t *serv, char *buffer)
     client->player->level += 1;
     sprintf(msg, "Current level: %d\n", client->player->level);
     write(sockfd, msg, 17);
-    printf("Player %d level up to %d\n", client->player->id, client->player->level);
     return finish_incantation(serv, client, msg, nb);
 }
