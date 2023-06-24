@@ -9,9 +9,9 @@
 
 int sound(player_t *start, player_t *goal)
 {
-   int orientation = get_facing(start, goal);
-   if (orientation == 0)
-       return 0;
+    int orientation = get_facing(start, goal);
+    if (orientation == 0)
+        return 0;
     if (goal->orientation == EAST)
         orientation += 6;
     if (goal->orientation == SOUTH)
@@ -23,7 +23,8 @@ int sound(player_t *start, player_t *goal)
     return (orientation);
 }
 
-void print_broadcast(client_t *client, client_t *actual_client, int sockfd, char *buffer)
+void print_broadcast(client_t *client, client_t *actual_client,
+    int sockfd, char *buffer)
 {
     char msg[0];
     int len = snprintf(msg, 0, "message 8,%s", buffer);
