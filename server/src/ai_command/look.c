@@ -94,6 +94,7 @@ int look(int sockfd, serv_t *serv, char *buffer)
         char *response = build_look_response(serv, player);
         write(sockfd, response, strlen(response));
         cli->clocking = false;
+        free(response);
     }
     return 0;
 }
