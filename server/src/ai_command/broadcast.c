@@ -27,7 +27,8 @@ void print_broadcast(client_t *client, client_t *actual_client,
     int sockfd, char *buffer)
 {
     char msg[0];
-    int len = snprintf(msg,0,"message %d,%s", sound(client->player, client->player), buffer);
+    int len = snprintf(msg,0,"message %d,%s",
+        sound(client->player, client->player), buffer);
     char send[len];
 
     for (; client != NULL; client = client->next) {

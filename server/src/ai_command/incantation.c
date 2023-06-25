@@ -49,7 +49,8 @@ static int finish_incantation(serv_t *serv, client_t *client, char *s, int nb)
     for (client_t *temp = serv->clients; temp != NULL && nb > 0;
         temp = temp->next) {
         if (temp->player->x == client->player->x
-        && temp->player->y == client->player->y && temp->sockfd != client->sockfd) {
+        && temp->player->y == client->player->y
+        && temp->sockfd != client->sockfd) {
             client_t *client_tmp = get_correct_client(serv, temp->sockfd);
             client_tmp->clocking = false;
             client_tmp->player->level += 1;

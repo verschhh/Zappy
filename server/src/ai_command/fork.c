@@ -17,7 +17,8 @@ int fork_cmd(int sockfd, serv_t *serv, char *buffer)
         return 0;
     }
     while (slot != NULL) {
-        printf("Cpy tn = %s and slot tn = %s\n", cpy->team_name, slot->team_name);
+        printf("Cpy tn = %s and slot tn = %s\n",
+            cpy->team_name, slot->team_name);
         if (strstr(cpy->team_name, slot->team_name) != NULL) {
             slot->nb += 1;
             write(sockfd, "ok\n", 4);
