@@ -16,7 +16,7 @@ int check_slot_team(int slot)
 
 int compare_team_name_buffer(slot_t *slot, char *copy)
 {
-    if (strcmp(slot->team_name, copy) == 0) {
+    if (strstr(copy, slot->team_name) != NULL) {
         if (check_slot_team(slot->nb) == FULL)
             return -1;
         slot->nb -= 1;
@@ -33,7 +33,8 @@ int check_name_team(serv_t *serv, char *buffer)
 
     strncpy(copy, buffer, strlen(buffer) - 1);
     copy[strlen(buffer) - 1] = 0;
-    while (temp->next != NULL) {
+    while (temp != NULL) {
+        printf("team name = %s\n", temp->team_name);
         slot = compare_team_name_buffer(temp, copy);
         if (slot != 84)
             return slot;
