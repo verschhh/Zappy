@@ -58,8 +58,9 @@ int parse_names_clients_nb_freq(int option, char *optarg, args_t *args,
             break;
         case 'f':
             char *endptr;
-            if ((args->freq = strtof(optarg, &endptr)) <= 0)
-                print_and_exit("Freq must be greater than 0");
+            if ((args->freq = strtof(optarg, &endptr)) <= 0 ||
+                (args->freq = strtof(optarg, &endptr)) > 100)
+                print_and_exit("Freq must <0, 100>");
             break;
     }
     return 0;
