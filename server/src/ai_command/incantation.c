@@ -70,7 +70,19 @@ int incantation(int sockfd, serv_t *serv, char *buffer)
     map_t *map = get_correct_tile(serv->map, client);
     int nb = check_enough_element(map, client, serv);
     if (nb == 84) {
+        client->clocking = false;
         write(sockfd, "ko\n", 4);
+        for (client_t *temp = serv->clients; temp != NULL && nb > 0;
+            temp = temp->next) {
+            if (temp->player->x == client->player->x
+            && temp->player->y == client->player->y
+            && temp->sockfd != client->sockfd) {
+                client_t *client_tmp = get_correct_client(serv, temp->sockfd);
+                client_tmp->clocking = false;
+                write(temp->sockfd, "ko\n", 4);
+                nb--;
+            }
+        }
         return 0;
     }
     int tmp = nb;

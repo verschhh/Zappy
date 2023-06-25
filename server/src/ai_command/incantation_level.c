@@ -14,6 +14,7 @@ int level_1_2_3(map_t *map, client_t *client, int nb_player_on_title)
     printf("deraumere = %d\n", map->deraumere);
     printf("sibur = %d\n", map->sibur);
     printf("mendiane = %d\n", map->mendiane);
+    printf("phiras = %d\n", map->phiras);
     if (client->player->level == 1 && map->linemate >= 1
     && nb_player_on_title >= 1) {
         map->linemate--;

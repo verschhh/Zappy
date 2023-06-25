@@ -68,7 +68,7 @@ class Player:
 
     def drop_all_ressources(self):
         for ressource in self._inventory:
-            print(ressource)
+            # print(ressource)
             tmp = 0
             while self._inventory[ressource] > 0 and ressource != "f" and tmp <= 4:
                 # print(f"ressource = {ressource}")
@@ -113,9 +113,9 @@ class Player:
     def forward(self):
         # print("Forward")
         self.socket.send("Forward")
-        print("Send Forward")
+        # print("Send Forward")
         self.socket.receive(self)
-        print("Receive Forward")
+        # print("Receive Forward")
         if self.orientation == Orientation.NORTH:
             self.y -= 1
         elif self.orientation == Orientation.EAST:
@@ -157,13 +157,13 @@ class Player:
         # print("Look")
         self.socket.send("Look")
         self.socket.receive(self)
-        print(self.socket.buffer)
+        # print(self.socket.buffer)
         while self.socket.buffer == "ko\n" or self.socket.buffer.split(" ")[0] == "Current":
             self.socket.send("Look")
             self.socket.receive(self)
             print("Tourn")
         buff = self.socket.buffer[1:-1]
-        print(buff)
+        # print(buff)
         buff += "\0"
         i = 0
         while buff[i] != '\0':
@@ -174,14 +174,14 @@ class Player:
             i += 1
         self.vision = buff.split(',')
         # print(self.vision)
-        print(f"len(self.vision) = {len(self.vision)}")
+        # print(f"len(self.vision) = {len(self.vision)}")
         level_len = [4, 9, 16, 25, 36, 49, 64, 81, 100]
         if len(self.vision) != level_len[self.level - 1]:
-            print("Look Failed")
+            # print("Look Failed")
             return []
         for i in range(len(self.vision)):
             self.vision[i] = self.vision[i].split(' ')
-        print(self.vision)
+        # print(self.vision)
         self.find_pos_of_look()
         return self.vision_with_pos
 
@@ -191,9 +191,9 @@ class Player:
         pos_vision = 0
 
         for c,i in enumerate(range(1, 2*self.level + 2, 2)):
-            print(f"c = {c}, i = {i}")
+            # print(f"c = {c}, i = {i}")
             for x in range(i):
-                print(f"x = {x}")
+                # print(f"x = {x}")
                 if x + 1 < i/2:
                     self.set_object_pos(-c+x, floor, pos_vision)
                 elif x + 1 == ceil(i/2):
@@ -205,8 +205,8 @@ class Player:
 
     def set_object_pos(self, move, floor, i):
 
-        print(f"move = {move}, floor = {floor}, i = {i}")
-        print(f"self.vision = {self.vision}")
+        # print(f"move = {move}, floor = {floor}, i = {i}")
+        # print(f"self.vision = {self.vision}")
         if self.orientation == Orientation.NORTH:
             if self.x + move > self.max_x:
                 move = -self.max_x - move + 1
@@ -277,7 +277,7 @@ class Player:
         return message
 
     def broadcast(self, message):
-        print(f"id{self.id} send this message : {message}")
+        # print(f"id{self.id} send this message : {message}")
         self.socket.send(f"Broadcast {message}")
         self.socket.receive(self)
         if message == "Ready":
@@ -312,7 +312,7 @@ class Player:
         self.socket.send("Incantation")
         self.socket.receive(self)
         buff = self.socket.buffer
-        print(buff)
+        # print(buff)
         if buff == "ko\n":
             print("Incantation Failed")
             self.socket.buffer = ""
@@ -342,22 +342,10 @@ class Player:
         return FAIL
 
     def go_to_direction(self):
-        print(f"self.incantation_direction = {self.incantation_direction}")
+        # print(f"self.incantation_direction = {self.incantation_direction}")
         tmp = 0
-        match int(self.incantation_direction):
-            case 3:
-                self.left()
-            case 4:
-                self.left()
-                self.left()
-            case 5:
-                self.left()
-                self.left()
-            case 6:
-                self.right()
-                self.right()
-            case 7:
-                self.right()
+        while self.orientation != Orientation.EAST:
+            self.right()
         while int(self.incantation_direction) != 0:
             print("ppase")
             print(f"self.x = {self.x}, self.max_x = {self.max_x}, tmp = {tmp}")
@@ -381,12 +369,12 @@ class Player:
                 print("forward")
                 self.forward() #Stuck ici * 2
             print("move over ")
-            for i in range(3):
+            for i in range(5):
                 print("Call inventory 1")
                 self.inventory()
             print("Incantaton in progress")
 
-        for i in range(3):
+        for i in range(5):
             print("Call inventory")
             self.inventory()
         print("Incantaton passed")

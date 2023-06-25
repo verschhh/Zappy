@@ -77,7 +77,6 @@ class AI(Player, Game, Priority, Orientation):
         for c, player in enumerate(player_select):
             for ressource in player["inventory"]:
                 while player["inventory"][ressource] > 0:
-                    print(c)
                     self.inv_other_player[c - 1]["inventory"][ressource] += 1
                     player["inventory"][ressource] -= 1
 
@@ -159,18 +158,21 @@ class AI(Player, Game, Priority, Orientation):
             self.fetch_ressources()
         player_select = self.check_evolution_possible(level)
         if player_select != []:
+            print("Enter")
             self.broadcast(f"Incantation,{self.take_id_player_select(player_select)}")
             while self.nb_joueur_ready < level['p'] - 1:
                 self.broadcast(f"Here")
             print("Leave")
             self.drop_all_ressources()
             self.update_map(self.look())
-            print(self.map[self.y][self.x])
+            # print(self.map[self.y][self.x])
             self.incantation()
             self.nb_joueur_ready = 0
-        self.broadcast(self.send_inventory())
+        
+        if randint(0, 3) == 0:
+            self.broadcast(self.send_inventory())
         self.fetch_ressources()
-        print(self.level)
+        print(f"Levle = {self.level}")
 
     def fetch_ressources(self):
         pos_food = self.nb_ressources_tile(3, "f")
@@ -181,7 +183,6 @@ class AI(Player, Game, Priority, Orientation):
         self.update_inventory()
 
     def take_usseless_ressources(self, level):
-        print(level)
         for ressource in self.map[self.y][self.x]:
             while ressource != "p" and ressource != "f" and self.map[self.y][self.x][ressource] > level[ressource]:
                 # print(f"ressource = {ressource}")
