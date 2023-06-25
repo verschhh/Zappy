@@ -35,10 +35,13 @@ int check_name_team(serv_t *serv, char *buffer)
     copy[strlen(buffer) - 1] = 0;
     while (temp != NULL) {
         slot = compare_team_name_buffer(temp, copy);
-        if (slot != 84)
+        if (slot != 84) {
+            free(copy);
             return slot;
+        }
         temp = temp->next;
     }
+    free(copy);
     return -1;
 }
 

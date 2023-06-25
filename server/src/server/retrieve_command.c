@@ -43,9 +43,12 @@ int parse_command(char *buffer)
     }
     cmd[index] = '\0';
     for (int i = 0; i != NB_CMD; i++) {
-        if (strstr(cmd, cmd_list[i].command) != NULL)
+        if (strstr(cmd, cmd_list[i].command) != NULL) {
+            free(cmd);
             return i;
+        }
     }
+    free(cmd);
     return -1;
 }
 

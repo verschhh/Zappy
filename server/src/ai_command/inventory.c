@@ -38,5 +38,6 @@ int inventory(int sockfd, serv_t *serv, char *buffer)
     if (write(sockfd, msg, len + 1) == -1)
         return 84;
     cpy->clocking = false;
+    free(msg);
     return 0;
 }
