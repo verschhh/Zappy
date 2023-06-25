@@ -261,7 +261,7 @@ class Player:
         self.socket.send("Fork")
         self.socket.receive(self)
 
-    def giconnect_nbr(self):
+    def connect_nbr(self):
         self.socket.send("Connect_nbr")
         self.socket.receive(self)
         return int(self.socket.buffer)
@@ -344,8 +344,20 @@ class Player:
     def go_to_direction(self):
         print(f"self.incantation_direction = {self.incantation_direction}")
         tmp = 0
-        while (self.orientation != Orientation.EAST):
-            self.left()
+        match int(self.incantation_direction):
+            case 3:
+                self.left()
+            case 4:
+                self.left()
+                self.left()
+            case 5:
+                self.left()
+                self.left()
+            case 6:
+                self.right()
+                self.right()
+            case 7:
+                self.right()
         while int(self.incantation_direction) != 0:
             print("ppase")
             print(f"self.x = {self.x}, self.max_x = {self.max_x}, tmp = {tmp}")
@@ -369,12 +381,12 @@ class Player:
                 print("forward")
                 self.forward() #Stuck ici * 2
             print("move over ")
-            for i in range(5):
+            for i in range(3):
                 print("Call inventory 1")
                 self.inventory()
             print("Incantaton in progress")
 
-        for i in range(5):
+        for i in range(3):
             print("Call inventory")
             self.inventory()
         print("Incantaton passed")
