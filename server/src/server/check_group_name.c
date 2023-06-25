@@ -34,7 +34,6 @@ int check_name_team(serv_t *serv, char *buffer)
     strncpy(copy, buffer, strlen(buffer) - 1);
     copy[strlen(buffer) - 1] = 0;
     while (temp != NULL) {
-        printf("team name = %s\n", temp->team_name);
         slot = compare_team_name_buffer(temp, copy);
         if (slot != 84)
             return slot;

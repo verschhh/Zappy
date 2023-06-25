@@ -259,7 +259,7 @@ class Player:
         self.socket.send("Fork")
         self.socket.receive(self)
 
-    def connect_nbr(self):
+    def giconnect_nbr(self):
         self.socket.send("Connect_nbr")
         self.socket.receive(self)
         return int(self.socket.buffer)
