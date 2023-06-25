@@ -113,7 +113,9 @@ class Player:
     def forward(self):
         # print("Forward")
         self.socket.send("Forward")
+        print("Send Forward")
         self.socket.receive(self)
+        print("Receive Forward")
         if self.orientation == Orientation.NORTH:
             self.y -= 1
         elif self.orientation == Orientation.EAST:
@@ -345,22 +347,37 @@ class Player:
         while (self.orientation != Orientation.EAST):
             self.left()
         while int(self.incantation_direction) != 0:
+            print("ppase")
+            print(f"self.x = {self.x}, self.max_x = {self.max_x}, tmp = {tmp}")
             if (self.x == self.max_x) and tmp == 0:
+                print("la")
                 self.left()
+                print("stuckere")
                 self.forward()
+                print("stuck")
                 self.left()
                 tmp = 1
             elif (self.x == 0) and tmp == 1:
+                print("ici")
                 self.right()
+                print("stuc")
                 self.forward()
+                print("stucke")
                 self.right()
                 tmp = 0
             else:
-                self.forward()
+                print("forward")
+                self.forward() #Stuck ici * 2
+            print("move over ")
             for i in range(5):
+                print("Call inventory 1")
                 self.inventory()
+            print("Incantaton in progress")
+
         for i in range(5):
+            print("Call inventory")
             self.inventory()
+        print("Incantaton passed")
         match int(self.incantation_direction):
                 case 0:
                     print("I am here")

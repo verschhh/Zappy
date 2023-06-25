@@ -98,6 +98,8 @@ class AI(Player, Game, Priority, Orientation):
                 tmp[cle] -= 1
                 valeur -= 1
 
+        
+
         for player in self.inv_other_player:
             if player["level"] != self.level:
                 continue
@@ -124,6 +126,8 @@ class AI(Player, Game, Priority, Orientation):
             self.regive_ressources(player_select)
             return []
 
+        if self.connect_nbr() < level["p"]:
+            self.fork()
 
         for i in self.inv_other_player:
             if self.check_if_id_in_list(i["id"], player_select) == False and len(player_select) < level["p"]:

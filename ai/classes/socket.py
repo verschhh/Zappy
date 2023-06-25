@@ -15,6 +15,7 @@ class Socket:
         self._machine = machine
         self._sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.buffer = ""
+        self.tmp = False
 
     def connect(self):
         try :
@@ -29,7 +30,7 @@ class Socket:
 
     def receive(self, player):
         buff = self._sock.recv(4096)
-        # print(f"buff = {buff}")
+        print(f"buff = {buff}")
         if not buff:
             print("Server disconnected")
             sys.exit(10)
@@ -38,7 +39,7 @@ class Socket:
             sys.exit(1)
         elif buff.decode().split(' ')[0] == "message":
             buff = buff.decode().split(',')
-            # print(f"Message received {buff}")
+            print(f"Message received :{buff};")
             if player.level > 1:
                 # print(buff)
                 if buff[1] == " Inventory":
@@ -61,8 +62,10 @@ class Socket:
                     self.buffer = "ok\n"
                     return
                 elif buff[1] == " Here\n":
-                    # print(f"New direction ;{buff[0].split(' ')[1]};")
+                    print(f"New direction ;{buff[0].split(' ')[1]};")
                     player.incantation_direction = int(buff[0].split(' ')[1])
+                    # self.buffer = "ok\n"
+                    # return
             self.buffer = ""
             self.receive(player)
 

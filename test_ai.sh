@@ -1,34 +1,10 @@
 #!/bin/bash
 
 commands=(
-    "python3 ./zappy_ai -p 1235 -n lol"
-    "python3 ./zappy_ai -p 1235 -n lol"
-    "python3 ./zappy_ai -p 1235 -n lol"
-    "python3 ./zappy_ai -p 1235 -n lol"
-    "python3 ./zappy_ai -p 1235 -n lol"
-    "python3 ./zappy_ai -p 1235 -n lol"
-    "python3 ./zappy_ai -p 1235 -n lol"
-    "python3 ./zappy_ai -p 1235 -n lol"
-    "python3 ./zappy_ai -p 1235 -n lol"
-    "python3 ./zappy_ai -p 1235 -n lol"
-    "python3 ./zappy_ai -p 1235 -n mdr"
-    "python3 ./zappy_ai -p 1235 -n mdr"
-    "python3 ./zappy_ai -p 1235 -n mdr"
-    "python3 ./zappy_ai -p 1235 -n mdr"
-    "python3 ./zappy_ai -p 1235 -n mdr"
-    "python3 ./zappy_ai -p 1235 -n mdr"
-    "python3 ./zappy_ai -p 1235 -n mdr"
-    "python3 ./zappy_ai -p 1235 -n mdr"
-    "python3 ./zappy_ai -p 1235 -n pt"
-    "python3 ./zappy_ai -p 1235 -n pt"
-    "python3 ./zappy_ai -p 1235 -n pt"
-    "python3 ./zappy_ai -p 1235 -n pt"
-    "python3 ./zappy_ai -p 1235 -n pt"
-    "python3 ./zappy_ai -p 1235 -n pt"
-    "python3 ./zappy_ai -p 1235 -n pt"
-    "python3 ./zappy_ai -p 1235 -n pt"
-    "python3 ./zappy_ai -p 1235 -n pt"
-    # Add more commands here
+    "python3 ./zappy_ai -p 4244 -n lol"
+    "python3 ./zappy_ai -p 4244 -n lol"
+    "python3 ./zappy_ai -p 4244 -n pt"
+    "python3 ./zappy_ai -p 4244 -n lol"
 )
 
 declare -a pids
